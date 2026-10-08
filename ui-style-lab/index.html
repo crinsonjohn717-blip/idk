@@ -382,6 +382,72 @@ button.ind{cursor:pointer}
 .veh-fuel.low i{background:var(--warn)}
 .veh-odo{margin-left:6px;color:var(--ink-dim)}
 
+/* radial menu, centred on screen */
+.ov-dim{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,0,0,.12),rgba(0,0,0,.45));opacity:0;pointer-events:none;transition:opacity .35s ease}
+.scene-world.ov .ov-dim{opacity:1}
+.radial{position:absolute;left:660px;top:240px;width:600px;height:600px;color:var(--ink);z-index:2}
+.rad-ring{position:absolute;inset:0;border-radius:50%;background:var(--panel);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop);-webkit-mask:radial-gradient(circle,transparent 103px,#000 104px,#000 262px,transparent 263px);mask:radial-gradient(circle,transparent 103px,#000 104px,#000 262px,transparent 263px)}
+.rad-svg{position:absolute;inset:0;width:600px;height:600px;overflow:visible}
+.rad-svg .edge{fill:none;stroke:var(--panel-line);stroke-width:1}
+.rad-svg .sep{stroke:var(--line-soft);stroke-width:1.5}
+.rad-hl{transform-origin:300px 300px;transition:transform .42s cubic-bezier(.16,1,.3,1),opacity .2s}
+.rad-hl .sec{fill:var(--sel-bg)}
+.rad-hl .arc{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round}
+.rad-items{position:absolute;inset:0}
+.rad-it{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:7px;width:132px;text-align:center;color:var(--ink-dim);transition:color .2s}
+.rad-it svg{width:34px;height:34px;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.rad-it .rl{font-size:17px;line-height:1.1}
+.rad-it .rs{font-size:13px;min-height:16px;opacity:.8}
+.rad-it.sel{color:var(--sel-ink)}
+.rad-it.sel svg{transform:scale(1.14)}
+.rad-center{position:absolute;left:50%;top:50%;width:192px;height:192px;margin:-96px 0 0 -96px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0 22px;text-align:center;background:var(--panel);box-shadow:var(--ring),var(--drop);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop);transition:background .2s}
+.rad-center.hot{background:var(--sel-bg);color:var(--sel-ink)}
+.rc-e{font-family:var(--f-meta);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
+.rad-center.hot .rc-e{color:var(--sel-dim)}
+.rc-t{font-size:24px}
+.rc-h{font-size:13.5px;line-height:1.35;color:var(--ink-dim)}
+.ui[data-skin="vinewood"] .rc-e{text-transform:none;letter-spacing:.01em}
+/* vehicle controls, bottom centre */
+.vm{position:absolute;left:510px;bottom:104px;width:900px;padding:20px 24px 22px;z-index:2}
+.vm-head{display:flex;align-items:center;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.vm-name{font-size:28px}
+.vm-sub{font-size:14px;color:var(--ink-dim);margin-top:5px}
+.vm-head .sa-plate{margin-left:auto}
+.vm-body{position:relative;isolation:isolate;display:grid;grid-template-columns:220px 268px minmax(0,1fr);gap:26px;margin-top:16px;align-items:start}
+.vm-h{margin-bottom:9px}
+.vm-tiles{display:grid;gap:8px}
+.vm-tiles.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.vm-tiles.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tile{height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0 6px;border:0;border-radius:var(--radius-sm);background:var(--field-bg);box-shadow:inset 0 0 0 1px var(--field-line);font-size:14px;cursor:pointer;transition:background .25s,color .25s}
+.tile svg{width:22px;height:22px}
+.tile .tl{font-weight:600;line-height:1.1}
+.tile .tv{font-size:12px;opacity:.7;line-height:1}
+.tile:hover{background:var(--panel-hover)}
+.tile.on{background:var(--accent);color:var(--accent-ink);box-shadow:none}
+.vm-tip{margin:14px 0 0;font-size:14px;line-height:1.45;color:var(--ink-dim)}
+.vm-car{position:relative;width:200px;height:320px;margin:0 auto}
+.vm-car svg{position:absolute;inset:0;width:200px;height:320px;overflow:visible}
+.vm-car .cb{fill:var(--field-bg);stroke:var(--field-line);stroke-width:1.5}
+.vm-car .floor{fill:color-mix(in srgb,var(--ink) 6%,transparent)}
+.vm-car .glass{fill:color-mix(in srgb,var(--ink) 20%,transparent)}
+.vm-car .cpart{fill:color-mix(in srgb,var(--ink) 11%,transparent);stroke:var(--field-line);transition:transform .45s cubic-bezier(.16,1,.3,1),fill .25s}
+.vm-car #vm-hood.open{transform:translateY(-13px);fill:color-mix(in srgb,var(--accent) 60%,transparent)}
+.vm-car #vm-trunk.open{transform:translateY(13px);fill:color-mix(in srgb,var(--accent) 60%,transparent)}
+.vm-car .door{fill:color-mix(in srgb,var(--ink) 55%,transparent);transform-box:view-box;transition:transform .5s cubic-bezier(.16,1,.3,1),fill .25s}
+.vm-car .door.open{transform:rotate(var(--rot));fill:var(--accent)}
+.vm-car .win{fill:color-mix(in srgb,var(--ink) 38%,transparent);transition:opacity .35s ease}
+.vm-car .win.down{opacity:.1}
+.vm-car .seat{fill:color-mix(in srgb,var(--ink) 13%,transparent);stroke:color-mix(in srgb,var(--ink) 30%,transparent);stroke-width:1.5;transition:fill .25s}
+.vm-car .seat.you{fill:var(--accent);stroke:none}
+.vm-car .wheel{fill:none;stroke:color-mix(in srgb,var(--ink) 55%,transparent);stroke-width:2.5}
+.hs{position:absolute;padding:0;border:0;background:transparent;border-radius:var(--radius-sm);cursor:pointer}
+.vm-f{outline:2px solid var(--accent);outline-offset:2px}
+.ui[data-skin="vinewood"] .vm-f{outline:none}
+.ui[data-skin="vinewood"] .vm-body>.glow{background:transparent;box-shadow:0 0 0 2px var(--accent),0 0 18px color-mix(in srgb,var(--accent) 35%,transparent);z-index:3}
+/* hint bar steps left of the cluster in styles that keep it bottom-right */
+.stage[data-scene="world"] .ui.car-hud:not([data-skin="vinewood"]) .ibar{right:424px}
+.ind-door.on{color:var(--warn);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--warn) 60%,transparent))}
+
 /* ---------- screen: dealership ---------- */
 .dl-list{position:absolute;left:96px;top:78px;width:600px;display:flex;flex-direction:column;gap:12px}
 .dl-list .ph{--ph-scale:.78}
@@ -648,6 +714,9 @@ button.ind{cursor:pointer}
             <div class="prompt sub" id="p-h"><span class="key ring" id="p-h-key">H</span><span class="p-l dsp">Hold to search</span></div>
             <div class="prompt sub" id="p-f"><span class="key">F</span><span class="p-l dsp">Enter vehicle</span></div>
           </div>
+          <div class="ov-dim"></div>
+          <div class="radial" id="radial" hidden></div>
+          <section class="vm pn" id="vm" aria-label="Vehicle controls" hidden></section>
           <aside class="ent pn" aria-label="Selected entity">
             <div class="ent-h"><span class="dsp">Selection</span><span class="meta">Entity info</span></div>
             <div class="ent-h2"><div><div class="dsp ent-name">Benefactor Schafter</div><div class="ent-sub">Vehicle · Net ID 7836 · schafter2</div></div><div class="sa-plate"><span>San Andreas</span>41FZK207</div></div>
@@ -743,6 +812,20 @@ const ICON = {
   engine: sv('<path d="M2.5 10.5v5M2.5 13h2.5M5 9.5h3l1.5-2h4.5l1.5 2H18v2h2.5v-2h1v7.5h-1v-2.5H18v3h-4.5L11.5 20H7.5L5 17.5z"/>'),
   pump: sv('<path d="M5 20.5V5a1.5 1.5 0 0 1 1.5-1.5h6A1.5 1.5 0 0 1 14 5v15.5M3.5 20.5h12M5 10h9M14 8.5l3.2 2.2v6.3a1.6 1.6 0 0 0 3.2 0V8.2L18 6"/>'),
   belt: sv('<circle cx="12" cy="4.6" r="2.2"/><path d="M7.5 21v-7.5a4.5 4.5 0 0 1 9 0V21M8.2 9.8l8 8.4"/>'),
+  car: sv('<path d="M5 16.5v-3.5l2.2-5.5h9.6l2.2 5.5v3.5zM5 16.5V19h2.5v-2.5M16.5 16.5V19H19v-2.5M8 13.2h.01M16 13.2h.01"/>'),
+  hand: sv('<path d="M8 13V6.5a1.5 1.5 0 0 1 3 0V11M11 10V5a1.5 1.5 0 0 1 3 0v6M14 10.5V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-.5A5.5 5.5 0 0 1 5 15.5L4 12.6a1.4 1.4 0 0 1 2.4-1.3L8 13"/>'),
+  shirt: sv('<path d="M8.5 4L12 6l3.5-2L20 7.5l-2.8 2.8V20H6.8v-9.7L4 7.5z"/>'),
+  med: sv('<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M12 9.5v4.5M9.8 11.7h4.4"/>'),
+  idcard: sv('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M5.5 16c.6-1.5 1.7-2.2 3-2.2s2.4.7 3 2.2M14 10h4M14 13h3"/>'),
+  badge: sv('<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M12 8.5l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.2-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/>'),
+  pin: sv('<path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>'),
+  power: sv('<path d="M12 3v8M7 6.5a7 7 0 1 0 10 0"/>'),
+  hazard: sv('<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/>'),
+  bulb: sv('<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/>'),
+  lock: sv('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+  win: sv('<path d="M4 18V9l4-4h12v13z"/><path d="M12 9v6M9.5 12.5L12 15l2.5-2.5"/>'),
+  doors: sv('<path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/><path d="M4 21h16M14.5 12.5h.01"/>'),
+  ajar: sv('<path d="M8.5 3.5h7l1 4V19a1.5 1.5 0 0 1-1.5 1.5H9A1.5 1.5 0 0 1 7.5 19V7.5z"/><path d="M7.5 9.5L3 13"/>'),
 };
 
 /* ---------- data ---------- */
@@ -780,13 +863,15 @@ const FX = {
 };
 const KEYS = {
   menu: [[['↑','↓'],'Move'],[['Enter'],'Select, run or open'],[['←','→'],'Change a list value'],[['Tab'],'Next field'],[['F'],'Favourite'],[['Q','E'],'Category'],[['X'],'List or grid'],[['/'],'Search'],[['Esc'],'Back, then close']],
-  world: [[['W','A','S','D'],'Walk, or drive in a vehicle'],[['Shift'],'Hold with W to sprint, tap to jog'],[['F'],'Get in or out of the vehicle'],[['E'],'Open stash (on foot)'],[['H'],'Hold to search on foot, headlights in a vehicle'],[['-','+'],'Left or right blinker'],[['Backspace'],'Hazards'],[['B'],'Seatbelt'],[['G'],'Engine on or off'],[['K'],'Damage or repair the engine (demo)']],
+  world: [[['F1'],'Radial menu (Vehicle opens the vehicle controls)'],[['W','A','S','D'],'Walk, or drive in a vehicle'],[['Shift'],'Hold with W to sprint, tap to jog'],[['F'],'Get in or out of the vehicle'],[['E'],'Open stash (on foot)'],[['H'],'Hold to search on foot, headlights in a vehicle'],[['-','+'],'Left or right blinker'],[['Backspace'],'Hazards'],[['B'],'Seatbelt'],[['G'],'Engine on or off'],[['K'],'Damage or repair the engine (demo)']],
   dealer: [[['↑','↓'],'Browse vehicles'],[['Q','E'],'Vehicle class'],[['←','→'],'Paint'],[['T'],'Test drive'],[['Enter'],'Purchase']],
   kit: [[['Copy'],'Takes the CSS tokens for this style and accent']],
 };
 const IBAR = {
   menu: [[['↑','↓'],'Move','ArrowDown'],[['↵'],'@enter','Enter'],[['F'],'Favourite','f'],[['Q','E'],'Category','e'],[['X'],'Layout','x'],[['Esc'],'Close','Escape']],
   dealer: [[['↑','↓'],'Browse','ArrowDown'],[['Q','E'],'Class','e'],[['T'],'Test drive','t'],[['↵'],'Purchase','Enter']],
+  radial: [[['Click'],'Select','Enter'],[['Right-click'],'Back','Backspace'],[['Esc'],'Close','Escape']],
+  vehicle: [[['↑','↓','←','→'],'Move','ArrowRight'],[['↵'],'Toggle','Enter'],[['⌫'],'Back','Backspace'],[['Esc'],'Close','Escape']],
 };
 
 const PLAYERS = [[12,'Marcus Bell'],[31,'Tasha Reyes'],[47,'Dre Ortega'],[88,'Ivan Petrov'],[117,'June Park']];
@@ -890,7 +975,7 @@ const STATS = ['Top speed','Acceleration','Braking','Traction'];
 
 /* ---------- state ---------- */
 const STORE = 'overlay-style-lab-2';
-const state = { skin:'vinewood', scene:'menu', accent:'michael', bg:'day',
+const state = { skin:'vinewood', scene:'menu', accent:'michael', bg:'day', ov:null,
   cat:'all', q:'', selId:null, open:null, fi:0, grid:false, menuOpen:true, binding:null, streamer:false,
   d:{ cls:'Sedans', i:0, paint:0, pay:0 }, bank:284310, cash:12400 };
 try {
@@ -978,7 +1063,7 @@ function renderChrome(){
   $('#keys-list').innerHTML = KEYS[state.scene].map(([ks, t]) => `<dt>${ks.map(k => `<kbd>${esc(k)}</kbd>`).join('')}</dt><dd>${esc(t)}</dd>`).join('');
 }
 function renderIbar(){
-  const items = IBAR[state.scene];
+  const items = IBAR[state.scene === 'world' && state.ov ? state.ov : state.scene];
   if (!items || (state.scene === 'menu' && !state.menuOpen)) { $('#ibar').innerHTML = ''; return; }
   $('#ibar').innerHTML = items.map(([ks, label, press], n) =>
     `${n ? '<span class="ib-sep">/</span>' : ''}<button type="button" class="ib dsp" data-press="${press}" tabindex="-1">${ks.map(k => `<span class="key sm">${esc(k)}</span>`).join('<span class="ib-or">/</span>')}${label === '@enter' ? `<span class="ib-verb">${enterVerb()}</span>` : label}</button>`).join('');
@@ -997,7 +1082,7 @@ function applyLook(){
   renderChrome(); renderIbar();
   if (state.scene === 'kit') renderKit();
   syncGlows(true);
-  if (state.scene === 'world') simStart(); else simStop();
+  if (state.scene === 'world') simStart(); else { simStop(); if (state.ov){ state.ov = null; $('#radial').hidden = true; $('#vm').hidden = true; $('.scene-world').classList.remove('ov'); syncPanels(); renderIbar(); } }
   save();
 }
 
@@ -1388,7 +1473,9 @@ const sim = {
   heading:265, x:0, y:0, clock:14 * 60 + 32,
   food:82, water:24, stress:12,
   foot:{ stamina:1, tired:false, mode:'idle' },
-  car:{ in:false, v:0, rpm:0, fuel:.62, engine:true, health:1, lights:0, left:false, right:false, hazard:false, belt:false, odo:12483.6, bulb:0, blink0:0 },
+  car:{ in:false, v:0, rpm:0, fuel:.62, engine:true, health:1, lights:0, left:false, right:false, hazard:false, belt:false, odo:12483.6, bulb:0, blink0:0,
+        doors:[false, false, false, false], hood:false, trunk:false, win:[false, false, false, false], interior:false, locked:false, seat:0 },
+  walk:'Normal',
 };
 const STAM = { idle:.12, walk:.08, jog:.045, sprint:-1 / 14 };   // per second; sprinting empties a full bar in 14 s
 const FOOT_MS = { idle:0, walk:1.5, jog:3.4, sprint:6.4 };      // metres per second, drives the minimap
@@ -1433,6 +1520,7 @@ function renderVehicle(){
       <span class="ind ind-high">${ICON.high}</span>
       <span class="ind ind-eng">${ICON.engine}</span>
       <span class="ind ind-fuel">${ICON.pump}</span>
+      <span class="ind ind-door">${ICON.ajar}</span>
       <button type="button" class="ind ind-belt" data-ind="belt" aria-label="Seatbelt" tabindex="-1">${ICON.belt}</button>
       <button type="button" class="ind ind-r" data-ind="right" aria-label="Right blinker" tabindex="-1">${ICON.br}</button>
     </div>
@@ -1514,6 +1602,7 @@ function updateHud(force){
     'ind-eng': bulb || (c.engine && c.health < .35),
     'ind-fuel': bulb || c.fuel < .15,
     'ind-belt': bulb || (!c.belt && (Math.abs(c.v) < 5 || phase)),
+    'ind-door': bulb || c.hood || c.trunk || c.doors.some(Boolean),
   };
   for (const k in lit) hudSet(k, lit[k], v => $('#veh .' + k).classList.toggle('on', v));
 }
@@ -1537,7 +1626,7 @@ function stepSim(dt, now){
   if (before[0] !== Math.round(sim.food) || before[1] !== Math.round(sim.water)) renderNeeds();
   let ms = 0;
   if (c.in){
-    const thr = fwd && c.engine && c.fuel > 0 ? 1 : 0, brk = back ? 1 : 0, pow = c.health < .35 ? .5 : 1;
+    const drv = c.seat === 0, thr = drv && fwd && c.engine && c.fuel > 0 ? 1 : 0, brk = drv && back ? 1 : 0, pow = c.health < .35 ? .5 : 1;
     let acc = 0;
     if (thr) acc += c.v >= 0 ? (15 * (1 - c.v / 128) + 4) * pow : 40;
     if (brk) acc -= c.v > .5 ? 42 : 10 * (1 + c.v / 18);
@@ -1556,7 +1645,7 @@ function stepSim(dt, now){
     c.rpm += (target - c.rpm) * Math.min(1, dt * 9);
     if (c.engine){ c.fuel = Math.max(0, c.fuel - dt * (.0006 + thr * .004)); if (c.fuel <= 0) c.engine = false; }
     c.odo += Math.abs(c.v) * dt / 3600;
-    if (Math.abs(c.v) > .5) sim.heading += ((rt ? 1 : 0) - (lt ? 1 : 0)) * 75 * Math.min(1, Math.abs(c.v) / 22) * Math.sign(c.v) * dt;
+    if (drv && Math.abs(c.v) > .5) sim.heading += ((rt ? 1 : 0) - (lt ? 1 : 0)) * 75 * Math.min(1, Math.abs(c.v) / 22) * Math.sign(c.v) * dt;
     ms = c.v * .447;
   } else {
     ms = FOOT_MS[mode] * (back && !fwd ? -.6 : 1);
@@ -1591,9 +1680,11 @@ function drawRadar(force){
   for (let y = -5000; y <= 5000; y += 250) c.lineTo(400 + Math.sin(y / 300) * 60, y);
   c.lineTo(6000, 5000); c.lineTo(6000, -5000); c.closePath(); c.fill();
   c.strokeStyle = '#a44cf2'; c.lineWidth = 5 / sc; c.lineJoin = 'round';
-  c.beginPath(); MAP.route.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke();
-  const [wx, wy] = MAP.route[MAP.route.length - 1];
-  c.fillStyle = '#a44cf2'; c.beginPath(); c.arc(wx, wy, 7 / sc, 0, Math.PI * 2); c.fill();
+  if (MAP.route.length){
+    c.beginPath(); MAP.route.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke();
+    const [wx, wy] = MAP.route[MAP.route.length - 1];
+    c.fillStyle = '#a44cf2'; c.beginPath(); c.arc(wx, wy, 7 / sc, 0, Math.PI * 2); c.fill();
+  }
   c.restore();
   c.fillStyle = '#ffffff'; c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1.5;
   c.beginPath(); c.moveTo(cx, cy - 11); c.lineTo(cx + 8, cy + 8); c.lineTo(cx, cy + 4); c.lineTo(cx - 8, cy + 8); c.closePath(); c.fill(); c.stroke();
@@ -1617,14 +1708,22 @@ function slideSwap(el, show, off, base = 'none'){
     .finished.then(() => { el.hidden = true; el.getAnimations().forEach(a => a.cancel()); }, quiet);
 }
 function startEngine(){ const c = sim.car; c.engine = c.fuel > 0; if (c.engine) c.bulb = performance.now() + 1100; }
-function toggleCar(){
+function toggleCar(seat = 0){
   const c = sim.car;
-  c.in = !c.in; c.v = 0; c.rpm = 0; c.left = c.right = c.hazard = false;
-  if (c.in){ c.belt = false; startEngine(); }
+  c.in = !c.in; c.v = 0; c.rpm = 0; c.left = c.right = false;
+  if (c.in){ c.belt = false; c.seat = seat; if (!seat) startEngine(); }
+  ui.classList.toggle('car-hud', c.in);
   slideSwap($('#veh'), c.in, 'translateX(70px)');
-  slideSwap($('.ent'), !c.in, 'translateX(70px)');
-  slideSwap($('.prompts'), !c.in, 'translateX(-50%) translateY(22px)', 'translateX(-50%)');
+  syncPanels();
+  if (state.ov === 'vehicle') updateVM();
   updateHud(true);
+}
+// Prompts show on foot with no menu open; the entity panel shows on foot.
+const shown = { prompts:true, ent:true };
+function syncPanels(){
+  const p = !sim.car.in && !state.ov, en = !sim.car.in;
+  if (p !== shown.prompts){ shown.prompts = p; slideSwap($('.prompts'), p, 'translateX(-50%) translateY(22px)', 'translateX(-50%)'); }
+  if (en !== shown.ent){ shown.ent = en; slideSwap($('.ent'), en, 'translateX(70px)'); }
 }
 function blinker(side){ const c = sim.car; c[side] = !c[side]; c[side === 'left' ? 'right' : 'left'] = false; c.blink0 = performance.now(); }
 function carAction(name){
@@ -1680,10 +1779,12 @@ $('#p-e').addEventListener('click', pressE);
 $('#p-h').addEventListener('pointerdown', holdBegin);
 $('#p-h').addEventListener('pointerup', holdEnd);
 $('#p-h').addEventListener('pointerleave', holdEnd);
-$('#p-f').addEventListener('click', toggleCar);
+$('#p-f').addEventListener('click', () => toggleCar());
 const normKey = e => e.code === 'NumpadSubtract' ? '-' : e.code === 'NumpadAdd' ? '+' : e.key.length === 1 ? e.key.toLowerCase() : e.key;
 function worldKey(e){
   const k = normKey(e);
+  if (state.ov){ ovKey(e); return; }
+  if (k === 'F1'){ e.preventDefault(); openRadial(); return; }
   if (k === 'w' || k === 'a' || k === 's' || k === 'd'){ e.preventDefault(); held.add(k); return; }
   if (k === 'Shift'){ if (!held.has('shift')){ shiftAt = performance.now(); held.add('shift'); } return; }
   if (e.repeat) return;
@@ -1702,6 +1803,288 @@ document.addEventListener('keyup', e => {
   if (k === 'Shift'){ if (performance.now() - shiftAt < 260) shiftTap = performance.now(); held.delete('shift'); }
   else held.delete(k);
 });
+
+/* ---------- radial menu (F1 on the HUD) and vehicle controls ---------- */
+const PLACES = [{ name:'Pillbox Hospital', x:-270, y:-180 }, { name:'Mission Row PD', x:270, y:450 }, { name:'Legion Square', x:-90, y:630 }, { name:'Los Santos Customs', x:-720, y:270 }];
+let waypoint = 'Pillbox Hospital';
+function setWaypoint(p){
+  if (!p){ MAP.route = []; waypoint = null; toast('info', 'Waypoint cleared'); }
+  else {
+    const y0 = Math.round(sim.y / MAP.grid) * MAP.grid;
+    MAP.route = [[sim.x, sim.y], [sim.x, y0], [p.x, y0], [p.x, p.y]]; waypoint = p.name;
+    toast('info', `Waypoint: ${p.name}`);
+  }
+  drawRadar(true);
+}
+const nearest = () => playerLabel(PLAYERS[1]);
+const RADIAL = [
+  { label:'Vehicle', icon:'car', hint:'Doors, windows, seats and engine', run:() => openVM() },
+  { label:'Emotes', icon:'hand', hint:'Play an animation', items:['Wave','Salute','Sit','Lean','Dance','Cross arms','Point','Stop'].map(l => ({ label:l, run:() => toast('info', l === 'Stop' ? 'Emote stopped' : `Emote: ${l}`) })) },
+  { label:'Walk style', icon:'run', hint:'Change how you walk', items:['Normal','Confident','Tough','Injured','Sad','Drunk'].map(l => ({ label:l, walk:true, run:() => { sim.walk = l; toast('info', `Walk style: ${l}`); } })) },
+  { label:'Clothing', icon:'shirt', hint:'Take items off or put them back on', items:['Hat','Glasses','Mask','Vest','Gloves','Shoes'].map(l => ({ label:l, on:true, keep:true, run(){ this.on = !this.on; toast('info', `${l} ${this.on ? 'on' : 'off'}`); } })) },
+  { label:'Inspect health', icon:'med', hint:'Check yourself for injuries', run:() => toast('ok', 'No injuries') },
+  { label:'Show ID', icon:'idcard', hint:'Show your ID to the nearest player', run:() => toast('info', `ID shown to ${nearest()}`) },
+  { label:'Police', icon:'badge', hint:'Act on the nearest player', items:[['Cuff','Cuffed'],['Escort','Escorting'],['Search','Searched'],['Seat in vehicle','Seated'],['Take ID','Took ID from'],['Send bill','Billed']].map(([l, v]) => ({ label:l, run:() => toast('info', `${v} ${nearest()}`) })) },
+  { label:'GPS', icon:'pin', hint:'Set a waypoint on your map', items:[...PLACES.map(p => ({ label:p.name, place:p, run:() => setWaypoint(p) })), { label:'Clear waypoint', run:() => setWaypoint(null) }] },
+];
+const rad = { stack:[], sel:0, angle:0, hot:false, busy:false, keepPlace:false };
+const radItems = () => rad.stack.length ? rad.stack[rad.stack.length - 1].it.items : RADIAL;
+const radState = it => it.on != null ? (it.on ? 'On' : 'Off') : it.walk && sim.walk === it.label ? 'Current' : it.place && waypoint === it.place.name ? 'Active' : '';
+const RC = 300, RIN = 104, ROUT = 262, RMID = 183;
+const polar = (r, a) => [RC + r * Math.sin(a * Math.PI / 180), RC - r * Math.cos(a * Math.PI / 180)];
+const pt = (r, a) => polar(r, a).map(v => v.toFixed(2)).join(' ');
+function sectorPath(step){
+  const h = step / 2 - .8, o = ROUT - 3, i = RIN + 3;
+  return `M${pt(o, -h)} A${o} ${o} 0 0 1 ${pt(o, h)} L${pt(i, h)} A${i} ${i} 0 0 0 ${pt(i, -h)}Z`;
+}
+function renderRadial(){
+  const items = radItems(), step = 360 / items.length;
+  const seps = items.map((_, i) => {
+    const a = i * step + step / 2, [x1, y1] = polar(RIN, a), [x2, y2] = polar(ROUT, a);
+    return `<line class="sep" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
+  }).join('');
+  $('#radial').innerHTML = `
+    <div class="rad-ring"></div>
+    <svg class="rad-svg" viewBox="0 0 600 600" aria-hidden="true">
+      <circle class="edge" cx="300" cy="300" r="${ROUT}"/><circle class="edge" cx="300" cy="300" r="${RIN}"/>${seps}
+      <g class="rad-hl" id="rad-hl"><path class="sec" d="${sectorPath(step)}"/><path class="arc" d="M${pt(ROUT - 2, -step / 2 + 4)} A${ROUT - 2} ${ROUT - 2} 0 0 1 ${pt(ROUT - 2, step / 2 - 4)}"/></g>
+    </svg>
+    <div class="rad-items">${items.map((it, i) => {
+      const [x, y] = polar(RMID, i * step);
+      return `<div class="rad-it" data-ri="${i}" style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px">${it.icon ? ICON[it.icon] : ''}<span class="rl dsp">${esc(it.label)}</span><span class="rs">${esc(radState(it))}</span></div>`;
+    }).join('')}</div>
+    <div class="rad-center" id="rad-center"></div>`;
+  rad.angle = rad.sel * step;
+  setRadHl(true); updateRadial();
+}
+// The highlight turns the short way round to the selected segment.
+function setRadHl(instant){
+  const step = 360 / radItems().length, target = rad.sel * step;
+  rad.angle += ((target - rad.angle) % 360 + 540) % 360 - 180;
+  const g = $('#rad-hl'); if (!g) return;
+  if (instant){ g.style.transition = 'none'; g.style.transform = `rotate(${rad.angle}deg)`; void g.getBoundingClientRect(); g.style.transition = ''; }
+  else g.style.transform = `rotate(${rad.angle}deg)`;
+}
+function updateRadial(){
+  const items = radItems(), it = items[rad.sel], parent = rad.stack.length ? rad.stack[rad.stack.length - 1].it : null;
+  $$('#radial .rad-it').forEach((el, i) => { el.classList.toggle('sel', i === rad.sel && !rad.hot); el.querySelector('.rs').textContent = radState(items[i]); });
+  $('#rad-hl').style.opacity = rad.hot ? 0 : 1;
+  const c = $('#rad-center'), eyebrow = `<span class="rc-e">${parent ? esc(parent.label) : 'Menu'}</span>`;
+  c.classList.toggle('hot', rad.hot);
+  c.innerHTML = rad.hot ? `${eyebrow}<span class="rc-t dsp">${parent ? 'Back' : 'Close'}</span>`
+    : `${eyebrow}<span class="rc-t dsp">${esc(it.label)}</span>${it.hint ? `<span class="rc-h">${esc(it.hint)}</span>` : ''}`;
+}
+function radSelect(i, hot = false){
+  if (i === rad.sel && hot === rad.hot) return;
+  rad.sel = i; rad.hot = hot; setRadHl(); updateRadial();
+}
+// Going into or out of a submenu turns the ring over to the new set of options.
+function radSwap(change, dir){
+  if (rad.busy) return;
+  rad.busy = true;
+  const go = () => {
+    change(); renderRadial(); rad.busy = false;
+    $('#radial .rad-items').animate([{ opacity:0, transform:`rotate(${dir * 16}deg) scale(.94)` }, { opacity:1, transform:'none' }], { duration:dur(420), easing:EASE_OUT });
+  };
+  $('#radial .rad-items').animate([{ opacity:1, transform:'none' }, { opacity:0, transform:`rotate(${-dir * 16}deg) scale(.94)` }], { duration:dur(150), easing:EASE_IN, fill:'forwards' })
+    .finished.then(go, () => { rad.busy = false; });
+}
+function radActivate(){
+  if (rad.busy) return;
+  if (rad.hot){ radBack(); return; }
+  const it = radItems()[rad.sel]; if (!it) return;
+  if (it.items){ const idx = rad.sel; radSwap(() => { rad.stack.push({ it, idx }); rad.sel = 0; }, 1); return; }
+  it.run();
+  if (it.keep) updateRadial();
+  else if (state.ov === 'radial') closeRadial();
+}
+function radBack(){
+  if (rad.busy) return;
+  if (!rad.stack.length){ closeRadial(); return; }
+  radSwap(() => { const p = rad.stack.pop(); rad.sel = p.idx; rad.hot = false; }, -1);
+}
+function syncOverlay(){
+  $('.scene-world').classList.toggle('ov', !!state.ov);
+  syncPanels(); renderIbar();
+  if (state.ov) ibarIn(60);
+}
+function showEl(el, from){
+  el.getAnimations().forEach(a => a.cancel()); el.hidden = false;
+  el.animate([from, { opacity:1, transform:'none' }], { duration:dur(460), easing:EASE_OUT });
+}
+function hideEl(el, to, still){
+  const from = pose(el);
+  el.getAnimations().forEach(a => a.cancel());
+  el.animate([from, to], { duration:dur(240), easing:EASE_IN, fill:'forwards' })
+    .finished.then(() => { if (still()){ el.hidden = true; el.getAnimations().forEach(a => a.cancel()); } }, quiet);
+}
+function openRadial(){
+  if (state.ov === 'radial') return;
+  if (state.ov === 'vehicle') hideEl($('#vm'), { opacity:0, transform:'translateY(40px)' }, () => state.ov !== 'vehicle');
+  state.ov = 'radial'; held.clear();
+  if (!rad.keepPlace){ rad.stack = []; rad.sel = 0; }
+  rad.keepPlace = false; rad.hot = false; rad.busy = false;
+  const r = $('#radial');
+  r.hidden = false; renderRadial();
+  showEl(r, { opacity:0, transform:'scale(.86)' });
+  $$('#radial .rad-it').forEach((el, i) => el.animate([{ opacity:0, transform:'translate(-50%,-50%) scale(.6)' }, { opacity:1, transform:'translate(-50%,-50%)' }], { duration:dur(420), delay:dur(60 + i * 22), easing:EASE_OUT, fill:'backwards' }));
+  syncOverlay();
+}
+function closeRadial(){
+  if (state.ov !== 'radial') return;
+  state.ov = null;
+  hideEl($('#radial'), { opacity:0, transform:'scale(.92)' }, () => state.ov !== 'radial');
+  syncOverlay();
+}
+const stagePoint = e => { const r = stage.getBoundingClientRect(); return [(e.clientX - r.left) / SCALE - 960, (e.clientY - r.top) / SCALE - 540]; };
+stage.addEventListener('mousemove', e => {
+  if (state.ov !== 'radial' || rad.busy) return;
+  const [x, y] = stagePoint(e), d = Math.hypot(x, y);
+  if (d < RIN - 6){ radSelect(rad.sel, true); return; }
+  const n = radItems().length, a = (Math.atan2(x, -y) * 180 / Math.PI + 360) % 360;
+  radSelect(Math.round(a / (360 / n)) % n, false);
+});
+stage.addEventListener('click', e => {
+  if (state.ov !== 'radial') return;
+  const [x, y] = stagePoint(e), d = Math.hypot(x, y);
+  if (d < RIN - 6) radBack(); else if (d <= ROUT + 60) radActivate();
+});
+frame.addEventListener('contextmenu', e => {
+  if (state.scene !== 'world' || !state.ov) return;
+  e.preventDefault();
+  if (state.ov === 'radial') radBack(); else vmBack();
+});
+
+// Vehicle controls: a top-down car you click on, plus tiles for windows and systems.
+const vm = { f:'door0' };
+const SEATS = ['Driver', 'Front passenger', 'Rear left', 'Rear right'];
+const WINS = ['Front left', 'Front right', 'Rear left', 'Rear right'];
+const tile = (id, icon, label) => `<button type="button" class="tile" data-vm="${id}" tabindex="-1">${ICON[icon]}<span class="tl">${label}</span><span class="tv" id="tv-${id}"></span></button>`;
+const hs = (id, l, t, w, h, label) => `<button type="button" class="hs" data-vm="${id}" aria-label="${label}" title="${label}" style="left:${l}px;top:${t}px;width:${w}px;height:${h}px" tabindex="-1"></button>`;
+function renderVM(){
+  const door = (i, x, y, h, rot) => `<rect id="vm-door${i}" class="door" x="${x}" y="${y}" width="7" height="${h}" rx="3" style="--rot:${rot}deg;transform-origin:${x + 3.5}px ${y}px"/>`;
+  $('#vm').innerHTML = `
+    <div class="vm-head"><div><div class="dsp vm-name">Benefactor Schafter</div><div class="vm-sub" id="vm-sub"></div></div><div class="sa-plate"><span>San Andreas</span>41FZK207</div></div>
+    <div class="vm-body" id="vm-body">
+      <div class="vm-car">
+        <svg viewBox="0 0 200 320" aria-hidden="true">
+          <rect class="cb" x="45" y="18" width="110" height="284" rx="42"/>
+          <path id="vm-hood" class="cpart" d="M57 78 C57 41 75 28 100 28 C125 28 143 41 143 78 Z"/>
+          <path class="glass" d="M60 96 H140 L132 122 H68 Z"/>
+          <rect class="floor" x="60" y="124" width="80" height="86" rx="8"/>
+          <path class="glass" d="M68 212 H132 L140 234 H60 Z"/>
+          <path id="vm-trunk" class="cpart" d="M57 246 H143 C143 280 125 292 100 292 C75 292 57 280 57 246 Z"/>
+          ${door(0, 39, 100, 64, -55)}${door(1, 154, 100, 64, 55)}${door(2, 39, 168, 62, -55)}${door(3, 154, 168, 62, 55)}
+          <rect id="vm-win0" class="win" x="49" y="106" width="5" height="52" rx="2"/><rect id="vm-win1" class="win" x="146" y="106" width="5" height="52" rx="2"/>
+          <rect id="vm-win2" class="win" x="49" y="174" width="5" height="50" rx="2"/><rect id="vm-win3" class="win" x="146" y="174" width="5" height="50" rx="2"/>
+          <circle class="wheel" cx="79" cy="128" r="7"/>
+          <rect id="vm-seat0" class="seat" x="64" y="138" width="30" height="32" rx="9"/><rect id="vm-seat1" class="seat" x="106" y="138" width="30" height="32" rx="9"/>
+          <rect id="vm-seat2" class="seat" x="64" y="176" width="30" height="32" rx="9"/><rect id="vm-seat3" class="seat" x="106" y="176" width="30" height="32" rx="9"/>
+        </svg>
+        ${hs('hood', 56, 24, 88, 56, 'Hood')}${hs('trunk', 56, 244, 88, 52, 'Trunk')}
+        ${hs('door0', 22, 96, 30, 72, 'Front left door')}${hs('door1', 148, 96, 30, 72, 'Front right door')}${hs('door2', 22, 166, 30, 68, 'Rear left door')}${hs('door3', 148, 166, 30, 68, 'Rear right door')}
+        ${hs('seat0', 61, 135, 36, 38, 'Driver seat')}${hs('seat1', 103, 135, 36, 38, 'Front passenger seat')}${hs('seat2', 61, 173, 36, 38, 'Rear left seat')}${hs('seat3', 103, 173, 36, 38, 'Rear right seat')}
+      </div>
+      <div><div class="vm-h meta">Windows</div><div class="vm-tiles c2">${WINS.map((w, i) => tile('win' + i, 'win', w)).join('')}${tile('winAll', 'win', 'All windows')}${tile('doorsAll', 'doors', 'All doors')}</div></div>
+      <div><div class="vm-h meta">Vehicle</div><div class="vm-tiles c3">${tile('engine', 'power', 'Engine')}${tile('lights', 'low', 'Lights')}${tile('hazard', 'hazard', 'Hazards')}${tile('interior', 'bulb', 'Interior')}${tile('lock', 'lock', 'Lock')}${tile('belt', 'belt', 'Seatbelt')}</div>
+        <p class="vm-tip">Click a door, the hood or the trunk to open it. Click a seat to move there.</p></div>
+    </div>`;
+}
+function updateVM(){
+  if (!$('#vm-body')) return;
+  const c = sim.car, set = (id, on, v) => { const t = $(`#vm [data-vm="${id}"]`); if (t) t.classList.toggle('on', on); const tv = $('#tv-' + id); if (tv && v != null) tv.textContent = v; };
+  $('#vm-hood').classList.toggle('open', c.hood); $('#vm-trunk').classList.toggle('open', c.trunk);
+  c.doors.forEach((o, i) => $('#vm-door' + i).classList.toggle('open', o));
+  c.win.forEach((d, i) => { $('#vm-win' + i).classList.toggle('down', d); set('win' + i, d, d ? 'Down' : 'Up'); });
+  [0, 1, 2, 3].forEach(i => $('#vm-seat' + i).classList.toggle('you', c.in && c.seat === i));
+  set('winAll', c.win.every(Boolean), c.win.every(Boolean) ? 'Down' : 'Up');
+  set('doorsAll', c.doors.every(Boolean), c.doors.every(Boolean) ? 'Open' : 'Closed');
+  set('engine', c.engine, c.engine ? 'Running' : 'Off');
+  set('lights', c.lights > 0, ['Off', 'Low', 'High'][c.lights]);
+  set('hazard', c.hazard, c.hazard ? 'On' : 'Off');
+  set('interior', c.interior, c.interior ? 'On' : 'Off');
+  set('lock', c.locked, c.locked ? 'Locked' : 'Unlocked');
+  set('belt', c.belt, c.belt ? 'Buckled' : 'Off');
+  $('#vm-sub').textContent = `${c.in ? 'You: ' + SEATS[c.seat] : 'Parked next to you'} · ${c.locked ? 'Locked' : 'Unlocked'}`;
+}
+function vmToggle(id){
+  const c = sim.car, m = /^(door|win|seat)(\d)$/.exec(id), i = m ? +m[2] : -1;
+  const locked = () => { toast('bad', 'Vehicle is locked'); return true; };
+  if (m && m[1] === 'door'){ if (c.locked && !c.doors[i] && locked()) return; c.doors[i] = !c.doors[i]; }
+  else if (m && m[1] === 'win') c.win[i] = !c.win[i];
+  else if (m && m[1] === 'seat'){
+    if (!c.in) toggleCar(i);
+    else if (Math.abs(c.v) > 3){ toast('bad', 'Stop the vehicle first'); return; }
+    else c.seat = i;
+  } else {
+    const run = ({
+      hood:() => { if (c.locked && !c.hood && locked()) return; c.hood = !c.hood; },
+      trunk:() => { if (c.locked && !c.trunk && locked()) return; c.trunk = !c.trunk; },
+      doorsAll:() => { const o = !c.doors.every(Boolean); if (o && c.locked && locked()) return; c.doors = c.doors.map(() => o); },
+      winAll:() => { const d = !c.win.every(Boolean); c.win = c.win.map(() => d); },
+      lock:() => { c.locked = !c.locked; toast('info', c.locked ? 'Vehicle locked' : 'Vehicle unlocked'); },
+      engine:() => carAction('engine'), lights:() => carAction('lights'), hazard:() => carAction('hazard'),
+      interior:() => { c.interior = !c.interior; },
+      belt:() => { if (!c.in){ toast('bad', 'Get in the vehicle first'); return; } carAction('belt'); },
+    })[id];
+    if (run) run();
+  }
+  updateVM(); updateHud(true);
+}
+function vmFocus(id){
+  vm.f = id;
+  $$('#vm [data-vm]').forEach(el => el.classList.toggle('vm-f', el.dataset.vm === id));
+  placeGlow($('#vm-body'), $(`#vm [data-vm="${id}"]`));
+}
+// Arrow keys jump to the nearest control in that direction.
+function vmMove([dx, dy]){
+  const box = $('#vm-body'), els = $$('[data-vm]', box), cur = els.find(el => el.dataset.vm === vm.f) || els[0];
+  const ctr = el => { const o = offsetIn(el, box); return [o.x + el.offsetWidth / 2, o.y + el.offsetHeight / 2]; };
+  const [cx, cy] = ctr(cur);
+  let best = null, score = Infinity;
+  for (const el of els){
+    if (el === cur) continue;
+    const [x, y] = ctr(el), ex = x - cx, ey = y - cy, along = ex * dx + ey * dy;
+    if (along <= 4) continue;
+    const sc = along + Math.abs(ex * dy - ey * dx) * 2.2;
+    if (sc < score){ score = sc; best = el; }
+  }
+  if (best) vmFocus(best.dataset.vm);
+}
+function openVM(){
+  if (state.ov === 'radial') hideEl($('#radial'), { opacity:0, transform:'scale(.92)' }, () => state.ov !== 'radial');
+  state.ov = 'vehicle'; held.clear();
+  const v = $('#vm');
+  v.hidden = false; renderVM(); updateVM();
+  showEl(v, { opacity:0, transform:'translateY(40px)' });
+  vmFocus(vm.f);
+  syncOverlay();
+}
+function closeVM(){
+  if (state.ov !== 'vehicle') return;
+  state.ov = null;
+  hideEl($('#vm'), { opacity:0, transform:'translateY(40px)' }, () => state.ov !== 'vehicle');
+  syncOverlay();
+}
+function vmBack(){ rad.keepPlace = true; rad.stack = []; rad.sel = 0; openRadial(); }
+$('#vm').addEventListener('mouseover', e => { const b = e.target.closest('[data-vm]'); if (b && b.dataset.vm !== vm.f) vmFocus(b.dataset.vm); });
+$('#vm').addEventListener('click', e => { const b = e.target.closest('[data-vm]'); if (b){ vmFocus(b.dataset.vm); vmToggle(b.dataset.vm); } });
+function ovKey(e){
+  const k = normKey(e);
+  if (state.ov === 'radial'){
+    const n = radItems().length, m = { ArrowRight:1, ArrowDown:1, ArrowLeft:-1, ArrowUp:-1 }[k];
+    if (m){ e.preventDefault(); if (!rad.busy) radSelect((rad.sel + m + n) % n, false); return; }
+    if (k === 'Enter' || k === ' '){ e.preventDefault(); radActivate(); return; }
+    if (k === 'Backspace'){ e.preventDefault(); radBack(); return; }
+    if (k === 'Escape' || k === 'F1'){ e.preventDefault(); closeRadial(); }
+    return;
+  }
+  const dir = { ArrowRight:[1, 0], ArrowLeft:[-1, 0], ArrowDown:[0, 1], ArrowUp:[0, -1] }[k];
+  if (dir){ e.preventDefault(); vmMove(dir); return; }
+  if (k === 'Enter' || k === ' '){ e.preventDefault(); if (!e.repeat) vmToggle(vm.f); return; }
+  if (k === 'Backspace'){ e.preventDefault(); vmBack(); return; }
+  if (k === 'Escape' || k === 'F1'){ e.preventDefault(); closeVM(); }
+}
 
 /* ---------- dealership ---------- */
 const dList = () => VEHICLES.filter(v => v.cls === state.d.cls);
@@ -1801,6 +2184,7 @@ function press(key){
   const e = { key, repeat:false, preventDefault(){}, target:frame };
   if (state.scene === 'menu') menuKey(e, false);
   else if (state.scene === 'dealer') dealerKey(e);
+  else if (state.scene === 'world' && state.ov) ovKey(e);
 }
 document.addEventListener('keydown', e => {
   if (!armed() || e.target === fsBtn) return;
