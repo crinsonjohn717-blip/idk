@@ -8,7 +8,7 @@
 <title>Overlay Style Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600;1,700&family=Barlow:wght@400;500;600;700&family=Saira+Condensed:wght@500;600;700&family=Saira:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,800;1,700;1,800;1,900&family=Sofia+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600;1,700&family=Barlow:wght@400;500;600;700&family=Saira+Condensed:wght@500;600;700&family=Saira:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,800;1,700;1,800;1,900&family=Sofia+Sans:wght@400;500;600;700&family=Archivo:wdth,wght@62..125,100..900&display=swap">
 <style>
 /* Layout: a quiet dark console around one 16:9 game frame. The frame is designed at 1920×1080 and scaled to fit. */
 :root{
@@ -81,6 +81,22 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
   --hud-ink:#ffffff; --hud-shadow:0 2px 3px rgba(0,0,0,.6),0 0 18px rgba(0,0,0,.35);
   --accent:#2d6eb9; --accent-ink:#ffffff;
 }
+/* Style 0: Vinewood. Our own: mixed case, one glass panel per screen, a highlight that glides to the selection. */
+.ui[data-skin="vinewood"]{
+  --panel:rgba(16,18,23,.74); --panel-2:rgba(255,255,255,.05); --panel-hover:rgba(255,255,255,.05); --panel-line:rgba(255,255,255,.08);
+  --ink:#f2f3f5; --ink-dim:rgba(242,243,245,.56); --line-soft:rgba(255,255,255,.08);
+  --sel-bg:rgba(255,255,255,.11); --sel-ink:#ffffff; --sel-dim:rgba(255,255,255,.64);
+  --field-bg:rgba(255,255,255,.06); --field-line:rgba(255,255,255,.10);
+  --radius:14px; --radius-sm:9px; --key-radius:7px;
+  --f-display:"Archivo","Arial Narrow",sans-serif; --f-body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-meta:"Archivo","Helvetica Neue",Arial,sans-serif; --f-num:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --d-style:normal; --d-weight:650; --d-track:0; --d-case:none; --ph-size:46px;
+  --key-bg:rgba(255,255,255,.14); --key-ink:#ffffff; --key-line:rgba(255,255,255,.10);
+  --bar-bg:rgba(16,18,23,.72); --bar-ink:#f2f3f5;
+  --chip-bg:rgba(16,18,23,.66); --chip-ink:#f2f3f5; --chip-shadow:none; --prompt-pad:8px 22px 8px 8px;
+  --ring:inset 0 0 0 1px var(--panel-line); --drop:0 18px 44px rgba(0,0,0,.28); --backdrop:blur(22px) saturate(1.35);
+  --accent-text:color-mix(in srgb,var(--accent) 72%,#fff);
+}
 /* Style 1: Native. GTA interaction-menu DNA. */
 .ui[data-skin="native"]{
   --panel:rgba(6,8,10,.80); --panel-2:rgba(18,21,25,.90); --panel-hover:rgba(36,40,46,.88); --panel-line:rgba(255,255,255,0);
@@ -132,7 +148,8 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 
 :where(.ui button){font:inherit;color:inherit}
 .ui input{user-select:text;-webkit-user-select:text}
-.dsp{font-family:var(--f-display);font-style:var(--d-style);font-weight:var(--d-weight);letter-spacing:var(--d-track);text-transform:uppercase;line-height:1.02}
+.dsp{font-family:var(--f-display);font-style:var(--d-style);font-weight:var(--d-weight);letter-spacing:var(--d-track);text-transform:var(--d-case,uppercase);line-height:1.02}
+.ui .glow,.ui .r-fav,.ui .cat-k,.ui .m-desc,.ui .ent-h2{display:none}
 .meta{font-family:var(--f-meta);font-size:14px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
 .num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
 .pn{background:var(--panel);box-shadow:var(--ring),var(--drop);border-radius:var(--radius);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop)}
@@ -315,11 +332,11 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .kv dt{font-family:var(--f-meta);font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);padding-right:16px;align-self:center}
 .kv dd{margin:0;text-align:right;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acts{display:flex;flex-direction:column;gap:6px;margin-top:16px}
-.act{height:46px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:var(--field-bg);border:0;box-shadow:inset 0 0 0 1px var(--field-line);border-radius:var(--radius-sm);font-size:19px;cursor:pointer;text-align:left}
-.act:hover{background:var(--sel-bg);color:var(--sel-ink);box-shadow:none}
-.act.danger{color:var(--bad)}
-.act.danger.confirm{background:var(--bad);color:#fff;box-shadow:none}
-.act svg{width:18px;height:18px;transform:rotate(-90deg);opacity:.7}
+.eact{height:46px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:var(--field-bg);border:0;box-shadow:inset 0 0 0 1px var(--field-line);border-radius:var(--radius-sm);font-size:19px;cursor:pointer;text-align:left}
+.eact:hover{background:var(--sel-bg);color:var(--sel-ink);box-shadow:none}
+.eact.danger{color:var(--bad)}
+.eact.danger.confirm{background:var(--bad);color:#fff;box-shadow:none}
+.eact svg{width:18px;height:18px;transform:rotate(-90deg);opacity:.7}
 
 /* ---------- screen: dealership ---------- */
 .dl-list{position:absolute;left:96px;top:78px;width:600px;display:flex;flex-direction:column;gap:12px}
@@ -389,6 +406,121 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .code{flex:1;min-height:0;margin:0;padding:14px 16px;overflow:auto;background:var(--field-bg);box-shadow:inset 0 0 0 1px var(--field-line);border-radius:var(--radius-sm);font:500 13.5px/1.55 var(--f-code);color:var(--ink);white-space:pre;user-select:text;-webkit-user-select:text;scrollbar-width:thin}
 .copy{height:38px;font-size:18px;padding:0 16px}
 
+/* ---------- Vinewood components ---------- */
+.ui[data-skin="vinewood"] .meta,.ui[data-skin="vinewood"] .fld-l,.ui[data-skin="vinewood"] .kv dt,.ui[data-skin="vinewood"] .v-s,.ui[data-skin="vinewood"] .tog-l{text-transform:none;letter-spacing:.01em}
+.ui[data-skin="vinewood"] .meta{font-size:14px}
+.ui[data-skin="vinewood"] .ph-title,.ui[data-skin="vinewood"] .dd-name,.ui[data-skin="vinewood"] .ty .t1,.ui[data-skin="vinewood"] .ent-name{font-stretch:72%;font-weight:700}
+.ui[data-skin="vinewood"] .glow{display:block;position:absolute;left:0;top:0;z-index:-1;pointer-events:none;border-radius:var(--radius-sm);background:var(--sel-bg);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transition:transform .42s cubic-bezier(.16,1,.3,1),width .42s cubic-bezier(.16,1,.3,1),height .42s cubic-bezier(.16,1,.3,1),opacity .2s}
+.ui[data-skin="vinewood"] .m-cats>.glow,.ui[data-skin="vinewood"] .tabs>.glow{background:var(--accent);border-radius:2px;box-shadow:none}
+.ui[data-skin="vinewood"] .ph-ban{color:var(--ink)}
+.ui[data-skin="vinewood"] .ph-eyebrow{font-family:var(--f-body);font-size:14px;font-weight:500;letter-spacing:.02em;text-transform:none;color:var(--accent-text);margin-bottom:4px}
+.ui[data-skin="vinewood"] .ph-sub{font-family:var(--f-body);font-size:15px;font-weight:500;color:var(--ink-dim);margin-top:6px}
+.ui[data-skin="vinewood"] .key{font-family:var(--f-body);font-weight:600;font-size:15px;box-shadow:inset 0 0 0 1px var(--key-line)}
+.ui[data-skin="vinewood"] .key.sm{font-size:13px;min-width:26px;height:26px}
+.ui[data-skin="vinewood"] .btn{font-size:17px;font-weight:600;height:46px}
+.ui[data-skin="vinewood"] .menu{left:72px;top:72px;width:660px;grid-template-columns:minmax(0,1fr);gap:14px;padding:24px 22px 16px;background:var(--panel);box-shadow:var(--ring),var(--drop);border-radius:var(--radius);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop)}
+.ui[data-skin="vinewood"] .menu .pn,.ui[data-skin="vinewood"] .dl-list .pn{background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.ui[data-skin="vinewood"] .m-cats{flex-direction:row;align-items:center;gap:2px;position:relative;isolation:isolate;border-bottom:1px solid var(--line-soft)}
+.ui[data-skin="vinewood"] .cat-k{display:inline-grid;margin-right:8px}
+.ui[data-skin="vinewood"] .cat-k:last-of-type{margin:0 0 0 auto}
+.ui[data-skin="vinewood"] .m-cat{height:44px;padding:0 12px;font-size:16px;font-weight:600;color:var(--ink-dim);border-radius:0}
+.ui[data-skin="vinewood"] .m-cat svg{display:none}
+.ui[data-skin="vinewood"] .m-cat:hover{background:transparent;color:var(--ink)}
+.ui[data-skin="vinewood"] .m-cat[aria-current="true"]{background:transparent;color:var(--ink)}
+.ui[data-skin="vinewood"] .m-bar{height:46px;gap:6px}
+.ui[data-skin="vinewood"] .menu .m-search{background:var(--field-bg);border-radius:var(--radius-sm);padding:0 14px;gap:10px}
+.ui[data-skin="vinewood"] .m-search svg{width:19px;height:19px}
+.ui[data-skin="vinewood"] .m-search input{font-size:17px}
+.ui[data-skin="vinewood"] .m-search:focus-within{box-shadow:inset 0 0 0 1px var(--accent)}
+.ui[data-skin="vinewood"] .m-len{display:none}
+.ui[data-skin="vinewood"] .m-lay{width:46px;border-radius:var(--radius-sm)}
+.ui[data-skin="vinewood"] .m-lay svg{width:20px;height:20px}
+.ui[data-skin="vinewood"] .m-countline{display:none}
+.ui[data-skin="vinewood"] .list{isolation:isolate;gap:2px;max-height:520px;margin-top:10px;padding-right:4px}
+.ui[data-skin="vinewood"] .row{grid-template-columns:minmax(0,1fr)}
+.ui[data-skin="vinewood"] .r-star{display:none}
+.ui[data-skin="vinewood"] .r-drawer{grid-column:1}
+.ui[data-skin="vinewood"] .r-main{min-height:50px;padding:0 10px 0 14px;border-radius:var(--radius-sm);gap:14px}
+.ui[data-skin="vinewood"] .menu .r-main:hover{background:rgba(255,255,255,.04)}
+.ui[data-skin="vinewood"] .row.sel .r-main{background:transparent;color:var(--ink)}
+.ui[data-skin="vinewood"] .row:not(.sel) .r-t{color:rgba(242,243,245,.8)}
+.ui[data-skin="vinewood"] .r-t{font-size:18px;font-weight:600}
+.ui[data-skin="vinewood"] .r-d,.ui[data-skin="vinewood"] .tog-l{display:none}
+.ui[data-skin="vinewood"] .r-fav{display:inline-block;width:14px;height:14px;margin-right:9px;vertical-align:-1px;color:var(--accent)}
+.ui[data-skin="vinewood"] .r-fav svg{width:14px;height:14px}
+.ui[data-skin="vinewood"] .r-end svg{width:18px;height:18px;opacity:.55}
+.ui[data-skin="vinewood"] .row.sel .key{background:var(--key-bg);color:var(--key-ink);box-shadow:inset 0 0 0 1px var(--key-line)}
+.ui[data-skin="vinewood"] .tog{width:44px;height:24px}
+.ui[data-skin="vinewood"] .tog i{width:18px;height:18px}
+.ui[data-skin="vinewood"] .tog.on i{transform:translateX(20px)}
+.ui[data-skin="vinewood"] .row.sel .tog.on{background:var(--accent)}
+.ui[data-skin="vinewood"] .row.sel .tog.on i{background:var(--accent-ink)}
+.ui[data-skin="vinewood"] .r-form{margin:4px 0 8px 22px;padding:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;flex-direction:column;align-items:stretch;gap:4px}
+.ui[data-skin="vinewood"] .fld{flex-direction:row;align-items:center;justify-content:space-between;gap:16px;height:46px;padding:0 6px 0 14px;border-radius:var(--radius-sm);background:rgba(255,255,255,.035);transition:background .25s ease}
+.ui[data-skin="vinewood"] .fld.act{background:rgba(255,255,255,.09)}
+.ui[data-skin="vinewood"] .fld-l{font-size:16px;font-weight:500}
+.ui[data-skin="vinewood"] .pick{height:36px;background:transparent;box-shadow:none}
+.ui[data-skin="vinewood"] .pick-v{min-width:170px;font-size:16px;font-weight:600}
+.ui[data-skin="vinewood"] .inp{height:36px;min-width:220px;text-align:right;font-size:16px;background:transparent}
+.ui[data-skin="vinewood"] .fld.act .pick,.ui[data-skin="vinewood"] .fld.act .inp,.ui[data-skin="vinewood"] .inp:focus{box-shadow:none}
+.ui[data-skin="vinewood"] .r-form .btn{justify-content:space-between;margin-top:4px;padding:0 10px 0 16px}
+.ui[data-skin="vinewood"] .m-desc{display:block;margin-top:10px;padding:12px 4px 2px;border-top:1px solid var(--line-soft);font-size:15px;line-height:1.45;color:var(--ink-dim);min-height:60px}
+.ui[data-skin="vinewood"] .helpbox{border-radius:12px;font-size:18px}
+.ui[data-skin="vinewood"] .ibar{left:0;right:0;margin:0 auto;width:max-content;bottom:34px;gap:22px;padding:9px 20px 9px 12px;border-radius:999px}
+.ui[data-skin="vinewood"] .ib-sep,.ui[data-skin="vinewood"] .ib-or{display:none}
+.ui[data-skin="vinewood"] .ib{font-size:16px;font-weight:500;gap:8px}
+.ui[data-skin="vinewood"] .ib .key+.key{margin-left:-4px}
+.ui[data-skin="vinewood"] .toasts{width:420px}
+.ui[data-skin="vinewood"] .toast{grid-template-columns:30px minmax(0,1fr);gap:12px;padding:13px 16px 14px 13px}
+.ui[data-skin="vinewood"] .t-ic{width:30px;height:30px;border-radius:50%}
+.ui[data-skin="vinewood"] .t-ic svg{width:17px;height:17px}
+.ui[data-skin="vinewood"] .t-t{font-size:18px;font-weight:600;margin-top:5px}
+.ui[data-skin="vinewood"] .toast.solo .t-t{margin-top:0}
+.ui[data-skin="vinewood"] .t-b{font-size:15px;margin-top:4px}
+.ui[data-skin="vinewood"] .t-bar{height:2px}
+.ui[data-skin="vinewood"] .cmp-tape{display:none}
+.ui[data-skin="vinewood"] .compass{top:28px}
+.ui[data-skin="vinewood"] .cmp-loc{border-radius:999px;padding:9px 20px;box-shadow:var(--ring)}
+.ui[data-skin="vinewood"] .cmp-st{font-size:20px;font-weight:700}
+.ui[data-skin="vinewood"] .cmp-ar,.ui[data-skin="vinewood"] .cmp-tm{font-size:16px}
+.ui[data-skin="vinewood"] .chip{border-radius:999px;font-size:15px}
+.ui[data-skin="vinewood"] .prompt{border-radius:999px;gap:12px;box-shadow:var(--ring)}
+.ui[data-skin="vinewood"] .p-l{font-size:24px;font-weight:600}
+.ui[data-skin="vinewood"] .prompt.sub .p-l{font-size:19px}
+.ui[data-skin="vinewood"] .key.lg{min-width:44px;height:44px;font-size:20px;border-radius:50%}
+.ui[data-skin="vinewood"] .prompt.sub .key{min-width:34px;height:34px;font-size:15px;border-radius:50%}
+.ui[data-skin="vinewood"] .key.ring::before{border-radius:50%}
+.ui[data-skin="vinewood"] .ent{padding:22px}
+.ui[data-skin="vinewood"] .ent-h{display:none}
+.ui[data-skin="vinewood"] .ent-h2{display:block;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.ui[data-skin="vinewood"] .ent-name{font-size:36px}
+.ui[data-skin="vinewood"] .ent-sub{font-size:15px;color:var(--ink-dim);margin-top:6px}
+.ui[data-skin="vinewood"] .kv dt{font-size:15px;font-weight:500}
+.ui[data-skin="vinewood"] .kv dd{font-size:16px}
+.ui[data-skin="vinewood"] .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ui[data-skin="vinewood"] .eact{justify-content:center;font-size:16px;font-weight:600}
+.ui[data-skin="vinewood"] .eact svg{display:none}
+.ui[data-skin="vinewood"] .eact.danger{grid-column:1/-1;order:9}
+.ui[data-skin="vinewood"] .dl-list{left:72px;top:72px;width:620px;padding:24px 22px 18px;gap:10px;background:var(--panel);box-shadow:var(--ring),var(--drop);border-radius:var(--radius);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop)}
+.ui[data-skin="vinewood"] .dl-list .ph{--ph-scale:1}
+.ui[data-skin="vinewood"] .tabs{position:relative;isolation:isolate;gap:2px;flex-wrap:nowrap;border-bottom:1px solid var(--line-soft)}
+.ui[data-skin="vinewood"] .tab{height:44px;padding:0 12px;font-size:16px;font-weight:600;color:var(--ink-dim);border-radius:0}
+.ui[data-skin="vinewood"] .tab:hover{background:transparent;color:var(--ink)}
+.ui[data-skin="vinewood"] .tab[aria-current="true"]{background:transparent;color:var(--ink)}
+.ui[data-skin="vinewood"] .vlist{position:relative;isolation:isolate;gap:2px;margin-top:4px}
+.ui[data-skin="vinewood"] .vrow{height:58px;padding:0 10px 0 14px;border-radius:var(--radius-sm)}
+.ui[data-skin="vinewood"] .dl-list .vrow:hover{background:rgba(255,255,255,.04)}
+.ui[data-skin="vinewood"] .vrow.sel{background:transparent;color:var(--ink)}
+.ui[data-skin="vinewood"] .vrow.sel .v-m{color:var(--ink-dim)}
+.ui[data-skin="vinewood"] .v-n{font-size:18px;font-weight:600}
+.ui[data-skin="vinewood"] .v-s{border-radius:999px;font-size:13px;font-weight:500}
+.ui[data-skin="vinewood"] .dl-detail{right:72px;top:72px}
+.ui[data-skin="vinewood"] .dd-name{font-size:58px}
+.ui[data-skin="vinewood"] .dd-price{font-size:40px}
+.ui[data-skin="vinewood"] .st-bar{height:8px;border-radius:999px}
+.ui[data-skin="vinewood"] .sw{border-radius:50%}
+.ui[data-skin="vinewood"] .sw[aria-pressed="true"]{outline-width:2px}
+
 @media (prefers-reduced-motion:reduce){
   .ui *,.ui *::before,.ui *::after{animation:none!important;transition:none!important}
   #bg,#bgimg{transition:none}
@@ -438,6 +570,7 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
               </div>
               <div class="m-countline meta" id="m-count"></div>
               <div class="list" id="m-list"></div>
+              <div class="m-desc" id="m-desc"></div>
             </div>
           </div>
           <div class="helpbox pn" id="m-help" hidden>Press <span class="key sm" id="m-help-key">F1</span> to open the admin menu.</div>
@@ -461,6 +594,7 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
           </div>
           <aside class="ent pn" aria-label="Selected entity">
             <div class="ent-h"><span class="dsp">Selection</span><span class="meta">Entity info</span></div>
+            <div class="ent-h2"><div class="dsp ent-name">Benefactor Schafter</div><div class="ent-sub">Vehicle · Net ID 7836 · 41FZK207</div></div>
             <dl class="kv" id="ent-kv"></dl>
             <div class="acts" id="ent-acts"></div>
           </aside>
@@ -549,6 +683,9 @@ const ICON = {
 
 /* ---------- data ---------- */
 const SKINS = {
+  vinewood: { name: 'Vinewood', accent: 'michael',
+    body: 'Our own direction. It keeps the feel of GTA\'s built-in menus without copying anyone\'s layout.',
+    points: ['Mixed-case type and one frosted glass panel per screen, instead of a stack of separate boxes.', 'Tabs across the top that you switch with Q and E, like GTA\'s pause menu, with an underline that slides between them.', 'A soft highlight glides to whatever you select. The description shows once at the bottom of the panel, like GTA\'s interaction menu.', 'Options unfold under the row as GTA-style list items: the label on the left and ‹ value › on the right.'] },
   native: { name: 'Native', accent: 'freemode',
     body: 'Built from GTA\'s own interaction menu, so it sits next to Rockstar\'s UI without looking bolted on.',
     points: ['A coloured banner holds the title, then a black bar with a position counter such as 3 / 22.', 'Black glass rows, a solid white bar on the selected row, square corners and real checkboxes.', 'Instructional buttons sit in the bottom-right corner, where GTA puts them.'] },
@@ -688,8 +825,8 @@ const PAINTS = [['Metallic Black','#0e0f12'],['Frost White','#e9ecef'],['Metalli
 const STATS = ['Top speed','Acceleration','Braking','Traction'];
 
 /* ---------- state ---------- */
-const STORE = 'overlay-style-lab';
-const state = { skin:'native', scene:'menu', accent:'freemode', bg:'day',
+const STORE = 'overlay-style-lab-2';
+const state = { skin:'vinewood', scene:'menu', accent:'michael', bg:'day',
   cat:'all', q:'', selId:null, open:null, fi:0, grid:false, menuOpen:true, binding:null, streamer:false,
   d:{ cls:'Sedans', i:0, paint:0, pay:0 }, bank:284310, cash:12400 };
 try {
@@ -781,6 +918,7 @@ function applyLook(){
   stage.style.setProperty('--bg-sat', fx.sat);
   renderChrome(); renderIbar();
   if (state.scene === 'kit') renderKit();
+  syncGlows(true);
   save();
 }
 
@@ -817,7 +955,7 @@ function rowHTML(c){
   else if (c.kind === 'bind') end = state.binding === c.id ? '<span class="tog-l blink">Press a key</span>' : `<span class="key">${esc(c.key)}</span>`;
   return `<div class="row${sel ? ' sel' : ''}${open ? ' open' : ''}" data-id="${c.id}">
     <button type="button" class="r-star pn${c.fav ? ' fav' : ''}" data-star="${c.id}" aria-label="Favourite ${esc(c.title)}" aria-pressed="${!!c.fav}" tabindex="-1">${ICON.star}</button>
-    <div class="r-main pn"><div><div class="r-t dsp">${esc(c.title)}</div>${c.desc ? `<div class="r-d">${esc(c.desc)}</div>` : ''}</div><div class="r-end">${end}</div></div>
+    <div class="r-main pn"><div><div class="r-t dsp">${c.fav ? `<span class="r-fav">${ICON.star}</span>` : ''}${esc(c.title)}</div>${c.desc ? `<div class="r-d">${esc(c.desc)}</div>` : ''}</div><div class="r-end">${end}</div></div>
     ${open ? `<div class="r-drawer">${formHTML(c)}</div>` : ''}</div>`;
 }
 function ensureVisible(smooth){
@@ -843,9 +981,10 @@ function renderList(){
   $('#m-count').textContent = `${list.length} command${list.length === 1 ? '' : 's'}`;
   $('#m-len').textContent = `${state.q.length}/100`;
   ensureVisible();
+  glowMenu();
 }
 function renderMenu(){
-  $('#m-cats').innerHTML = CATS.map(c => `<button type="button" class="m-cat pn dsp" data-cat="${c.id}" aria-current="${state.cat === c.id}" tabindex="-1">${ICON[c.icon]}<span>${c.label}</span></button>`).join('');
+  $('#m-cats').innerHTML = '<span class="key sm cat-k">Q</span>' + CATS.map(c => `<button type="button" class="m-cat pn dsp" data-cat="${c.id}" aria-current="${state.cat === c.id}" tabindex="-1">${ICON[c.icon]}<span>${c.label}</span></button>`).join('') + '<span class="key sm cat-k">E</span>';
   $('#m-cat-name').textContent = state.cat === 'all' ? 'All commands' : CATS.find(c => c.id === state.cat).label;
   $('#m-lay').innerHTML = state.grid ? ICON.rows : ICON.grid;
   $('#m-menu').hidden = !state.menuOpen;
@@ -854,11 +993,47 @@ function renderMenu(){
   renderList(); renderIbar();
 }
 const firstRows = () => $$('#m-list .row').slice(0, 10);
+// One highlight per list that glides to the selected item (the underline variant sits under tabs).
+function placeGlow(box, target, opts = {}){
+  if (!box) return;
+  let g = box.querySelector(':scope > .glow');
+  const fresh = !g;
+  if (fresh){ g = document.createElement('i'); g.className = 'glow'; box.prepend(g); }
+  if (!target){ g.style.opacity = '0'; box._g = null; return; }
+  const b = { x:target.offsetLeft, y:target.offsetTop, w:target.offsetWidth, h:target.offsetHeight };
+  if (opts.line){ b.y += b.h - 2; b.h = 2; }
+  const put = v => { g.style.transform = `translate(${v.x}px,${v.y}px)`; g.style.width = v.w + 'px'; g.style.height = v.h + 'px'; };
+  if (fresh || opts.instant || !box._g){
+    g.style.transition = 'none';
+    put(fresh && box._g && !opts.instant ? box._g : b);
+    void g.offsetWidth;
+    g.style.transition = '';
+  }
+  put(b); g.style.opacity = '1'; box._g = b;
+}
+function glowMenu(instant){
+  placeGlow($('#m-list'), $('#m-list .row.sel > .r-main'), { instant });
+  placeGlow($('#m-cats'), $('#m-cats [aria-current="true"]'), { line:true, instant });
+  const c = byId(state.selId), d = $('#m-desc'), text = c ? c.desc || '' : '';
+  if (d.textContent !== text){ d.textContent = text; d.animate([{ opacity:0 }, { opacity:1 }], { duration:dur(220) }); }
+}
+function glowDealer(instant){
+  placeGlow($('#d-list'), $('#d-list .vrow.sel'), { instant });
+  placeGlow($('#d-tabs'), $('#d-tabs [aria-current="true"]'), { line:true, instant });
+}
+const syncGlows = instant => { glowMenu(instant); glowDealer(instant); };
+// While drawers open or close, rows shift; keep the highlight chasing its row.
+function trackGlow(ms = 560){
+  const end = performance.now() + ms;
+  const tick = () => { glowMenu(); if (performance.now() < end) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+}
 function setSel(id, scroll){
   if (state.selId !== id){
     state.selId = id;
     $$('#m-list .row').forEach(r => r.classList.toggle('sel', r.dataset.id === id));
     updatePos(cmds());
+    glowMenu();
   }
   if (scroll) ensureVisible();
 }
@@ -868,6 +1043,7 @@ function move(d){
   const id = list[(i + d + list.length) % list.length].id;
   if (state.open && state.open !== id) closeForm();
   setSel(id, true);
+  trackGlow();
 }
 function switchCat(id){
   state.cat = id; state.open = null; state.selId = null;
@@ -920,6 +1096,7 @@ function openForm(c){
     .finished.then(() => { if (state.open === c.id) ensureVisible(true); }, quiet);
   dr.firstElementChild.animate([{ transform:'translateY(-28px)', opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(480), easing:EASE_OUT });
   staggerIn($$('.fld, .btn', dr), 55, 'translateX(-18px)', 90);
+  trackGlow();
 }
 function closeForm(){
   const id = state.open; state.open = null;
@@ -932,6 +1109,7 @@ function closeForm(){
   dr.animate([{ height:dr.offsetHeight + 'px' }, { height:'0px' }], { duration:dur(340), easing:EASE_INOUT, fill:'forwards' })
     .finished.then(() => dr.remove(), quiet);
   dr.firstElementChild.animate([{ transform:'none', opacity:1 }, { transform:'translateY(-22px)', opacity:0 }], { duration:dur(260), easing:EASE_IN, fill:'forwards' });
+  trackGlow(420);
 }
 const liveDrawer = id => $(`#m-list .row[data-id="${id}"] .r-drawer:not(.closing)`);
 function setActiveField(k){
@@ -1084,7 +1262,7 @@ function renderWorld(){
     `<span class="chip pn num">${ICON.water}<span class="low">24</span></span>` +
     `<span class="chip pn num">${ICON.stress}12</span>`;
   $('#ent-acts').innerHTML = [['delete','Delete entity',true],['fix','Fix vehicle'],['clean','Clean vehicle'],['keys','Get vehicle keys'],['enter','Enter vehicle']]
-    .map(([id, l, d]) => `<button type="button" class="act dsp${d ? ' danger' : ''}" data-act="${id}" tabindex="-1"><span>${l}</span>${ICON.chev}</button>`).join('');
+    .map(([id, l, d]) => `<button type="button" class="eact dsp${d ? ' danger' : ''}" data-act="${id}" tabindex="-1"><span>${l}</span>${ICON.chev}</button>`).join('');
   renderEntity();
 }
 function renderEntity(){
@@ -1157,6 +1335,7 @@ function renderDealer(){
     <div><span class="meta">Paint</span><div class="sw-row">${PAINTS.map(([n, c], i) => `<button type="button" class="sw" data-paint="${i}" style="--c:${c}" aria-pressed="${i === d.paint}" aria-label="${n}" tabindex="-1"></button>`).join('')}</div><div class="sw-label">${PAINTS[d.paint][0]}</div></div>
     <div class="pay"><span class="meta">Payment</span><div class="pick"><button type="button" data-pay="-1" aria-label="Previous payment option" tabindex="-1">‹</button><span class="pick-v dsp num">${payOpts()[d.pay]}</span><button type="button" data-pay="1" aria-label="Next payment option" tabindex="-1">›</button></div><div class="pay-note">${notes[d.pay]}</div></div>
     <div class="dd-btns"><button type="button" class="btn ghost dsp" data-dact="test" tabindex="-1"><span class="key sm">T</span>Test drive</button><button type="button" class="btn dsp" data-dact="buy" tabindex="-1">Purchase<span class="key sm">↵</span></button></div>`;
+  glowDealer();
 }
 function dDetailIn(dir){ staggerIn([...$('#d-detail').children], 34, `translateY(${dir * 16}px)`); }
 function dListIn(){ staggerIn($$('#d-list .vrow'), 32, 'translateX(-24px)'); dDetailIn(1); }
@@ -1492,6 +1671,7 @@ paintStreet($('#bg'), state.bg === 'night');
 paintRadar($('#radar'));
 renderMenu(); renderWorld(); renderDealer();
 applyLook(); fit(); sceneIntro();
+if (document.fonts) document.fonts.ready.then(() => syncGlows(true));
 })();
 </script>
 
