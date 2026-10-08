@@ -294,19 +294,19 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .cmp-loc{display:flex;gap:14px;align-items:baseline;padding:6px 14px;background:var(--chip-bg);border-radius:var(--radius);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop)}
 .cmp-st{font-size:27px}
 .cmp-ar,.cmp-tm{font-size:18px;opacity:.82}
-.feed{position:absolute;left:48px;bottom:334px;width:410px;display:flex;flex-direction:column;gap:8px}
+.feed{position:absolute;left:48px;bottom:344px;width:410px;display:flex;flex-direction:column;gap:8px}
 .feed .toast{grid-template-columns:38px minmax(0,1fr);gap:13px;padding:12px 16px 13px 12px}
 .feed .t-ic{width:38px;height:38px}
 .feed .t-ic svg{width:21px;height:21px}
 .feed .t-t{font-size:20px}
 .feed .t-b{font-size:15px;margin-top:3px}
-.radar{position:absolute;left:48px;bottom:108px;width:330px;height:200px;border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 3px rgba(0,0,0,.35)}
+.radar{position:absolute;left:48px;bottom:122px;width:330px;height:200px;border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 3px rgba(0,0,0,.35)}
 .radar canvas{width:100%;height:100%;display:block}
-.vitals{position:absolute;left:48px;bottom:90px;width:330px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.vitals{position:absolute;left:48px;bottom:104px;width:330px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .vbar{height:9px;background:rgba(0,0,0,.55);border-radius:calc(var(--radius) / 2);overflow:hidden}
 .vbar i{display:block;height:100%;background:var(--hp)}
 .vbar.ap i{background:var(--ap)}
-.chips{position:absolute;left:48px;bottom:36px;display:flex;gap:6px}
+.chips{position:absolute;left:48px;bottom:52px;display:flex;gap:6px}
 .chip{display:flex;align-items:center;gap:8px;height:40px;padding:0 13px 0 11px;font-size:17px;font-weight:600}
 .chip svg{width:20px;height:20px}
 .chip .low{color:var(--warn)}
@@ -337,6 +337,48 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .eact.danger{color:var(--bad)}
 .eact.danger.confirm{background:var(--bad);color:#fff;box-shadow:none}
 .eact svg{width:18px;height:18px;transform:rotate(-90deg);opacity:.7}
+
+/* stamina: the last bar in the left column */
+.stam{position:absolute;left:48px;bottom:26px;width:330px;display:flex;align-items:center;gap:10px;color:#fff;text-shadow:var(--hud-shadow)}
+.stam-ic{display:grid;place-items:center;width:18px;opacity:.85}
+.stam-ic svg{width:18px;height:18px}
+.stam-bar{position:relative;flex:1;height:7px;background:rgba(0,0,0,.55);border-radius:calc(var(--radius-sm) / 2);overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.stam-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--warn);border-radius:inherit}
+.stam.tired .stam-bar i{background:var(--bad)}
+.stam.tired .stam-ic{color:var(--bad)}
+.stam-l{min-width:78px;font-size:14px;font-weight:600;text-align:right;opacity:.9}
+/* vehicle cluster, bottom right */
+.veh{position:absolute;right:56px;bottom:36px;width:344px;padding:14px 18px}
+.veh.off .veh-gauge,.veh.off .veh-row{opacity:.45}
+.veh-ind{display:flex;justify-content:space-between;align-items:center}
+.ind{display:grid;place-items:center;width:32px;height:30px;padding:0;border:0;background:none;color:var(--ink);opacity:.16;transition:opacity .1s,color .1s}
+button.ind{cursor:pointer}
+.ind svg{width:22px;height:22px}
+.ind.on{opacity:1}
+.ind-l.on,.ind-r.on,.ind-low.on{color:var(--ok);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--ok) 65%,transparent))}
+.ind-high.on{color:#4c9dff;filter:drop-shadow(0 0 6px rgba(76,157,255,.6))}
+.ind-eng.on,.ind-fuel.on{color:var(--warn);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--warn) 60%,transparent))}
+.ind-belt.on{color:var(--bad);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--bad) 60%,transparent))}
+.veh-gauge{position:relative;width:300px;height:206px;margin:4px auto 0}
+.rpm{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rpm path{fill:none;stroke-width:9}
+.rpm .trk{stroke:currentColor;opacity:.13;stroke-linecap:round}
+.rpm .red{stroke:var(--bad);opacity:.55}
+.rpm .val{stroke:var(--accent);stroke-linecap:round;transition:stroke .15s}
+.rpm.shift .val{stroke:var(--bad)}
+.rpm .tick{stroke:currentColor;stroke-width:2;opacity:.35}
+.rpm text{fill:currentColor;opacity:.5;font-family:var(--f-num);font-size:13px;font-weight:600}
+.veh-spd{position:absolute;left:0;right:0;top:60px;text-align:center;font-size:78px;font-weight:700;line-height:1;letter-spacing:-.01em}
+.veh-spd .lead{opacity:.2}
+.veh-unit{position:absolute;left:0;right:0;top:142px;text-align:center;font-family:var(--f-meta);font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
+.veh-gear{position:absolute;left:50%;top:166px;transform:translateX(-50%);min-width:38px;height:36px;padding:0 8px;display:grid;place-items:center;border-radius:var(--radius-sm);background:var(--field-bg);box-shadow:inset 0 0 0 1px var(--field-line);font-size:21px;font-weight:700}
+.veh-row{display:flex;align-items:center;gap:10px;margin-top:8px;font-size:14px}
+.veh-fic{display:grid;place-items:center;opacity:.7}
+.veh-fic svg{width:18px;height:18px}
+.veh-fuel{flex:1;height:6px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--ink) 14%,transparent);overflow:hidden}
+.veh-fuel i{display:block;height:100%;background:var(--ink);border-radius:inherit}
+.veh-fuel.low i{background:var(--warn)}
+.veh-odo{margin-left:6px;color:var(--ink-dim)}
 
 /* ---------- screen: dealership ---------- */
 .dl-list{position:absolute;left:96px;top:78px;width:600px;display:flex;flex-direction:column;gap:12px}
@@ -581,16 +623,19 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
           <div class="hud">
             <div class="compass">
               <div class="cmp-tape" id="cmp-tape"></div>
-              <div class="cmp-loc"><span class="cmp-st dsp">Alta St</span><span class="cmp-ar">Pillbox Hill · W 265°</span><span class="cmp-tm num">14:32</span></div>
+              <div class="cmp-loc"><span class="cmp-st dsp" id="cmp-st">Alta St</span><span class="cmp-ar" id="cmp-ar">Pillbox Hill · W 265°</span><span class="cmp-tm num" id="cmp-tm">14:32</span></div>
             </div>
             <div class="feed" id="feed"></div>
             <div class="radar"><canvas id="radar"></canvas></div>
             <div class="vitals"><div class="vbar hp"><i style="width:86%"></i></div><div class="vbar ap"><i style="width:42%"></i></div></div>
             <div class="chips" id="chips"></div>
+            <div class="stam" id="stam"></div>
+            <section class="veh pn" id="veh" aria-label="Vehicle" hidden></section>
           </div>
           <div class="prompts">
             <div class="prompt" id="p-e"><span class="key lg">E</span><span class="p-l dsp">Open stash</span></div>
             <div class="prompt sub" id="p-h"><span class="key ring" id="p-h-key">H</span><span class="p-l dsp">Hold to search</span></div>
+            <div class="prompt sub" id="p-f"><span class="key">F</span><span class="p-l dsp">Enter vehicle</span></div>
           </div>
           <aside class="ent pn" aria-label="Selected entity">
             <div class="ent-h"><span class="dsp">Selection</span><span class="meta">Entity info</span></div>
@@ -679,6 +724,14 @@ const ICON = {
   food: sv('<path d="M4 11a8 6 0 0 1 16 0z"/><path d="M3.5 14.5h17M5 18h14"/>'),
   water: sv('<path d="M12 3.5s6 6.4 6 10.9a6 6 0 0 1-12 0C6 9.9 12 3.5 12 3.5z"/>'),
   stress: sv('<path d="M3 12h4l2.2-5 4 10 2.2-5H21"/>'),
+  run: sv('<circle cx="14.5" cy="4.5" r="2"/><path d="M7 21l3.5-6.5L14 17v4M5.5 11.5L9 8l4.5 1 3 3.5 3 .5M10.5 14.5L9 8"/>'),
+  bl: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12L11 4.5V9h10.5v6H11v4.5z" fill="currentColor"/></svg>',
+  br: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 12L13 4.5V9H2.5v6H13v4.5z" fill="currentColor"/></svg>',
+  low: sv('<path d="M13 5.5c4.4 0 8 2.9 8 6.5s-3.6 6.5-8 6.5z" fill="currentColor"/><path d="M10 7.5L3 10M10 11.5L3 14M10 15.5L3 18"/>'),
+  high: sv('<path d="M13 5.5c4.4 0 8 2.9 8 6.5s-3.6 6.5-8 6.5z" fill="currentColor"/><path d="M10 8H3M10 12H3M10 16H3"/>'),
+  engine: sv('<path d="M2.5 10.5v5M2.5 13h2.5M5 9.5h3l1.5-2h4.5l1.5 2H18v2h2.5v-2h1v7.5h-1v-2.5H18v3h-4.5L11.5 20H7.5L5 17.5z"/>'),
+  pump: sv('<path d="M5 20.5V5a1.5 1.5 0 0 1 1.5-1.5h6A1.5 1.5 0 0 1 14 5v15.5M3.5 20.5h12M5 10h9M14 8.5l3.2 2.2v6.3a1.6 1.6 0 0 0 3.2 0V8.2L18 6"/>'),
+  belt: sv('<circle cx="12" cy="4.6" r="2.2"/><path d="M7.5 21v-7.5a4.5 4.5 0 0 1 9 0V21M8.2 9.8l8 8.4"/>'),
 };
 
 /* ---------- data ---------- */
@@ -705,7 +758,7 @@ const ACCENTS = [
   { id: 'waypoint', name: 'Waypoint Purple', hud: 'HUD_COLOUR_WAYPOINT', hex: '#A44CF2' },
 ];
 const SCENES = [
-  { id: 'menu', label: 'Admin menu' }, { id: 'world', label: 'In world' },
+  { id: 'menu', label: 'Admin menu' }, { id: 'world', label: 'HUD' },
   { id: 'dealer', label: 'Dealership' }, { id: 'kit', label: 'Style kit' },
 ];
 const FX = {
@@ -716,7 +769,7 @@ const FX = {
 };
 const KEYS = {
   menu: [[['↑','↓'],'Move'],[['Enter'],'Select, run or open'],[['←','→'],'Change a list value'],[['Tab'],'Next field'],[['F'],'Favourite'],[['Q','E'],'Category'],[['X'],'List or grid'],[['/'],'Search'],[['Esc'],'Back, then close']],
-  world: [[['E'],'Open stash'],[['H'],'Hold to search'],[['Click'],'Entity actions on the right']],
+  world: [[['W','A','S','D'],'Walk, or drive in a vehicle'],[['Shift'],'Hold with W to sprint, tap to jog'],[['F'],'Get in or out of the vehicle'],[['E'],'Open stash (on foot)'],[['H'],'Hold to search on foot, headlights in a vehicle'],[['-','+'],'Left or right blinker'],[['Backspace'],'Hazards'],[['B'],'Seatbelt'],[['G'],'Engine on or off'],[['K'],'Damage or repair the engine (demo)']],
   dealer: [[['↑','↓'],'Browse vehicles'],[['Q','E'],'Vehicle class'],[['←','→'],'Paint'],[['T'],'Test drive'],[['Enter'],'Purchase']],
   kit: [[['Copy'],'Takes the CSS tokens for this style and accent']],
 };
@@ -919,6 +972,7 @@ function applyLook(){
   renderChrome(); renderIbar();
   if (state.scene === 'kit') renderKit();
   syncGlows(true);
+  if (state.scene === 'world') simStart(); else simStop();
   save();
 }
 
@@ -1245,30 +1299,267 @@ function menuKey(e, typing){
   }
 }
 
-/* ---------- in world ---------- */
-function renderWorld(){
-  const H = 265, PX = 5.3, cards = { 0:'N', 45:'NE', 90:'E', 135:'SE', 180:'S', 225:'SW', 270:'W', 315:'NW' };
+/* ---------- in world: live HUD, stamina on foot, and a drivable vehicle ---------- */
+const CARD = { 0:'N', 45:'NE', 90:'E', 135:'SE', 180:'S', 225:'SW', 270:'W', 315:'NW' };
+const cardinal = h => ['N','NE','E','SE','S','SW','W','NW'][Math.round(h / 45) % 8];
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const sim = {
+  heading:265, x:0, y:0, clock:14 * 60 + 32,
+  food:82, water:24, stress:12,
+  foot:{ stamina:1, tired:false, mode:'idle' },
+  car:{ in:false, v:0, rpm:0, fuel:.62, engine:true, health:1, lights:0, left:false, right:false, hazard:false, belt:false, odo:12483.6, bulb:0, blink0:0 },
+};
+const STAM = { idle:.12, walk:.08, jog:.045, sprint:-1 / 14 };   // per second; sprinting empties a full bar in 14 s
+const FOOT_MS = { idle:0, walk:1.5, jog:3.4, sprint:6.4 };      // metres per second, drives the minimap
+const GEARS = [0, 18, 34, 52, 74, 98, 128];                       // mph where each gear starts
+const held = new Set();
+let shiftAt = 0, shiftTap = -1e9;
+
+function renderCompass(){
+  const H = Math.round(sim.heading) % 360, PX = 5.3;
   let t = '';
   for (let d = Math.ceil((H - 64) / 5) * 5; d <= H + 64; d += 5){
-    const deg = (d + 360) % 360, x = 320 + (d - H) * PX;
-    if (deg % 15 === 0) t += `<span class="cmp-tick${cards[deg] ? ' card' : ''}" style="left:${x}px">${cards[deg] || deg}</span>`;
+    const deg = ((d % 360) + 360) % 360, x = 320 + (d - H) * PX;
+    if (deg % 15 === 0) t += `<span class="cmp-tick${CARD[deg] ? ' card' : ''}" style="left:${x}px">${CARD[deg] || deg}</span>`;
     else t += `<span class="cmp-tick minor" style="left:${x}px"></span>`;
   }
   $('#cmp-tape').innerHTML = t + '<i class="cmp-mark"></i>';
+  $('#cmp-st').textContent = Math.abs(Math.sin(H * Math.PI / 180)) > .7071 ? 'Alta St' : 'Strawberry Ave';
+  $('#cmp-ar').textContent = `Pillbox Hill · ${cardinal(H)} ${H}°`;
+}
+function renderNeeds(){
+  for (const [id, v] of [['food', sim.food], ['water', sim.water], ['stress', sim.stress]]){
+    const el = $('#v-' + id); el.textContent = Math.round(v); el.classList.toggle('low', id !== 'stress' && v < 25);
+  }
+}
+const RPM = { cx:150, cy:128, r:116 };
+function arcPath(){
+  const { cx, cy, r } = RPM, p = a => `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy - r * Math.sin(a)).toFixed(1)}`;
+  return `M${p(7 * Math.PI / 6)} A${r} ${r} 0 1 1 ${p(-Math.PI / 6)}`;
+}
+function renderVehicle(){
+  const d = arcPath(), { cx, cy, r } = RPM;
+  let ticks = '';
+  for (let i = 0; i <= 8; i++){
+    const a = (210 - i * 30) * Math.PI / 180, c = Math.cos(a), sn = Math.sin(a);
+    ticks += `<line class="tick" x1="${(cx + (r - 14) * c).toFixed(1)}" y1="${(cy - (r - 14) * sn).toFixed(1)}" x2="${(cx + (r - 8) * c).toFixed(1)}" y2="${(cy - (r - 8) * sn).toFixed(1)}"/>`;
+    ticks += `<text x="${(cx + (r - 27) * c).toFixed(1)}" y="${(cy - (r - 27) * sn).toFixed(1)}" text-anchor="middle" dominant-baseline="central">${i}</text>`;
+  }
+  $('#veh').innerHTML = `
+    <div class="veh-ind">
+      <button type="button" class="ind ind-l" data-ind="left" aria-label="Left blinker" tabindex="-1">${ICON.bl}</button>
+      <button type="button" class="ind ind-low" data-ind="lights" aria-label="Headlights" tabindex="-1">${ICON.low}</button>
+      <span class="ind ind-high">${ICON.high}</span>
+      <span class="ind ind-eng">${ICON.engine}</span>
+      <span class="ind ind-fuel">${ICON.pump}</span>
+      <button type="button" class="ind ind-belt" data-ind="belt" aria-label="Seatbelt" tabindex="-1">${ICON.belt}</button>
+      <button type="button" class="ind ind-r" data-ind="right" aria-label="Right blinker" tabindex="-1">${ICON.br}</button>
+    </div>
+    <div class="veh-gauge">
+      <svg class="rpm" id="rpm" viewBox="0 0 300 206" aria-hidden="true">
+        <path class="trk" d="${d}" pathLength="100"/>
+        <path class="red" d="${d}" pathLength="100" stroke-dasharray="12.5 100" stroke-dashoffset="-87.5"/>
+        ${ticks}
+        <path class="val" id="rpm-val" d="${d}" pathLength="100" stroke-dasharray="0 100"/>
+      </svg>
+      <div class="veh-spd num" id="veh-spd"></div>
+      <div class="veh-unit">mph</div>
+      <div class="veh-gear num" id="veh-gear">N</div>
+    </div>
+    <div class="veh-row"><span class="veh-fic">${ICON.pump}</span><div class="veh-fuel" id="veh-fuel"><i></i></div><span class="num" id="veh-fuel-v"></span><span class="veh-odo num" id="veh-odo"></span></div>`;
+}
+function renderWorld(){
+  renderCompass();
   $('#feed').innerHTML = toastHTML('info', 'Dispatch · 10-31', 'Burglary in progress, Alta St. 0.4 mi.', true) + toastHTML('ok', 'Paycheck +$1,250', '', true);
   $('#chips').innerHTML =
     `<span class="chip pn">${ICON.mic}<span class="talk"><i></i><i></i><i></i></span>Normal</span>` +
-    `<span class="chip pn num">${ICON.food}82</span>` +
-    `<span class="chip pn num">${ICON.water}<span class="low">24</span></span>` +
-    `<span class="chip pn num">${ICON.stress}12</span>`;
+    `<span class="chip pn num">${ICON.food}<span id="v-food"></span></span>` +
+    `<span class="chip pn num">${ICON.water}<span id="v-water"></span></span>` +
+    `<span class="chip pn num">${ICON.stress}<span id="v-stress"></span></span>`;
+  renderNeeds();
+  $('#stam').innerHTML = `<span class="stam-ic">${ICON.run}</span><div class="stam-bar"><i id="stam-fill"></i></div><span class="stam-l" id="stam-l"></span>`;
   $('#ent-acts').innerHTML = [['delete','Delete entity',true],['fix','Fix vehicle'],['clean','Clean vehicle'],['keys','Get vehicle keys'],['enter','Enter vehicle']]
     .map(([id, l, d]) => `<button type="button" class="eact dsp${d ? ' danger' : ''}" data-act="${id}" tabindex="-1"><span>${l}</span>${ICON.chev}</button>`).join('');
   renderEntity();
+  renderVehicle();
+  updateHud(true);
 }
 function renderEntity(){
   const rows = [['Coords','-43.92, 33.08, 71.81'],['Heading','265.75'],['Model','schafter2'],['Net ID','7836'],['Owner', playerLabel(PLAYERS[4])],['Health','999 / 1000'],['Plate','41FZK207'],['VIN','2PFSTR7KC40311592'],['Engine','998.25'],['Body','973.42']];
   $('#ent-kv').innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd class="num">${esc(v)}</dd>`).join('');
 }
+
+// Speed digits, RPM arc, gear, fuel, odometer and warning lights. Only touches the DOM when a value changes.
+const hudLast = {};
+function hudSet(key, val, fn){ if (hudLast[key] !== val){ hudLast[key] = val; fn(val); } }
+function gearOf(c){
+  if (!c.engine) return 'N';
+  if (Math.abs(c.v) < .6) return held.has('w') ? '1' : 'N';
+  if (c.v < 0) return 'R';
+  let g = 0; while (g < GEARS.length - 2 && c.v >= GEARS[g + 1]) g++;
+  return String(g + 1);
+}
+function updateHud(force){
+  if (force) for (const k in hudLast) delete hudLast[k];
+  const f = sim.foot, c = sim.car, now = performance.now();
+  hudSet('stam', Math.round(f.stamina * 1000), v => { $('#stam-fill').style.width = v / 10 + '%'; });
+  hudSet('tired', f.tired, v => $('#stam').classList.toggle('tired', v));
+  hudSet('mode', c.in ? '' : f.tired && f.mode !== 'idle' ? 'Winded' : { idle:'', walk:'Walking', jog:'Jogging', sprint:'Sprinting' }[f.mode], v => { $('#stam-l').textContent = v; });
+  hudSet('clock', Math.floor(sim.clock) % 1440, v => { $('#cmp-tm').textContent = `${String(Math.floor(v / 60)).padStart(2, '0')}:${String(v % 60).padStart(2, '0')}`; });
+  if (!c.in && !force) return;
+  const mph = Math.round(Math.abs(c.v));
+  hudSet('spd', mph, v => {
+    const s3 = String(v).padStart(3, '0'), lead = v ? 3 - String(v).length : 2;
+    $('#veh-spd').innerHTML = `<span class="lead">${s3.slice(0, lead)}</span>${s3.slice(lead)}`;
+  });
+  hudSet('rpm', Math.round(c.rpm * 400), v => {
+    const val = $('#rpm-val');
+    val.setAttribute('stroke-dasharray', `${(v / 4).toFixed(2)} 100`);
+    val.style.opacity = v > 1 ? 1 : 0;
+    $('#rpm').classList.toggle('shift', v > 350);
+  });
+  hudSet('gear', gearOf(c), v => { $('#veh-gear').textContent = v; });
+  hudSet('fuel', Math.round(c.fuel * 100), v => {
+    $('#veh-fuel i').style.width = v + '%'; $('#veh-fuel').classList.toggle('low', v < 15); $('#veh-fuel-v').textContent = v + '%';
+  });
+  hudSet('odo', c.odo.toFixed(1), v => { $('#veh-odo').textContent = v.padStart(8, '0') + ' mi'; });
+  hudSet('off', !c.engine, v => $('#veh').classList.toggle('off', v));
+  const bulb = now < c.bulb, phase = Math.floor((now - c.blink0) / 380) % 2 === 0;
+  const lit = {
+    'ind-l': bulb || ((c.left || c.hazard) && phase),
+    'ind-r': bulb || ((c.right || c.hazard) && phase),
+    'ind-low': bulb || c.lights >= 1,
+    'ind-high': bulb || c.lights === 2,
+    'ind-eng': bulb || (c.engine && c.health < .35),
+    'ind-fuel': bulb || c.fuel < .15,
+    'ind-belt': bulb || (!c.belt && (Math.abs(c.v) < 5 || phase)),
+  };
+  for (const k in lit) hudSet(k, lit[k], v => $('#veh .' + k).classList.toggle('on', v));
+}
+
+function stepSim(dt, now){
+  const f = sim.foot, c = sim.car;
+  const fwd = held.has('w'), back = held.has('s'), lt = held.has('a'), rt = held.has('d');
+  // On foot: hold Shift with W to sprint (drains), tap Shift to jog, walk or stand still to recover.
+  let mode = 'idle';
+  if (!c.in && (fwd || back || lt || rt)){
+    if (held.has('shift') && now - shiftAt > 260 && !f.tired) mode = 'sprint';
+    else if (held.has('shift') || now - shiftTap < 650) mode = 'jog';
+    else mode = 'walk';
+  }
+  f.mode = mode;
+  f.stamina = clamp(f.stamina + STAM[mode] * dt, 0, 1);
+  if (f.stamina <= 0) f.tired = true; else if (f.tired && f.stamina >= .3) f.tired = false;
+  const before = [Math.round(sim.food), Math.round(sim.water)];
+  sim.water = Math.max(0, sim.water - dt / (mode === 'sprint' ? 12 : 30));
+  sim.food = Math.max(0, sim.food - dt / 45);
+  if (before[0] !== Math.round(sim.food) || before[1] !== Math.round(sim.water)) renderNeeds();
+  let ms = 0;
+  if (c.in){
+    const thr = fwd && c.engine && c.fuel > 0 ? 1 : 0, brk = back ? 1 : 0, pow = c.health < .35 ? .5 : 1;
+    let acc = 0;
+    if (thr) acc += c.v >= 0 ? (15 * (1 - c.v / 128) + 4) * pow : 40;
+    if (brk) acc -= c.v > .5 ? 42 : 10 * (1 + c.v / 18);
+    acc -= Math.sign(c.v) * (2.2 + Math.abs(c.v) * .02);
+    c.v = clamp(c.v + acc * dt, -18, 128);
+    if (!thr && !brk && Math.abs(c.v) < .6) c.v = 0;
+    let target = 0;
+    if (c.engine){
+      if (Math.abs(c.v) < .6) target = thr ? .45 : .11;
+      else if (c.v < 0) target = .2 + Math.min(1, -c.v / 18) * .5;
+      else {
+        let g = 0; while (g < GEARS.length - 2 && c.v >= GEARS[g + 1]) g++;
+        target = .28 + (c.v - GEARS[g]) / (GEARS[g + 1] - GEARS[g]) * .64 - (thr ? 0 : .06);
+      }
+    }
+    c.rpm += (target - c.rpm) * Math.min(1, dt * 9);
+    if (c.engine){ c.fuel = Math.max(0, c.fuel - dt * (.0006 + thr * .004)); if (c.fuel <= 0) c.engine = false; }
+    c.odo += Math.abs(c.v) * dt / 3600;
+    if (Math.abs(c.v) > .5) sim.heading += ((rt ? 1 : 0) - (lt ? 1 : 0)) * 75 * Math.min(1, Math.abs(c.v) / 22) * Math.sign(c.v) * dt;
+    ms = c.v * .447;
+  } else {
+    ms = FOOT_MS[mode] * (back && !fwd ? -.6 : 1);
+    if (mode !== 'idle') sim.heading += ((rt ? 1 : 0) - (lt ? 1 : 0)) * 80 * dt;
+  }
+  sim.heading = ((sim.heading % 360) + 360) % 360;
+  const hr = sim.heading * Math.PI / 180;
+  sim.x += Math.sin(hr) * ms * dt; sim.y -= Math.cos(hr) * ms * dt;
+  sim.clock += dt / 2;   // one game minute every two seconds, like GTA
+  hudSet('heading', Math.round(sim.heading) % 360, renderCompass);
+}
+
+// Heading-up minimap: the world turns around you, scrolls as you move and zooms out with speed.
+const MAP = { grid:90, route:[[0, 0], [-270, 0], [-270, -180]], parks:[[-330, -250, 120, 90], [180, 170, 150, 110]] };
+function drawRadar(force){
+  const cv = $('#radar'), c = cv.getContext('2d'), W = 330, H = 200;
+  if (cv.width !== W * 2){ cv.width = W * 2; cv.height = H * 2; }
+  const v = sim.car.in ? Math.abs(sim.car.v) : 0, sc = .62 - Math.min(v, 90) / 90 * .26;
+  const key = `${sim.x.toFixed(1)},${sim.y.toFixed(1)},${sim.heading.toFixed(1)},${sc.toFixed(3)}`;
+  if (!force && key === drawRadar.k) return;
+  drawRadar.k = key;
+  c.setTransform(2, 0, 0, 2, 0, 0);
+  c.fillStyle = '#3d4b46'; c.fillRect(0, 0, W, H);
+  const cx = W / 2, cy = H * .64, G = MAP.grid, R = Math.hypot(W, H) / sc;
+  c.save(); c.translate(cx, cy); c.rotate(-sim.heading * Math.PI / 180); c.scale(sc, sc); c.translate(-sim.x, -sim.y);
+  c.fillStyle = '#4a6447'; MAP.parks.forEach(([x, y, w, h]) => c.fillRect(x, y, w, h));
+  c.strokeStyle = '#86908f'; c.lineCap = 'square';
+  const x0 = Math.floor((sim.x - R) / G) * G, y0 = Math.floor((sim.y - R) / G) * G;
+  for (let gx = x0; gx <= sim.x + R; gx += G){ c.lineWidth = (Math.round(gx / G) % 3 === 0 ? 7 : 3.5) / sc; c.beginPath(); c.moveTo(gx, y0); c.lineTo(gx, sim.y + R); c.stroke(); }
+  for (let gy = y0; gy <= sim.y + R; gy += G){ c.lineWidth = (Math.round(gy / G) % 3 === 0 ? 7 : 3.5) / sc; c.beginPath(); c.moveTo(x0, gy); c.lineTo(sim.x + R, gy); c.stroke(); }
+  c.fillStyle = '#3c6985'; c.beginPath(); c.moveTo(400, -5000);
+  for (let y = -5000; y <= 5000; y += 250) c.lineTo(400 + Math.sin(y / 300) * 60, y);
+  c.lineTo(6000, 5000); c.lineTo(6000, -5000); c.closePath(); c.fill();
+  c.strokeStyle = '#a44cf2'; c.lineWidth = 5 / sc; c.lineJoin = 'round';
+  c.beginPath(); MAP.route.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke();
+  const [wx, wy] = MAP.route[MAP.route.length - 1];
+  c.fillStyle = '#a44cf2'; c.beginPath(); c.arc(wx, wy, 7 / sc, 0, Math.PI * 2); c.fill();
+  c.restore();
+  c.fillStyle = '#ffffff'; c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1.5;
+  c.beginPath(); c.moveTo(cx, cy - 11); c.lineTo(cx + 8, cy + 8); c.lineTo(cx, cy + 4); c.lineTo(cx - 8, cy + 8); c.closePath(); c.fill(); c.stroke();
+  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, 'rgba(0,0,0,.25)'); g.addColorStop(.3, 'rgba(0,0,0,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+}
+
+let simRaf = 0, simLast = 0;
+function simTick(now){
+  const dt = Math.min(.05, (now - simLast) / 1000); simLast = now;
+  stepSim(dt, now); updateHud(); drawRadar();
+  simRaf = requestAnimationFrame(simTick);
+}
+function simStart(){ if (simRaf) return; simLast = performance.now(); simRaf = requestAnimationFrame(simTick); }
+function simStop(){ cancelAnimationFrame(simRaf); simRaf = 0; held.clear(); }
+
+// Getting in slides the cluster in and the prompts and entity panel out; getting out reverses it.
+function slideSwap(el, show, off, base = 'none'){
+  el.getAnimations().forEach(a => a.cancel());
+  if (show){ el.hidden = false; el.animate([{ opacity:0, transform:off }, { opacity:1, transform:base }], { duration:dur(520), easing:EASE_OUT }); }
+  else el.animate([{ opacity:1, transform:base }, { opacity:0, transform:off }], { duration:dur(320), easing:EASE_IN, fill:'forwards' })
+    .finished.then(() => { el.hidden = true; el.getAnimations().forEach(a => a.cancel()); }, quiet);
+}
+function startEngine(){ const c = sim.car; c.engine = c.fuel > 0; if (c.engine) c.bulb = performance.now() + 1100; }
+function toggleCar(){
+  const c = sim.car;
+  c.in = !c.in; c.v = 0; c.rpm = 0; c.left = c.right = c.hazard = false;
+  if (c.in){ c.belt = false; startEngine(); }
+  slideSwap($('#veh'), c.in, 'translateX(70px)');
+  slideSwap($('.ent'), !c.in, 'translateX(70px)');
+  slideSwap($('.prompts'), !c.in, 'translateX(-50%) translateY(22px)', 'translateX(-50%)');
+  updateHud(true);
+}
+function blinker(side){ const c = sim.car; c[side] = !c[side]; c[side === 'left' ? 'right' : 'left'] = false; c.blink0 = performance.now(); }
+function carAction(name){
+  const c = sim.car;
+  ({
+    lights:() => { c.lights = (c.lights + 1) % 3; },
+    left:() => blinker('left'), right:() => blinker('right'),
+    hazard:() => { c.hazard = !c.hazard; c.blink0 = performance.now(); },
+    belt:() => { c.belt = !c.belt; },
+    engine:() => { if (c.engine) c.engine = false; else startEngine(); },
+    damage:() => { c.health = c.health < .35 ? 1 : .22; },
+  })[name]();
+  updateHud(true);
+}
+$('#veh').addEventListener('click', e => { const b = e.target.closest('[data-ind]'); if (b) carAction(b.dataset.ind); });
+
 $('#ent-acts').addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const a = b.dataset.act;
@@ -1281,7 +1572,9 @@ $('#ent-acts').addEventListener('click', e => {
     clearTimeout(b._t); b.classList.remove('confirm'); b.firstElementChild.textContent = 'Delete entity';
     toast('warn', 'Entity 7836 deleted'); return;
   }
-  const M = { fix:['ok','Vehicle repaired'], clean:['ok','Vehicle cleaned'], keys:['info','Vehicle keys added'], enter:['info','Entered vehicle'] };
+  if (a === 'enter'){ toggleCar(); return; }
+  if (a === 'fix') sim.car.health = 1;
+  const M = { fix:['ok','Vehicle repaired'], clean:['ok','Vehicle cleaned'], keys:['info','Vehicle keys added'] };
   toast(...M[a]);
 });
 function pressE(){
@@ -1306,12 +1599,28 @@ $('#p-e').addEventListener('click', pressE);
 $('#p-h').addEventListener('pointerdown', holdBegin);
 $('#p-h').addEventListener('pointerup', holdEnd);
 $('#p-h').addEventListener('pointerleave', holdEnd);
+$('#p-f').addEventListener('click', toggleCar);
+const normKey = e => e.code === 'NumpadSubtract' ? '-' : e.code === 'NumpadAdd' ? '+' : e.key.length === 1 ? e.key.toLowerCase() : e.key;
 function worldKey(e){
-  const k = e.key.toLowerCase();
-  if (k === 'e' && !e.repeat){ e.preventDefault(); pressE(); }
-  if (k === 'h' && !e.repeat){ e.preventDefault(); holdBegin(); }
+  const k = normKey(e);
+  if (k === 'w' || k === 'a' || k === 's' || k === 'd'){ e.preventDefault(); held.add(k); return; }
+  if (k === 'Shift'){ if (!held.has('shift')){ shiftAt = performance.now(); held.add('shift'); } return; }
+  if (e.repeat) return;
+  if (k === 'f'){ e.preventDefault(); toggleCar(); return; }
+  if (!sim.car.in){
+    if (k === 'e'){ e.preventDefault(); pressE(); }
+    else if (k === 'h'){ e.preventDefault(); holdBegin(); }
+    return;
+  }
+  const name = { h:'lights', '-':'left', '_':'left', '+':'right', '=':'right', Backspace:'hazard', b:'belt', g:'engine', k:'damage' }[k];
+  if (name){ e.preventDefault(); carAction(name); }
 }
-document.addEventListener('keyup', e => { if (e.key.toLowerCase() === 'h') holdEnd(); });
+document.addEventListener('keyup', e => {
+  const k = normKey(e);
+  if (k === 'h') holdEnd();
+  if (k === 'Shift'){ if (performance.now() - shiftAt < 260) shiftTap = performance.now(); held.delete('shift'); }
+  else held.delete(k);
+});
 
 /* ---------- dealership ---------- */
 const dList = () => VEHICLES.filter(v => v.cls === state.d.cls);
@@ -1433,7 +1742,7 @@ frame.addEventListener('pointerdown', e => {
 });
 const kbState = () => { const on = armed(); frame.classList.toggle('armed', on); $('#kb-state').classList.toggle('on', on); $('#kb-text').textContent = on ? 'Keyboard is on. Click outside the frame to release it.' : 'Click the frame to use the keyboard.'; };
 frame.addEventListener('focusin', kbState);
-frame.addEventListener('focusout', () => setTimeout(kbState, 0));
+frame.addEventListener('focusout', () => setTimeout(() => { kbState(); if (!armed()) held.clear(); }, 0));
 
 /* ---------- chrome controls ---------- */
 $('#seg-skin').addEventListener('click', e => { const b = e.target.closest('[data-skin]'); if (!b) return; state.skin = b.dataset.skin; state.accent = SKINS[state.skin].accent; applyLook(); });
@@ -1443,8 +1752,8 @@ function sceneIntro(){
   if (sc === 'menu'){ if (state.menuOpen) menuIntro(); return; }
   if (sc === 'world'){
     $('.compass').animate([{ opacity:0, transform:'translateX(-50%) translateY(-28px)' }, { opacity:1, transform:'translateX(-50%)' }], { duration:dur(560), easing:EASE_OUT });
-    staggerIn([$('#feed'), $('.radar'), $('.vitals'), $('#chips')], 50, 'translateX(-36px)', 60);
-    staggerIn([$('.ent')], 0, 'translateX(48px)', 80);
+    staggerIn([$('#feed'), $('.radar'), $('.vitals'), $('#chips'), $('#stam')], 50, 'translateX(-36px)', 60);
+    staggerIn([sim.car.in ? $('#veh') : $('.ent')], 0, 'translateX(48px)', 80);
     $('.prompts').animate([{ opacity:0, transform:'translateX(-50%) translateY(18px)' }, { opacity:1, transform:'translateX(-50%)' }], { duration:dur(520), delay:dur(160), easing:EASE_OUT, fill:'backwards' });
     return;
   }
@@ -1643,32 +1952,9 @@ function paintStreet(cv, night){
   c.fillStyle = g; c.fillRect(0, HZ - 260, W, 340);
   if (!night){ c.fillStyle = 'rgba(255,190,130,.06)'; c.fillRect(0, 0, W, H); }
 }
-function paintRadar(cv){
-  const W = 330, H = 200, S = 2; cv.width = W * S; cv.height = H * S;
-  const c = cv.getContext('2d'); c.scale(S, S);
-  c.fillStyle = '#3d4b46'; c.fillRect(0, 0, W, H);
-  const cx = W / 2, cy = H * .64;
-  c.save(); c.translate(cx, cy); c.rotate(-.27);
-  c.fillStyle = '#4a6447'; c.fillRect(-170, -150, 80, 64);
-  c.strokeStyle = '#86908f'; c.lineCap = 'square';
-  for (let i = -7; i <= 7; i++){
-    c.lineWidth = i % 3 === 0 ? 7 : 3.5;
-    c.beginPath(); c.moveTo(i * 42, -320); c.lineTo(i * 42, 320); c.stroke();
-    c.beginPath(); c.moveTo(-320, i * 36); c.lineTo(320, i * 36); c.stroke();
-  }
-  c.fillStyle = '#3c6985'; c.beginPath(); c.moveTo(150, -260); c.bezierCurveTo(190, -60, 150, 60, 230, 200); c.lineTo(400, 200); c.lineTo(400, -260); c.closePath(); c.fill();
-  c.strokeStyle = '#a44cf2'; c.lineWidth = 5; c.lineJoin = 'round';
-  c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -72); c.lineTo(84, -72); c.lineTo(84, -144); c.stroke();
-  c.fillStyle = '#a44cf2'; c.beginPath(); c.arc(84, -144, 7, 0, Math.PI * 2); c.fill();
-  c.restore();
-  c.fillStyle = '#ffffff'; c.strokeStyle = 'rgba(0,0,0,.5)'; c.lineWidth = 1.5;
-  c.beginPath(); c.moveTo(cx, cy - 11); c.lineTo(cx + 8, cy + 8); c.lineTo(cx, cy + 4); c.lineTo(cx - 8, cy + 8); c.closePath(); c.fill(); c.stroke();
-  const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, 'rgba(0,0,0,.25)'); g.addColorStop(.3, 'rgba(0,0,0,0)'); c.fillStyle = g; c.fillRect(0, 0, W, H);
-}
-
 /* ---------- boot ---------- */
 paintStreet($('#bg'), state.bg === 'night');
-paintRadar($('#radar'));
+drawRadar(true);
 renderMenu(); renderWorld(); renderDealer();
 applyLook(); fit(); sceneIntro();
 if (document.fonts) document.fonts.ready.then(() => syncGlows(true));
