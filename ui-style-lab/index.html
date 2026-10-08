@@ -149,7 +149,9 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 :where(.ui button){font:inherit;color:inherit}
 .ui input{user-select:text;-webkit-user-select:text}
 .dsp{font-family:var(--f-display);font-style:var(--d-style);font-weight:var(--d-weight);letter-spacing:var(--d-track);text-transform:var(--d-case,uppercase);line-height:1.02}
-.ui .glow,.ui .r-fav,.ui .cat-k,.ui .m-desc,.ui .ent-h2{display:none}
+.ui .glow,.ui .r-fav,.ui .cat-k,.ui .m-desc,.ui .ent-h2,.ui .pm{display:none}
+.r-val{font-size:15px;font-weight:500;color:var(--ink-dim);white-space:nowrap}
+.row.sel .r-val{color:var(--sel-dim)}
 .meta{font-family:var(--f-meta);font-size:14px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim)}
 .num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
 .pn{background:var(--panel);box-shadow:var(--ring),var(--drop);border-radius:var(--radius);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop)}
@@ -221,6 +223,7 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 
 /* notifications */
 .toasts{position:absolute;right:64px;top:64px;width:460px;display:flex;flex-direction:column;gap:10px;z-index:5;pointer-events:none}
+.toast-slot[data-leaving]{position:absolute;left:0;right:0;z-index:-1;pointer-events:none}
 .toast{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:start;padding:14px 18px 16px 14px;overflow:hidden}
 .toast.solo{align-items:center;padding-block:12px 13px}
 .toast.solo .t-t{margin-top:0}
@@ -256,9 +259,8 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .m-lay:hover{background:var(--panel-hover)}
 .m-countline{margin:16px 0 10px}
 .list{position:relative;display:flex;flex-direction:column;gap:6px;max-height:566px;overflow-y:auto;padding-right:8px;scrollbar-width:thin;scrollbar-color:var(--ink-dim) transparent}
-.list.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start}
+.list.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;align-items:start}
 .row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 6px}
-.list.grid .row.open{grid-column:1/-1}
 .r-star{display:grid;place-items:center;border:0;cursor:pointer}
 .r-star svg{width:24px;height:24px;opacity:.8}
 .r-star.fav{color:var(--accent)}
@@ -563,9 +565,18 @@ button.ind{cursor:pointer}
 .ui[data-skin="vinewood"] .sw{border-radius:50%}
 .ui[data-skin="vinewood"] .sw[aria-pressed="true"]{outline-width:2px}
 
+.ui[data-skin="vinewood"] .r-chev{display:none}
+.ui[data-skin="vinewood"] .r-end .pm{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;opacity:.7}
+.ui[data-skin="vinewood"] .row.open .r-end .pm{transform:none}
+.pm-v{transform-box:fill-box;transform-origin:center;transition:transform .32s cubic-bezier(.16,1,.3,1)}
+.row.open .pm-v{transform:scaleY(0)}
+.ui[data-skin="vinewood"] .ent-h2{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.sa-plate{display:grid;place-items:center;flex:none;padding:5px 12px 6px;border-radius:7px;background:linear-gradient(#fdfdfb,#e6e9ee);box-shadow:inset 0 0 0 2px #c3c9d2,0 2px 8px rgba(0,0,0,.35);color:#1d3b8f;font-family:var(--f-num);font-weight:700;font-size:21px;line-height:1;letter-spacing:.05em}
+.sa-plate span{font-family:var(--f-body);font-style:italic;font-weight:600;font-size:10px;letter-spacing:.02em;color:#c1272d;margin-bottom:3px}
+
 @media (prefers-reduced-motion:reduce){
   .ui *,.ui *::before,.ui *::after{animation:none!important;transition:none!important}
-  #bg,#bgimg{transition:none}
+  #bg,#bgimg,.shade{transition:none}
 }
 </style>
 
@@ -639,7 +650,7 @@ button.ind{cursor:pointer}
           </div>
           <aside class="ent pn" aria-label="Selected entity">
             <div class="ent-h"><span class="dsp">Selection</span><span class="meta">Entity info</span></div>
-            <div class="ent-h2"><div class="dsp ent-name">Benefactor Schafter</div><div class="ent-sub">Vehicle · Net ID 7836 · 41FZK207</div></div>
+            <div class="ent-h2"><div><div class="dsp ent-name">Benefactor Schafter</div><div class="ent-sub">Vehicle · Net ID 7836 · schafter2</div></div><div class="sa-plate"><span>San Andreas</span>41FZK207</div></div>
             <dl class="kv" id="ent-kv"></dl>
             <div class="acts" id="ent-acts"></div>
           </aside>
@@ -774,7 +785,7 @@ const KEYS = {
   kit: [[['Copy'],'Takes the CSS tokens for this style and accent']],
 };
 const IBAR = {
-  menu: [[['↑','↓'],'Move','ArrowDown'],[['↵'],'Select','Enter'],[['F'],'Favourite','f'],[['Q','E'],'Category','e'],[['X'],'Layout','x'],[['Esc'],'Close','Escape']],
+  menu: [[['↑','↓'],'Move','ArrowDown'],[['↵'],'@enter','Enter'],[['F'],'Favourite','f'],[['Q','E'],'Category','e'],[['X'],'Layout','x'],[['Esc'],'Close','Escape']],
   dealer: [[['↑','↓'],'Browse','ArrowDown'],[['Q','E'],'Class','e'],[['T'],'Test drive','t'],[['↵'],'Purchase','Enter']],
 };
 
@@ -789,18 +800,18 @@ const COMMANDS = [
     msg:on=>['info', on?'Admin mode enabled':'Admin mode disabled'] },
   { id:'noclip', cat:'utility', title:'Noclip', desc:'Fly through the world. Hold Shift to go faster.', kind:'toggle', on:false, fav:true,
     msg:on=>['info', on?'Noclip on':'Noclip off'] },
-  { id:'weather', cat:'utility', title:'Change Weather', desc:'Change the weather to a specific type.', kind:'form', fav:true, action:'Apply',
+  { id:'weather', cat:'utility', title:'Change Weather', desc:'Change the weather to a specific type.', kind:'form', fav:true, action:'Apply', now:'CLEAR',
     fields:[{type:'list',label:'Weather',options:['EXTRASUNNY','CLEAR','CLOUDS','SMOG','FOGGY','OVERCAST','RAIN','THUNDER','CLEARING','XMAS'],i:6},{type:'list',label:'Transition',options:['15 seconds','Instant','60 seconds'],i:0}],
     run:v=>['ok',`Weather set to ${v[0]}`] },
   { id:'time', cat:'utility', title:'Set Time', desc:'Set the in-game clock for everyone.', kind:'form', action:'Apply',
     fields:[{type:'list',label:'Time',options:['06:00','09:00','12:00','15:00','18:00','21:00','00:00','03:00'],i:2},{type:'list',label:'Freeze clock',options:['No','Yes'],i:0}],
     run:v=>['ok',`Time set to ${v[0]}${v[1]==='Yes'?', frozen':''}`] },
-  { id:'spawn', cat:'utility', title:'Spawn Vehicle', desc:'Spawn a vehicle for a player.', kind:'form', fav:true, action:'Spawn',
+  { id:'spawn', cat:'utility', title:'Spawn Vehicle', desc:'Spawn a vehicle for a player.', kind:'form', fav:true, action:'Spawn', now:'schafter2', nowLabel:'Last',
     fields:[{type:'text',label:'Model',value:'schafter2',req:true},{type:'player',label:'For player',i:4}],
     run:v=>['ok',`Spawned ${v[0]} for ${v[1]}`] },
-  { id:'revive', cat:'players', title:'Revive in Range', desc:'Revive every player within 10 units of you.', kind:'action', fav:true,
+  { id:'revive', cat:'players', title:'Revive in Range', desc:'Revive every player within 10 units of you.', kind:'action', fav:true, hint:'10 m',
     run:()=>['ok','3 players revived'] },
-  { id:'tpwp', cat:'utility', title:'Teleport to Waypoint', desc:'Move to your map waypoint and land on the ground.', kind:'action',
+  { id:'tpwp', cat:'utility', title:'Teleport to Waypoint', desc:'Move to your map waypoint and land on the ground.', kind:'action', hint:'1.2 km',
     run:()=>['info','Teleported to waypoint'] },
   { id:'coords', cat:'utility', title:'Copy Coords', desc:'Copy your position as a vector4 for config files.', kind:'action',
     run:()=>['info','Coords copied','vector4(-43.92, 33.08, 71.81, 265.75)'] },
@@ -911,14 +922,19 @@ function staggerIn(els, step, from = 'translateX(-22px)', base = 0){
 }
 // Animate siblings from where they were to where they are now (FLIP), so the rest of a stack glides instead of jumping.
 // Rows are matched by command id because a re-render replaces the elements.
+let SCALE = 1;   // screen px per stage px, kept current by fit()
+const pose = el => { const cs = getComputedStyle(el); return { opacity:cs.opacity, transform:cs.transform }; };
+// FLIP: each item starts from where it is on screen right now (even mid-glide), then settles into its new place.
 function glide(box, sel, mutate){
   const key = el => el.dataset.id || el;
-  const before = new Map($$(sel, box).map(el => [key(el), el.offsetTop - box.scrollTop]));
+  const before = new Map($$(sel, box).map(el => { const r = el.getBoundingClientRect(); return [key(el), [r.left, r.top]]; }));
   mutate();
   $$(sel, box).forEach(el => {
-    if (!before.has(key(el))) return;
-    const dy = before.get(key(el)) - (el.offsetTop - box.scrollTop);
-    if (dy) el.animate([{ transform:`translateY(${dy}px)` }, { transform:'none' }], { duration:dur(480), easing:EASE_OUT });
+    const b = before.get(key(el)); if (!b) return;
+    el.getAnimations().forEach(a => { if (a.id === 'glide') a.cancel(); });
+    const r = el.getBoundingClientRect(), dx = (b[0] - r.left) / SCALE, dy = (b[1] - r.top) / SCALE;
+    if (Math.abs(dx) < .5 && Math.abs(dy) < .5) return;
+    el.animate([{ transform:`translate(${dx}px,${dy}px)` }, { transform:'none' }], { duration:dur(480), easing:EASE_OUT, id:'glide' });
   });
 }
 const OFF_RIGHT = 'translateX(calc(100% + 80px))';
@@ -926,16 +942,25 @@ function toast(type, title, body){
   const box = $('#toasts'), slot = document.createElement('div');
   slot.className = 'toast-slot';
   slot.innerHTML = toastHTML(type, title, body);
-  glide(box, '.toast-slot', () => box.prepend(slot));
-  slot.firstElementChild.animate([{ transform:OFF_RIGHT, opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(620), easing:EASE_OUT });
+  glide(box, '.toast-slot:not([data-leaving])', () => box.prepend(slot));
+  const t = slot.firstElementChild;
+  t.animate([{ transform:`translateX(${t.offsetWidth + 80}px)`, opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(620), easing:EASE_OUT });
   $$('.toast-slot:not([data-leaving])', box).slice(3).forEach(dismissToast);
   slot._t = setTimeout(() => dismissToast(slot), 4200);
 }
+// A leaving toast steps out of the stack straight away (the others glide up) and slides off from wherever it is.
 function dismissToast(slot){
-  if (slot.dataset.leaving) return;
-  slot.dataset.leaving = '1'; clearTimeout(slot._t);
-  slot.firstElementChild.animate([{ transform:'none', opacity:1 }, { transform:OFF_RIGHT, opacity:0 }], { duration:dur(420), easing:EASE_IN, fill:'forwards' })
-    .finished.then(() => { const box = slot.parentNode; if (box) glide(box, '.toast-slot', () => slot.remove()); }, quiet);
+  const box = slot.parentNode;
+  if (slot.dataset.leaving || !box) return;
+  clearTimeout(slot._t);
+  const t = slot.firstElementChild, from = pose(t), top = (slot.getBoundingClientRect().top - box.getBoundingClientRect().top) / SCALE;
+  t.getAnimations().forEach(a => a.cancel());
+  glide(box, '.toast-slot:not([data-leaving])', () => {
+    slot.getAnimations().forEach(a => a.cancel());
+    slot.style.top = top + 'px'; slot.dataset.leaving = '1';
+  });
+  t.animate([from, { transform:`translateX(${t.offsetWidth + 80}px)`, opacity:0 }], { duration:dur(420), easing:EASE_IN, fill:'forwards' })
+    .finished.then(() => slot.remove(), quiet);
 }
 
 /* ---------- chrome ---------- */
@@ -956,7 +981,7 @@ function renderIbar(){
   const items = IBAR[state.scene];
   if (!items || (state.scene === 'menu' && !state.menuOpen)) { $('#ibar').innerHTML = ''; return; }
   $('#ibar').innerHTML = items.map(([ks, label, press], n) =>
-    `${n ? '<span class="ib-sep">/</span>' : ''}<button type="button" class="ib dsp" data-press="${press}" tabindex="-1">${ks.map(k => `<span class="key sm">${esc(k)}</span>`).join('<span class="ib-or">/</span>')}${label}</button>`).join('');
+    `${n ? '<span class="ib-sep">/</span>' : ''}<button type="button" class="ib dsp" data-press="${press}" tabindex="-1">${ks.map(k => `<span class="key sm">${esc(k)}</span>`).join('<span class="ib-or">/</span>')}${label === '@enter' ? `<span class="ib-verb">${enterVerb()}</span>` : label}</button>`).join('');
 }
 
 function applyLook(){
@@ -1000,16 +1025,26 @@ function formHTML(c){
   }).join('');
   return `<div class="r-form">${f}<button type="button" class="btn dsp${c.danger ? ' danger' : ''}" data-run="${c.id}" tabindex="-1">${esc(c.action || 'Confirm')}<span class="key sm">↵</span></button></div>`;
 }
+const pretty = v => /^[A-Z]+$/.test(v) ? v.charAt(0) + v.slice(1).toLowerCase() : v;
+const rowValText = c => c.now != null ? `${c.nowLabel || 'Now'}: ${pretty(c.now)}` : c.hint || '';
+const rowVal = c => rowValText(c) ? `<span class="r-val">${esc(rowValText(c))}</span>` : '';
+function enterVerb(){
+  const c = byId(state.selId);
+  if (!c) return 'Select';
+  if (state.open === c.id) return c.action || 'Apply';
+  return { toggle:c.on ? 'Turn off' : 'Turn on', form:'Open', action:'Run', bind:'Rebind' }[c.kind];
+}
+function updateEnterVerb(){ const v = $('#ibar .ib-verb'), t = enterVerb(); if (v && v.textContent !== t) v.textContent = t; }
 function rowHTML(c){
   const sel = c.id === state.selId, open = state.open === c.id;
   let end = '';
   if (c.kind === 'toggle') end = `<span class="tog-l">${c.on ? 'On' : 'Off'}</span><span class="tog${c.on ? ' on' : ''}"><i></i></span>`;
-  else if (c.kind === 'form') end = ICON.chev;
+  else if (c.kind === 'form') end = `<span class="r-chev">${ICON.chev}</span><svg class="pm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/><path class="pm-v" d="M12 6v12"/></svg>`;
   else if (c.kind === 'action') end = '<span class="key sm">↵</span>';
   else if (c.kind === 'bind') end = state.binding === c.id ? '<span class="tog-l blink">Press a key</span>' : `<span class="key">${esc(c.key)}</span>`;
   return `<div class="row${sel ? ' sel' : ''}${open ? ' open' : ''}" data-id="${c.id}">
     <button type="button" class="r-star pn${c.fav ? ' fav' : ''}" data-star="${c.id}" aria-label="Favourite ${esc(c.title)}" aria-pressed="${!!c.fav}" tabindex="-1">${ICON.star}</button>
-    <div class="r-main pn"><div><div class="r-t dsp">${c.fav ? `<span class="r-fav">${ICON.star}</span>` : ''}${esc(c.title)}</div>${c.desc ? `<div class="r-d">${esc(c.desc)}</div>` : ''}</div><div class="r-end">${end}</div></div>
+    <div class="r-main pn"><div><div class="r-t dsp">${c.fav ? `<span class="r-fav">${ICON.star}</span>` : ''}${esc(c.title)}</div>${c.desc ? `<div class="r-d">${esc(c.desc)}</div>` : ''}</div><div class="r-end">${rowVal(c)}${end}</div></div>
     ${open ? `<div class="r-drawer">${formHTML(c)}</div>` : ''}</div>`;
 }
 function ensureVisible(smooth){
@@ -1048,13 +1083,20 @@ function renderMenu(){
 }
 const firstRows = () => $$('#m-list .row').slice(0, 10);
 // One highlight per list that glides to the selected item (the underline variant sits under tabs).
+// Layout position of el inside box, ignoring transforms (rows that are sliding in still report their resting place).
+function offsetIn(el, box){
+  let x = 0, y = 0, n = el;
+  while (n && n !== box){ x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+  return n === box ? { x, y } : { x:el.offsetLeft, y:el.offsetTop };
+}
 function placeGlow(box, target, opts = {}){
   if (!box) return;
   let g = box.querySelector(':scope > .glow');
   const fresh = !g;
   if (fresh){ g = document.createElement('i'); g.className = 'glow'; box.prepend(g); }
   if (!target){ g.style.opacity = '0'; box._g = null; return; }
-  const b = { x:target.offsetLeft, y:target.offsetTop, w:target.offsetWidth, h:target.offsetHeight };
+  if (!target.offsetWidth) return;   // hidden right now; keep the last good spot
+  const o = offsetIn(target, box), b = { x:o.x, y:o.y, w:target.offsetWidth, h:target.offsetHeight };
   if (opts.line){ b.y += b.h - 2; b.h = 2; }
   const put = v => { g.style.transform = `translate(${v.x}px,${v.y}px)`; g.style.width = v.w + 'px'; g.style.height = v.h + 'px'; };
   if (fresh || opts.instant || !box._g){
@@ -1068,6 +1110,7 @@ function placeGlow(box, target, opts = {}){
 function glowMenu(instant){
   placeGlow($('#m-list'), $('#m-list .row.sel > .r-main'), { instant });
   placeGlow($('#m-cats'), $('#m-cats [aria-current="true"]'), { line:true, instant });
+  updateEnterVerb();
   const c = byId(state.selId), d = $('#m-desc'), text = c ? c.desc || '' : '';
   if (d.textContent !== text){ d.textContent = text; d.animate([{ opacity:0 }, { opacity:1 }], { duration:dur(220) }); }
 }
@@ -1077,10 +1120,12 @@ function glowDealer(instant){
 }
 const syncGlows = instant => { glowMenu(instant); glowDealer(instant); };
 // While drawers open or close, rows shift; keep the highlight chasing its row.
-function trackGlow(ms = 560){
-  const end = performance.now() + ms;
-  const tick = () => { glowMenu(); if (performance.now() < end) requestAnimationFrame(tick); };
-  requestAnimationFrame(tick);
+let glowEnd = 0, glowRaf = 0;
+function trackGlow(ms = 1000){
+  glowEnd = Math.max(glowEnd, performance.now() + ms);
+  if (glowRaf) return;
+  const tick = () => { glowMenu(); glowRaf = performance.now() < glowEnd ? requestAnimationFrame(tick) : 0; };
+  glowRaf = requestAnimationFrame(tick);
 }
 function setSel(id, scroll){
   if (state.selId !== id){
@@ -1104,16 +1149,21 @@ function switchCat(id){
   $('#m-list').scrollTop = 0;
   renderMenu();
   staggerIn(firstRows(), 26, 'translateX(-24px)');
+  trackGlow();
 }
 function setCat(d){
   const i = CATS.findIndex(c => c.id === state.cat);
   switchCat(CATS[(i + d + CATS.length) % CATS.length].id);
 }
-function toggleLayout(){ state.grid = !state.grid; renderMenu(); staggerIn(firstRows(), 22, 'translateY(14px)'); }
+function toggleLayout(){ state.grid = !state.grid; renderMenu(); staggerIn(firstRows(), 22, 'translateY(14px)'); trackGlow(); }
 function flash(id){ const r = $(`#m-list .row[data-id="${id}"]`); if (r){ r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash'); } }
 function sideEffects(c){
   if (c.id === 'hud') ui.classList.toggle('hud-off', c.on);
-  if (c.id === 'streamer'){ state.streamer = c.on; renderEntity(); }
+  if (c.id === 'streamer'){
+    state.streamer = c.on; renderEntity();
+    const o = state.open && byId(state.open), dr = o && liveDrawer(o.id);
+    if (dr) o.fields.forEach((f, k) => { const v = f.type === 'player' && dr.querySelector(`.fld[data-fi="${k}"] .pick-v`); if (v) v.textContent = optsOf(f)[f.i || 0]; });
+  }
 }
 function updateToggle(c){
   const r = $(`#m-list .row[data-id="${c.id}"]`);
@@ -1131,7 +1181,7 @@ function toggleFav(c){
 }
 function activate(c){
   if (!c) return;
-  if (c.kind === 'toggle'){ c.on = !c.on; sideEffects(c); toast(...c.msg(c.on)); updateToggle(c); flash(c.id); }
+  if (c.kind === 'toggle'){ c.on = !c.on; sideEffects(c); toast(...c.msg(c.on)); updateToggle(c); flash(c.id); updateEnterVerb(); }
   else if (c.kind === 'form'){ if (state.open === c.id) closeForm(); else openForm(c); }
   else if (c.kind === 'action'){ toast(...c.run()); flash(c.id); }
   else if (c.kind === 'bind'){ state.binding = c.id; renderList(); }
@@ -1142,15 +1192,28 @@ function openForm(c){
   state.open = c.id; state.fi = 0;
   const row = $(`#m-list .row[data-id="${c.id}"]`);
   if (!row){ renderList(); return; }
-  row.querySelectorAll('.r-drawer').forEach(d => d.remove());
+  // Reopening while it is still closing: carry on from its current height instead of restarting at zero.
+  let from = 0;
+  row.querySelectorAll('.r-drawer').forEach(d => { from = Math.max(from, d.getBoundingClientRect().height / SCALE); d.remove(); });
   row.classList.add('open');
   row.insertAdjacentHTML('beforeend', `<div class="r-drawer">${formHTML(c)}</div>`);
   const dr = row.lastElementChild, h = dr.scrollHeight;
-  dr.animate([{ height:'0px' }, { height:h + 'px' }], { duration:dur(480), easing:EASE_OUT })
-    .finished.then(() => { if (state.open === c.id) ensureVisible(true); }, quiet);
-  dr.firstElementChild.animate([{ transform:'translateY(-28px)', opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(480), easing:EASE_OUT });
-  staggerIn($$('.fld, .btn', dr), 55, 'translateX(-18px)', 90);
-  trackGlow();
+  dr.animate([{ height:from + 'px' }, { height:h + 'px' }], { duration:dur(480), easing:EASE_OUT });
+  dr.firstElementChild.animate([{ transform:from ? 'none' : 'translateY(-28px)', opacity:from ? .5 : 0 }, { transform:'none', opacity:1 }], { duration:dur(480), easing:EASE_OUT });
+  if (!from) staggerIn($$('.fld, .btn', dr), 55, 'translateX(-18px)', 90);
+  followRow(row);
+  trackGlow(); updateEnterVerb();
+}
+// Keep a growing drawer in view: the list scrolls with it frame by frame instead of after it finishes.
+function followRow(row, ms = 520){
+  const list = $('#m-list'), end = performance.now() + ms;
+  const tick = () => {
+    if (!row.isConnected) return;
+    const need = row.offsetTop + row.offsetHeight - list.clientHeight;
+    if (list.scrollTop < need) list.scrollTop = Math.min(need, row.offsetTop);
+    if (performance.now() < end) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 }
 function closeForm(){
   const id = state.open; state.open = null;
@@ -1163,7 +1226,7 @@ function closeForm(){
   dr.animate([{ height:dr.offsetHeight + 'px' }, { height:'0px' }], { duration:dur(340), easing:EASE_INOUT, fill:'forwards' })
     .finished.then(() => dr.remove(), quiet);
   dr.firstElementChild.animate([{ transform:'none', opacity:1 }, { transform:'translateY(-22px)', opacity:0 }], { duration:dur(260), easing:EASE_IN, fill:'forwards' });
-  trackGlow(420);
+  trackGlow(420); updateEnterVerb();
 }
 const liveDrawer = id => $(`#m-list .row[data-id="${id}"] .r-drawer:not(.closing)`);
 function setActiveField(k){
@@ -1181,19 +1244,29 @@ function submit(c){
     if (el) el.animate([{ transform:'none' }, { transform:'translateX(-7px)' }, { transform:'translateX(6px)' }, { transform:'translateX(-3px)' }, { transform:'none' }], { duration:dur(360), easing:'ease-out' });
     return;
   }
-  toast(...c.run(vals)); closeForm(); flash(c.id);
+  toast(...c.run(vals));
+  if (c.now != null){ c.now = vals[0]; const v = $(`#m-list .row[data-id="${c.id}"] .r-val`); if (v) slideValue(v, rowValText(c), 1); }
+  closeForm(); flash(c.id);
 }
 function focusField(c, k){ const inp = $(`#f-${c.id}-${k}`); if (inp) inp.focus({ preventScroll:true }); }
 // Old value slides out one way, the new one slides in from the other side.
+// The old value slides out one way and the new one in from the other. Fast repeats show the newest value at once.
 function slideValue(el, text, d){
-  const n = el._n = (el._n || 0) + 1;
-  el.animate([{ transform:'none', opacity:1 }, { transform:`translateX(${-d * 24}px)`, opacity:0 }], { duration:dur(130), easing:EASE_IN, fill:'forwards' })
-    .finished.then(() => {
-      if (el._n !== n) return;
-      el.textContent = text;
-      el.getAnimations().forEach(a => a.cancel());
-      el.animate([{ transform:`translateX(${d * 24}px)`, opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(320), easing:EASE_OUT });
-    }, quiet);
+  el._text = text;
+  if (el._out){
+    el._out.cancel(); el._out = null;
+    el.getAnimations().forEach(a => a.cancel());
+    el.textContent = text;
+    el.animate([{ transform:`translateX(${d * 14}px)`, opacity:.35 }, { transform:'none', opacity:1 }], { duration:dur(220), easing:EASE_OUT });
+    return;
+  }
+  el.getAnimations().forEach(a => a.cancel());
+  const out = el._out = el.animate([{ transform:'none', opacity:1 }, { transform:`translateX(${-d * 24}px)`, opacity:0 }], { duration:dur(130), easing:EASE_IN, fill:'forwards' });
+  out.finished.then(() => {
+    if (el._out !== out) return;
+    el._out = null; el.textContent = el._text; out.cancel();
+    el.animate([{ transform:`translateX(${d * 24}px)`, opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(320), easing:EASE_OUT });
+  }, quiet);
 }
 function cycle(c, k, d){
   const f = c && c.fields[k]; if (!f || f.type === 'text') return;
@@ -1217,19 +1290,26 @@ function menuIntro(){
 function openMenu(){
   if (state.menuOpen) return;
   state.menuOpen = true;
-  [$('#m-menu'), $('#ibar')].forEach(el => el.getAnimations().forEach(a => a.cancel()));
-  renderMenu(); menuIntro();
+  const m = $('#m-menu'), ib = $('#ibar'), midway = !m.hidden && m.getAnimations().length > 0;
+  const from = midway ? pose(m) : null, ibFrom = midway ? pose(ib) : null;
+  [m, ib].forEach(el => el.getAnimations().forEach(a => a.cancel()));
+  renderMenu(); glowMenu(true);
+  if (midway){   // reopened while still closing: turn around from where it is
+    m.animate([from, { opacity:1, transform:'none' }], { duration:dur(420), easing:EASE_OUT });
+    ib.animate([ibFrom, { opacity:1, transform:'none' }], { duration:dur(420), easing:EASE_OUT });
+  } else { menuIntro(); trackGlow(); }
 }
 function closeMenu(){
   if (!state.menuOpen) return;
   state.menuOpen = false; state.open = null;
-  const m = $('#m-menu');
-  $('#ibar').animate([{ opacity:1, transform:'none' }, { opacity:0, transform:'translateY(16px)' }], { duration:dur(260), easing:EASE_IN, fill:'forwards' });
-  m.animate([{ opacity:1, transform:'none' }, { opacity:0, transform:'translateX(-60px)' }], { duration:dur(320), easing:EASE_IN, fill:'forwards' })
+  const m = $('#m-menu'), ib = $('#ibar'), from = pose(m), ibFrom = pose(ib);
+  [m, ib].forEach(el => el.getAnimations().forEach(a => a.cancel()));
+  ib.animate([ibFrom, { opacity:0, transform:'translateY(16px)' }], { duration:dur(260), easing:EASE_IN, fill:'forwards' });
+  m.animate([from, { opacity:0, transform:'translateX(-60px)' }], { duration:dur(320), easing:EASE_IN, fill:'forwards' })
     .finished.then(() => {
       if (state.menuOpen) return;
       renderMenu();
-      [m, $('#ibar')].forEach(el => el.getAnimations().forEach(a => a.cancel()));
+      [m, ib].forEach(el => el.getAnimations().forEach(a => a.cancel()));
       $('#m-help').animate([{ opacity:0, transform:'translateY(-12px)' }, { opacity:1, transform:'none' }], { duration:dur(420), easing:EASE_OUT });
     }, quiet);
 }
@@ -1258,6 +1338,7 @@ $('#m-list').addEventListener('click', e => {
 });
 $('#m-list').addEventListener('mouseover', e => { const r = e.target.closest('.row'); if (r) setSel(r.dataset.id); });
 
+const MENU_KEYS = new Set(['ArrowDown','ArrowUp','ArrowLeft','ArrowRight','Enter',' ','Tab','f','q','e','x','/','Escape']);
 function menuKey(e, typing){
   const k = e.key;
   if (!state.menuOpen){
@@ -1272,8 +1353,8 @@ function menuKey(e, typing){
     if (k === 'Tab' && open && e.target.dataset.fk != null){ e.preventDefault(); nextField(open); }
     return;
   }
-  if (keyName(e) === byId('kb1').key){ e.preventDefault(); closeMenu(); return; }
   const lower = k.length === 1 ? k.toLowerCase() : k;
+  if (keyName(e) === byId('kb1').key && !MENU_KEYS.has(lower)){ e.preventDefault(); closeMenu(); return; }
   switch (lower){
     case 'ArrowDown': e.preventDefault(); move(1); break;
     case 'ArrowUp': e.preventDefault(); move(-1); break;
@@ -1652,10 +1733,11 @@ function dSelect(i){ if (i === state.d.i) return; const dir = i > state.d.i ? 1 
 function dMove(n){ const l = dList(); dSelect((state.d.i + n + l.length) % l.length); }
 function dSetClass(cls){ if (cls === state.d.cls) return; state.d.cls = cls; state.d.i = 0; renderDealer(); dListIn(); }
 function dClass(n){ const i = DCLS.indexOf(state.d.cls); dSetClass(DCLS[(i + n + DCLS.length) % DCLS.length]); }
-function setPaint(i){
+function setPaint(i, d){
+  const dir = d || (i > state.d.paint ? 1 : -1);
   state.d.paint = i;
   $$('#d-detail [data-paint]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.paint === i)));
-  slideValue($('#d-detail .sw-label'), PAINTS[i][0], 1);
+  slideValue($('#d-detail .sw-label'), PAINTS[i][0], dir);
 }
 function setPay(d){
   state.d.pay = (state.d.pay + d + 3) % 3;
@@ -1686,8 +1768,8 @@ function dealerKey(e){
   const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
   const map = {
     ArrowDown:() => dMove(1), ArrowUp:() => dMove(-1), q:() => dClass(-1), e:() => dClass(1),
-    ArrowLeft:() => setPaint((state.d.paint + PAINTS.length - 1) % PAINTS.length),
-    ArrowRight:() => setPaint((state.d.paint + 1) % PAINTS.length),
+    ArrowLeft:() => setPaint((state.d.paint + PAINTS.length - 1) % PAINTS.length, -1),
+    ArrowRight:() => setPaint((state.d.paint + 1) % PAINTS.length, 1),
     t: testDrive, Enter: buy,
   };
   if (map[k] && !e.repeat){ e.preventDefault(); map[k](); }
@@ -1786,6 +1868,7 @@ function setBg(mode){
 function fit(){
   const r = frame.getBoundingClientRect();
   const s = Math.min(r.width / 1920, r.height / 1080);
+  SCALE = s || 1;
   stage.style.transform = `translate(${(r.width - 1920 * s) / 2}px, ${(r.height - 1080 * s) / 2}px) scale(${s})`;
 }
 new ResizeObserver(fit).observe(frame);
