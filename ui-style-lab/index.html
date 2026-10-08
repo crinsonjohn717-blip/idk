@@ -179,8 +179,8 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .pick button:hover{color:var(--ink)}
 .pick-v{flex:1;min-width:200px;text-align:center;font-size:20px;white-space:nowrap}
 .fld.act .pick,.fld.act .inp,.inp:focus{box-shadow:inset 0 0 0 2px var(--accent)}
-.tog{position:relative;width:52px;height:28px;border-radius:999px;background:color-mix(in srgb,currentColor 22%,transparent);flex:none;transition:background .2s}
-.tog i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:currentColor;transition:transform .2s}
+.tog{position:relative;width:52px;height:28px;border-radius:999px;background:color-mix(in srgb,currentColor 22%,transparent);flex:none;transition:background .3s ease}
+.tog i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:currentColor;transition:transform .38s cubic-bezier(.16,1,.3,1),background .3s ease}
 .tog.on{background:var(--accent)}
 .tog.on i{transform:translateX(24px);background:var(--accent-ink)}
 .row.sel .tog.on{background:var(--sel-ink)}
@@ -189,7 +189,8 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .ui[data-skin="native"] .tog{--tick:#06080a;width:28px;height:28px;border-radius:0;background:transparent;box-shadow:inset 0 0 0 2.5px currentColor}
 .ui[data-skin="native"] .tog i{display:none}
 .ui[data-skin="native"] .tog.on{background:currentColor}
-.ui[data-skin="native"] .tog.on::after{content:"";position:absolute;left:10px;top:4px;width:8px;height:15px;border:solid var(--tick);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.ui[data-skin="native"] .tog.on::after{content:"";position:absolute;left:10px;top:4px;width:8px;height:15px;border:solid var(--tick);border-width:0 3px 3px 0;transform:rotate(45deg);animation:tick .3s cubic-bezier(.16,1,.3,1)}
+@keyframes tick{from{opacity:0;transform:rotate(45deg) scale(.3)}}
 .ui[data-skin="native"] .row.sel .tog{--tick:var(--sel-bg)}
 .tog-l{font-family:var(--f-meta);font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;min-width:34px;opacity:.75}
 
@@ -202,8 +203,7 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 
 /* notifications */
 .toasts{position:absolute;right:64px;top:64px;width:460px;display:flex;flex-direction:column;gap:10px;z-index:5;pointer-events:none}
-.toast{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:start;padding:14px 18px 16px 14px;overflow:hidden;animation:t-in .28s cubic-bezier(.2,.8,.2,1)}
-.toast.static{animation:none}
+.toast{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:start;padding:14px 18px 16px 14px;overflow:hidden}
 .toast.solo{align-items:center;padding-block:12px 13px}
 .toast.solo .t-t{margin-top:0}
 .t-ic{width:44px;height:44px;display:grid;place-items:center;background:var(--tc);color:var(--tc-ink);border-radius:var(--radius-sm)}
@@ -215,9 +215,6 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .t-ok{--tc:var(--ok);--tc-ink:#0b0c0e}
 .t-warn{--tc:var(--warn);--tc-ink:#0b0c0e}
 .t-bad{--tc:var(--bad);--tc-ink:#ffffff}
-.toast.out{animation:t-out .3s forwards}
-@keyframes t-in{from{opacity:0;transform:translateX(34px)}}
-@keyframes t-out{to{opacity:0;transform:translateX(34px)}}
 @keyframes t-bar{to{transform:scaleX(0)}}
 
 /* ---------- screen: admin menu ---------- */
@@ -242,7 +239,7 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .m-countline{margin:16px 0 10px}
 .list{position:relative;display:flex;flex-direction:column;gap:6px;max-height:566px;overflow-y:auto;padding-right:8px;scrollbar-width:thin;scrollbar-color:var(--ink-dim) transparent}
 .list.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start}
-.row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:6px}
+.row{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0 6px}
 .list.grid .row.open{grid-column:1/-1}
 .r-star{display:grid;place-items:center;border:0;cursor:pointer}
 .r-star svg{width:24px;height:24px;opacity:.8}
@@ -254,13 +251,15 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .list.grid .r-d{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .list.grid .r-main{min-height:92px}
 .r-end{display:flex;align-items:center;gap:10px}
-.r-end svg{width:22px;height:22px;transition:transform .2s}
+.r-end svg{width:22px;height:22px;transition:transform .38s cubic-bezier(.16,1,.3,1)}
 .row.open .r-end svg{transform:rotate(180deg)}
 .row.sel .r-main{background:var(--sel-bg);color:var(--sel-ink)}
 .row.sel .r-d{color:var(--sel-dim)}
 .row.flash .r-main{animation:flash .45s}
 @keyframes flash{50%{filter:brightness(1.35)}}
-.r-form{grid-column:2;display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 20px;padding:18px 22px;background:var(--panel-2);box-shadow:var(--ring),var(--drop);border-radius:var(--radius);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop)}
+.r-drawer{grid-column:2;overflow:hidden}
+.r-drawer.closing{pointer-events:none}
+.r-form{margin-top:6px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 20px;padding:18px 22px;background:var(--panel-2);box-shadow:var(--ring),var(--drop);border-radius:var(--radius);backdrop-filter:var(--backdrop);-webkit-backdrop-filter:var(--backdrop)}
 .blink{animation:blink 1s steps(2) infinite}
 @keyframes blink{50%{opacity:.25}}
 .empty{padding:22px;color:var(--ink-dim);font-size:19px}
@@ -711,12 +710,41 @@ const inkFor = hex => (1.05 / (lum(hex) + .05)) >= 3.4 ? '#ffffff' : '#0b0c0e';
 function toastHTML(type, title, body, stat){
   return `<div class="toast pn t-${type}${body ? '' : ' solo'}${stat ? ' static' : ''}"><span class="t-ic">${ICON[type]}</span><div><div class="t-t dsp">${esc(title)}</div>${body ? `<div class="t-b">${esc(body)}</div>` : ''}</div>${stat ? '' : '<i class="t-bar"></i>'}</div>`;
 }
+/* Motion: everything slides with one ease-out curve. Reduced motion turns it all off. */
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const dur = ms => reduceMotion.matches ? 0 : ms;
+const EASE_OUT = 'cubic-bezier(.16,1,.3,1)', EASE_IN = 'cubic-bezier(.55,0,.75,.2)', EASE_INOUT = 'cubic-bezier(.65,0,.35,1)';
+const quiet = () => {};
+function staggerIn(els, step, from = 'translateX(-22px)', base = 0){
+  els.filter(Boolean).forEach((el, i) => el.animate([{ opacity:0, transform:from }, { opacity:1, transform:'none' }], { duration:dur(460), delay:dur(base + i * step), easing:EASE_OUT, fill:'backwards' }));
+}
+// Animate siblings from where they were to where they are now (FLIP), so the rest of a stack glides instead of jumping.
+// Rows are matched by command id because a re-render replaces the elements.
+function glide(box, sel, mutate){
+  const key = el => el.dataset.id || el;
+  const before = new Map($$(sel, box).map(el => [key(el), el.offsetTop - box.scrollTop]));
+  mutate();
+  $$(sel, box).forEach(el => {
+    if (!before.has(key(el))) return;
+    const dy = before.get(key(el)) - (el.offsetTop - box.scrollTop);
+    if (dy) el.animate([{ transform:`translateY(${dy}px)` }, { transform:'none' }], { duration:dur(480), easing:EASE_OUT });
+  });
+}
+const OFF_RIGHT = 'translateX(calc(100% + 80px))';
 function toast(type, title, body){
-  const box = $('#toasts');
-  box.insertAdjacentHTML('afterbegin', toastHTML(type, title, body));
-  const el = box.firstElementChild;
-  while (box.children.length > 3) box.lastElementChild.remove();
-  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 320); }, 4200);
+  const box = $('#toasts'), slot = document.createElement('div');
+  slot.className = 'toast-slot';
+  slot.innerHTML = toastHTML(type, title, body);
+  glide(box, '.toast-slot', () => box.prepend(slot));
+  slot.firstElementChild.animate([{ transform:OFF_RIGHT, opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(620), easing:EASE_OUT });
+  $$('.toast-slot:not([data-leaving])', box).slice(3).forEach(dismissToast);
+  slot._t = setTimeout(() => dismissToast(slot), 4200);
+}
+function dismissToast(slot){
+  if (slot.dataset.leaving) return;
+  slot.dataset.leaving = '1'; clearTimeout(slot._t);
+  slot.firstElementChild.animate([{ transform:'none', opacity:1 }, { transform:OFF_RIGHT, opacity:0 }], { duration:dur(420), easing:EASE_IN, fill:'forwards' })
+    .finished.then(() => { const box = slot.parentNode; if (box) glide(box, '.toast-slot', () => slot.remove()); }, quiet);
 }
 
 /* ---------- chrome ---------- */
@@ -789,13 +817,16 @@ function rowHTML(c){
   return `<div class="row${sel ? ' sel' : ''}${open ? ' open' : ''}" data-id="${c.id}">
     <button type="button" class="r-star pn${c.fav ? ' fav' : ''}" data-star="${c.id}" aria-label="Favourite ${esc(c.title)}" aria-pressed="${!!c.fav}" tabindex="-1">${ICON.star}</button>
     <div class="r-main pn"><div><div class="r-t dsp">${esc(c.title)}</div>${c.desc ? `<div class="r-d">${esc(c.desc)}</div>` : ''}</div><div class="r-end">${end}</div></div>
-    ${open ? formHTML(c) : ''}</div>`;
+    ${open ? `<div class="r-drawer">${formHTML(c)}</div>` : ''}</div>`;
 }
-function ensureVisible(){
+function ensureVisible(smooth){
   const list = $('#m-list'), el = list.querySelector('.row.sel');
   if (!el) return;
-  if (el.offsetTop < list.scrollTop) list.scrollTop = el.offsetTop;
-  else if (el.offsetTop + el.offsetHeight > list.scrollTop + list.clientHeight) list.scrollTop = el.offsetTop + el.offsetHeight - list.clientHeight;
+  let top = null;
+  if (el.offsetTop < list.scrollTop) top = el.offsetTop;
+  else if (el.offsetTop + el.offsetHeight > list.scrollTop + list.clientHeight) top = Math.min(el.offsetTop, el.offsetTop + el.offsetHeight - list.clientHeight);
+  if (top == null) return;
+  if (smooth && !reduceMotion.matches) list.scrollTo({ top, behavior:'smooth' }); else list.scrollTop = top;
 }
 function updatePos(list){
   const i = list.findIndex(c => c.id === state.selId);
@@ -821,83 +852,182 @@ function renderMenu(){
   $('#m-help-key').textContent = byId('kb1').key;
   renderList(); renderIbar();
 }
-function setSel(id){
-  if (state.selId === id) return;
-  state.selId = id;
-  $$('#m-list .row').forEach(r => r.classList.toggle('sel', r.dataset.id === id));
-  updatePos(cmds());
+const firstRows = () => $$('#m-list .row').slice(0, 10);
+function setSel(id, scroll){
+  if (state.selId !== id){
+    state.selId = id;
+    $$('#m-list .row').forEach(r => r.classList.toggle('sel', r.dataset.id === id));
+    updatePos(cmds());
+  }
+  if (scroll) ensureVisible();
 }
 function move(d){
   const list = curList(); if (!list.length) return;
   const i = list.findIndex(c => c.id === state.selId);
-  state.selId = list[(i + d + list.length) % list.length].id;
-  if (state.open && state.open !== state.selId) state.open = null;
-  renderList();
+  const id = list[(i + d + list.length) % list.length].id;
+  if (state.open && state.open !== id) closeForm();
+  setSel(id, true);
+}
+function switchCat(id){
+  state.cat = id; state.open = null; state.selId = null;
+  $('#m-list').scrollTop = 0;
+  renderMenu();
+  staggerIn(firstRows(), 26, 'translateX(-24px)');
 }
 function setCat(d){
   const i = CATS.findIndex(c => c.id === state.cat);
-  state.cat = CATS[(i + d + CATS.length) % CATS.length].id;
-  state.open = null; state.selId = null; renderMenu();
+  switchCat(CATS[(i + d + CATS.length) % CATS.length].id);
 }
+function toggleLayout(){ state.grid = !state.grid; renderMenu(); staggerIn(firstRows(), 22, 'translateY(14px)'); }
 function flash(id){ const r = $(`#m-list .row[data-id="${id}"]`); if (r){ r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash'); } }
 function sideEffects(c){
   if (c.id === 'hud') ui.classList.toggle('hud-off', c.on);
   if (c.id === 'streamer'){ state.streamer = c.on; renderEntity(); }
 }
+function updateToggle(c){
+  const r = $(`#m-list .row[data-id="${c.id}"]`);
+  if (!r){ renderList(); return; }
+  r.querySelector('.tog').classList.toggle('on', c.on);
+  r.querySelector('.tog-l').textContent = c.on ? 'On' : 'Off';
+}
+function toggleFav(c){
+  if (!c) return;
+  c.fav = !c.fav; state.selId = c.id;
+  glide($('#m-list'), '.row', renderList);
+  const star = $(`#m-list [data-star="${c.id}"] svg`);
+  if (star && c.fav) star.animate([{ transform:'scale(1.6)' }, { transform:'none' }], { duration:dur(420), easing:'cubic-bezier(.34,1.56,.64,1)' });
+}
 function activate(c){
   if (!c) return;
-  if (c.kind === 'toggle'){ c.on = !c.on; sideEffects(c); toast(...c.msg(c.on)); renderList(); flash(c.id); }
-  else if (c.kind === 'form'){ state.open = state.open === c.id ? null : c.id; state.fi = 0; renderList(); }
+  if (c.kind === 'toggle'){ c.on = !c.on; sideEffects(c); toast(...c.msg(c.on)); updateToggle(c); flash(c.id); }
+  else if (c.kind === 'form'){ if (state.open === c.id) closeForm(); else openForm(c); }
   else if (c.kind === 'action'){ toast(...c.run()); flash(c.id); }
   else if (c.kind === 'bind'){ state.binding = c.id; renderList(); }
+}
+// Options drawer: slides open under the row, fields follow one after another.
+function openForm(c){
+  if (state.open && state.open !== c.id) closeForm();
+  state.open = c.id; state.fi = 0;
+  const row = $(`#m-list .row[data-id="${c.id}"]`);
+  if (!row){ renderList(); return; }
+  row.querySelectorAll('.r-drawer').forEach(d => d.remove());
+  row.classList.add('open');
+  row.insertAdjacentHTML('beforeend', `<div class="r-drawer">${formHTML(c)}</div>`);
+  const dr = row.lastElementChild, h = dr.scrollHeight;
+  dr.animate([{ height:'0px' }, { height:h + 'px' }], { duration:dur(480), easing:EASE_OUT })
+    .finished.then(() => { if (state.open === c.id) ensureVisible(true); }, quiet);
+  dr.firstElementChild.animate([{ transform:'translateY(-28px)', opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(480), easing:EASE_OUT });
+  staggerIn($$('.fld, .btn', dr), 55, 'translateX(-18px)', 90);
+}
+function closeForm(){
+  const id = state.open; state.open = null;
+  if (!id) return;
+  const row = $(`#m-list .row[data-id="${id}"]`); if (!row) return;
+  row.classList.remove('open');
+  const dr = row.querySelector('.r-drawer:not(.closing)'); if (!dr) return;
+  if (dr.contains(document.activeElement)) frame.focus({ preventScroll:true });
+  dr.classList.add('closing');
+  dr.animate([{ height:dr.offsetHeight + 'px' }, { height:'0px' }], { duration:dur(340), easing:EASE_INOUT, fill:'forwards' })
+    .finished.then(() => dr.remove(), quiet);
+  dr.firstElementChild.animate([{ transform:'none', opacity:1 }, { transform:'translateY(-22px)', opacity:0 }], { duration:dur(260), easing:EASE_IN, fill:'forwards' });
+}
+const liveDrawer = id => $(`#m-list .row[data-id="${id}"] .r-drawer:not(.closing)`);
+function setActiveField(k){
+  state.fi = k;
+  const dr = state.open && liveDrawer(state.open);
+  if (dr) $$('.fld', dr).forEach(f => f.classList.toggle('act', +f.dataset.fi === k));
 }
 function submit(c){
   const vals = c.fields.map(f => f.type === 'text' ? (f.value || '').trim() : optsOf(f)[f.i || 0]);
   const miss = c.fields.findIndex((f, k) => f.type === 'text' && f.req && !vals[k]);
   if (miss > -1){
-    const lab = c.fields[miss].label;
-    toast('bad', `${lab} is required`);
-    state.fi = miss; renderList(); focusField(c, miss); return;
+    toast('bad', `${c.fields[miss].label} is required`);
+    setActiveField(miss); focusField(c, miss);
+    const fld = liveDrawer(c.id); const el = fld && fld.querySelector(`.fld[data-fi="${miss}"]`);
+    if (el) el.animate([{ transform:'none' }, { transform:'translateX(-7px)' }, { transform:'translateX(6px)' }, { transform:'translateX(-3px)' }, { transform:'none' }], { duration:dur(360), easing:'ease-out' });
+    return;
   }
-  toast(...c.run(vals)); state.open = null; renderList(); flash(c.id);
+  toast(...c.run(vals)); closeForm(); flash(c.id);
 }
 function focusField(c, k){ const inp = $(`#f-${c.id}-${k}`); if (inp) inp.focus({ preventScroll:true }); }
+// Old value slides out one way, the new one slides in from the other side.
+function slideValue(el, text, d){
+  const n = el._n = (el._n || 0) + 1;
+  el.animate([{ transform:'none', opacity:1 }, { transform:`translateX(${-d * 24}px)`, opacity:0 }], { duration:dur(130), easing:EASE_IN, fill:'forwards' })
+    .finished.then(() => {
+      if (el._n !== n) return;
+      el.textContent = text;
+      el.getAnimations().forEach(a => a.cancel());
+      el.animate([{ transform:`translateX(${d * 24}px)`, opacity:0 }, { transform:'none', opacity:1 }], { duration:dur(320), easing:EASE_OUT });
+    }, quiet);
+}
 function cycle(c, k, d){
-  const f = c.fields[k]; if (!f || f.type === 'text') return;
-  const n = optsOf(f).length; f.i = ((f.i || 0) + d + n) % n; state.fi = k; renderList();
+  const f = c && c.fields[k]; if (!f || f.type === 'text') return;
+  const o = optsOf(f), n = o.length;
+  f.i = ((f.i || 0) + d + n) % n;
+  setActiveField(k);
+  const dr = liveDrawer(c.id), v = dr && dr.querySelector(`.fld[data-fi="${k}"] .pick-v`);
+  if (v) slideValue(v, o[f.i], d); else renderList();
 }
 function nextField(c){
-  state.fi = (state.fi + 1) % c.fields.length; renderList();
+  setActiveField((state.fi + 1) % c.fields.length);
   if (c.fields[state.fi].type === 'text') focusField(c, state.fi); else frame.focus({ preventScroll:true });
+}
+function ibarIn(delay = 140){ $('#ibar').animate([{ opacity:0, transform:'translateY(16px)' }, { opacity:1, transform:'none' }], { duration:dur(460), delay:dur(delay), easing:EASE_OUT, fill:'backwards' }); }
+function menuIntro(){
+  const m = $('#m-menu');
+  m.animate([{ opacity:0, transform:'translateX(-60px)' }, { opacity:1, transform:'none' }], { duration:dur(560), easing:EASE_OUT });
+  staggerIn([...$$('#m-cats .m-cat'), ...firstRows()], 28, 'translateX(-28px)', 80);
+  ibarIn();
+}
+function openMenu(){
+  if (state.menuOpen) return;
+  state.menuOpen = true;
+  [$('#m-menu'), $('#ibar')].forEach(el => el.getAnimations().forEach(a => a.cancel()));
+  renderMenu(); menuIntro();
+}
+function closeMenu(){
+  if (!state.menuOpen) return;
+  state.menuOpen = false; state.open = null;
+  const m = $('#m-menu');
+  $('#ibar').animate([{ opacity:1, transform:'none' }, { opacity:0, transform:'translateY(16px)' }], { duration:dur(260), easing:EASE_IN, fill:'forwards' });
+  m.animate([{ opacity:1, transform:'none' }, { opacity:0, transform:'translateX(-60px)' }], { duration:dur(320), easing:EASE_IN, fill:'forwards' })
+    .finished.then(() => {
+      if (state.menuOpen) return;
+      renderMenu();
+      [m, $('#ibar')].forEach(el => el.getAnimations().forEach(a => a.cancel()));
+      $('#m-help').animate([{ opacity:0, transform:'translateY(-12px)' }, { opacity:1, transform:'none' }], { duration:dur(420), easing:EASE_OUT });
+    }, quiet);
 }
 
 $('#m-q-ic').outerHTML = ICON.search;
-$('#m-cats').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (!b) return; state.cat = b.dataset.cat; state.open = null; state.selId = null; renderMenu(); });
-$('#m-lay').addEventListener('click', () => { state.grid = !state.grid; renderMenu(); });
+$('#m-cats').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) switchCat(b.dataset.cat); });
+$('#m-lay').addEventListener('click', toggleLayout);
 $('#m-q').addEventListener('input', e => { state.q = e.target.value; state.selId = null; state.open = null; renderList(); });
-$('#m-help').addEventListener('click', () => { state.menuOpen = true; renderMenu(); });
+$('#m-help').addEventListener('click', openMenu);
 $('#m-list').addEventListener('input', e => {
   const k = e.target.dataset.fk; if (k == null || !state.open) return;
   byId(state.open).fields[+k].value = e.target.value;
 });
 $('#m-list').addEventListener('click', e => {
+  if (e.target.closest('.r-drawer.closing')) return;
   const star = e.target.closest('[data-star]');
-  if (star){ const c = byId(star.dataset.star); c.fav = !c.fav; state.selId = c.id; renderList(); return; }
+  if (star){ toggleFav(byId(star.dataset.star)); return; }
   const cyc = e.target.closest('[data-cyc]');
   if (cyc){ cycle(byId(state.open), +cyc.dataset.fk, +cyc.dataset.cyc); return; }
   const run = e.target.closest('[data-run]');
   if (run){ submit(byId(run.dataset.run)); return; }
   const fld = e.target.closest('.fld');
-  if (fld){ state.fi = +fld.dataset.fi; $$('#m-list .fld').forEach(f => f.classList.toggle('act', f === fld)); return; }
+  if (fld){ setActiveField(+fld.dataset.fi); return; }
   const main = e.target.closest('.r-main');
-  if (main){ const id = main.parentElement.dataset.id; state.selId = id; activate(byId(id)); }
+  if (main){ const id = main.parentElement.dataset.id; if (state.open && state.open !== id) closeForm(); setSel(id); activate(byId(id)); }
 });
 $('#m-list').addEventListener('mouseover', e => { const r = e.target.closest('.row'); if (r) setSel(r.dataset.id); });
 
 function menuKey(e, typing){
   const k = e.key;
   if (!state.menuOpen){
-    if (keyName(e) === byId('kb1').key || k === 'Enter'){ e.preventDefault(); state.menuOpen = true; renderMenu(); }
+    if (keyName(e) === byId('kb1').key || k === 'Enter'){ e.preventDefault(); openMenu(); }
     return;
   }
   const open = state.open ? byId(state.open) : null;
@@ -908,6 +1038,7 @@ function menuKey(e, typing){
     if (k === 'Tab' && open && e.target.dataset.fk != null){ e.preventDefault(); nextField(open); }
     return;
   }
+  if (keyName(e) === byId('kb1').key){ e.preventDefault(); closeMenu(); return; }
   const lower = k.length === 1 ? k.toLowerCase() : k;
   switch (lower){
     case 'ArrowDown': e.preventDefault(); move(1); break;
@@ -920,18 +1051,17 @@ function menuKey(e, typing){
       if (open){ e.preventDefault(); cycle(open, state.fi, k === 'ArrowRight' ? 1 : -1); }
       break;
     case 'Tab': if (open){ e.preventDefault(); nextField(open); } break;
-    case 'f': { const c = byId(state.selId); if (c){ c.fav = !c.fav; renderList(); } break; }
+    case 'f': toggleFav(byId(state.selId)); break;
     case 'q': setCat(-1); break;
     case 'e': setCat(1); break;
-    case 'x': state.grid = !state.grid; renderMenu(); break;
+    case 'x': toggleLayout(); break;
     case '/': e.preventDefault(); $('#m-q').focus({ preventScroll:true }); break;
     case 'Escape':
       e.preventDefault();
-      if (state.open){ state.open = null; renderList(); }
-      else if (state.q){ state.q = ''; $('#m-q').value = ''; renderList(); }
-      else { state.menuOpen = false; renderMenu(); }
+      if (state.open) closeForm();
+      else if (state.q){ state.q = ''; $('#m-q').value = ''; renderList(); staggerIn(firstRows(), 22); }
+      else closeMenu();
       break;
-    case 'F1': e.preventDefault(); break;
   }
 }
 
@@ -1005,6 +1135,7 @@ document.addEventListener('keyup', e => { if (e.key.toLowerCase() === 'h') holdE
 
 /* ---------- dealership ---------- */
 const dList = () => VEHICLES.filter(v => v.cls === state.d.cls);
+const payNotes = v => ['Paid from your Maze Bank account.', 'Paid from the cash you carry.', `${money(v.price * 1.08 / 12)} a week for 12 weeks, 8% fee.`];
 const payOpts = () => [`Bank · ${money(state.bank)}`, `Cash · ${money(state.cash)}`, 'Finance · 12 weeks'];
 function renderDealer(){
   const list = dList(), d = state.d;
@@ -1014,7 +1145,7 @@ function renderDealer(){
   $('#d-cls-name').textContent = d.cls;
   $('#d-pos').textContent = `${d.i + 1} / ${list.length}`;
   $('#d-list').innerHTML = list.map((x, i) => `<button type="button" class="vrow pn${i === d.i ? ' sel' : ''}" data-vi="${i}" tabindex="-1"><div><div class="v-n dsp">${esc(x.name)}</div><div class="v-m">${esc(x.make)}</div></div><span class="v-p num">${money(x.price)}</span><span class="v-s${x.stock ? '' : ' out'}">${x.stock ? x.stock + ' in stock' : 'Sold out'}</span></button>`).join('');
-  const notes = [ 'Paid from your Maze Bank account.', 'Paid from the cash you carry.', `${money(v.price * 1.08 / 12)} a week for 12 weeks, 8% fee.` ];
+  const notes = payNotes(v);
   $('#d-detail').innerHTML = `
     <div><span class="meta">${esc(v.make)}</span><h3 class="dd-name dsp">${esc(v.name)}</h3>
       <div class="dd-sub"><span>${v.cls === 'Bikes' ? 'Motorcycle' : v.cls.replace(/s$/, '')}</span><span>${v.seats} seats</span><span class="${v.stock ? '' : 'out'}">${v.stock ? v.stock + ' in stock' : 'Sold out'}</span></div></div>
@@ -1025,8 +1156,22 @@ function renderDealer(){
     <div class="pay"><span class="meta">Payment</span><div class="pick"><button type="button" data-pay="-1" aria-label="Previous payment option" tabindex="-1">‹</button><span class="pick-v dsp num">${payOpts()[d.pay]}</span><button type="button" data-pay="1" aria-label="Next payment option" tabindex="-1">›</button></div><div class="pay-note">${notes[d.pay]}</div></div>
     <div class="dd-btns"><button type="button" class="btn ghost dsp" data-dact="test" tabindex="-1"><span class="key sm">T</span>Test drive</button><button type="button" class="btn dsp" data-dact="buy" tabindex="-1">Purchase<span class="key sm">↵</span></button></div>`;
 }
-function dMove(n){ const l = dList(); state.d.i = (state.d.i + n + l.length) % l.length; renderDealer(); }
-function dClass(n){ const i = DCLS.indexOf(state.d.cls); state.d.cls = DCLS[(i + n + DCLS.length) % DCLS.length]; state.d.i = 0; renderDealer(); }
+function dDetailIn(dir){ staggerIn([...$('#d-detail').children], 34, `translateY(${dir * 16}px)`); }
+function dListIn(){ staggerIn($$('#d-list .vrow'), 32, 'translateX(-24px)'); dDetailIn(1); }
+function dSelect(i){ if (i === state.d.i) return; const dir = i > state.d.i ? 1 : -1; state.d.i = i; renderDealer(); dDetailIn(dir); }
+function dMove(n){ const l = dList(); dSelect((state.d.i + n + l.length) % l.length); }
+function dSetClass(cls){ if (cls === state.d.cls) return; state.d.cls = cls; state.d.i = 0; renderDealer(); dListIn(); }
+function dClass(n){ const i = DCLS.indexOf(state.d.cls); dSetClass(DCLS[(i + n + DCLS.length) % DCLS.length]); }
+function setPaint(i){
+  state.d.paint = i;
+  $$('#d-detail [data-paint]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.paint === i)));
+  slideValue($('#d-detail .sw-label'), PAINTS[i][0], 1);
+}
+function setPay(d){
+  state.d.pay = (state.d.pay + d + 3) % 3;
+  slideValue($('#d-detail .pay .pick-v'), payOpts()[state.d.pay], d);
+  slideValue($('#d-detail .pay-note'), payNotes(dList()[state.d.i])[state.d.pay], d);
+}
 function testDrive(){ const v = dList()[state.d.i]; toast('info', 'Test drive · 2:00'); }
 function buy(){
   const v = dList()[state.d.i], pay = state.d.pay;
@@ -1041,18 +1186,18 @@ function buy(){
 }
 $('.scene-dealer').addEventListener('click', e => {
   const t = e.target;
-  const tab = t.closest('[data-cls]'); if (tab){ state.d.cls = tab.dataset.cls; state.d.i = 0; renderDealer(); return; }
-  const row = t.closest('[data-vi]'); if (row){ state.d.i = +row.dataset.vi; renderDealer(); return; }
-  const sw = t.closest('[data-paint]'); if (sw){ state.d.paint = +sw.dataset.paint; renderDealer(); return; }
-  const pay = t.closest('[data-pay]'); if (pay){ state.d.pay = (state.d.pay + +pay.dataset.pay + 3) % 3; renderDealer(); return; }
+  const tab = t.closest('[data-cls]'); if (tab){ dSetClass(tab.dataset.cls); return; }
+  const row = t.closest('[data-vi]'); if (row){ dSelect(+row.dataset.vi); return; }
+  const sw = t.closest('[data-paint]'); if (sw){ setPaint(+sw.dataset.paint); return; }
+  const pay = t.closest('[data-pay]'); if (pay){ setPay(+pay.dataset.pay); return; }
   const act = t.closest('[data-dact]'); if (act){ act.dataset.dact === 'buy' ? buy() : testDrive(); }
 });
 function dealerKey(e){
   const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
   const map = {
     ArrowDown:() => dMove(1), ArrowUp:() => dMove(-1), q:() => dClass(-1), e:() => dClass(1),
-    ArrowLeft:() => { state.d.paint = (state.d.paint + PAINTS.length - 1) % PAINTS.length; renderDealer(); },
-    ArrowRight:() => { state.d.paint = (state.d.paint + 1) % PAINTS.length; renderDealer(); },
+    ArrowLeft:() => setPaint((state.d.paint + PAINTS.length - 1) % PAINTS.length),
+    ArrowRight:() => setPaint((state.d.paint + 1) % PAINTS.length),
     t: testDrive, Enter: buy,
   };
   if (map[k] && !e.repeat){ e.preventDefault(); map[k](); }
@@ -1111,7 +1256,25 @@ frame.addEventListener('focusout', () => setTimeout(kbState, 0));
 
 /* ---------- chrome controls ---------- */
 $('#seg-skin').addEventListener('click', e => { const b = e.target.closest('[data-skin]'); if (!b) return; state.skin = b.dataset.skin; state.accent = SKINS[state.skin].accent; applyLook(); });
-$('#seg-scene').addEventListener('click', e => { const b = e.target.closest('[data-scene]'); if (!b) return; state.scene = b.dataset.scene; applyLook(); });
+$('#seg-scene').addEventListener('click', e => { const b = e.target.closest('[data-scene]'); if (!b || b.dataset.scene === state.scene) return; state.scene = b.dataset.scene; applyLook(); sceneIntro(); });
+function sceneIntro(){
+  const sc = state.scene;
+  if (sc === 'menu'){ if (state.menuOpen) menuIntro(); return; }
+  if (sc === 'world'){
+    $('.compass').animate([{ opacity:0, transform:'translateX(-50%) translateY(-28px)' }, { opacity:1, transform:'translateX(-50%)' }], { duration:dur(560), easing:EASE_OUT });
+    staggerIn([$('#feed'), $('.radar'), $('.vitals'), $('#chips')], 50, 'translateX(-36px)', 60);
+    staggerIn([$('.ent')], 0, 'translateX(48px)', 80);
+    $('.prompts').animate([{ opacity:0, transform:'translateX(-50%) translateY(18px)' }, { opacity:1, transform:'translateX(-50%)' }], { duration:dur(520), delay:dur(160), easing:EASE_OUT, fill:'backwards' });
+    return;
+  }
+  if (sc === 'dealer'){
+    staggerIn([$('.dl-list .ph'), $('#d-tabs')], 40, 'translateX(-40px)');
+    staggerIn($$('#d-list .vrow'), 30, 'translateX(-28px)', 90);
+    staggerIn([$('#d-detail')], 0, 'translateX(48px)', 60);
+    ibarIn(); return;
+  }
+  if (sc === 'kit'){ staggerIn([$('.kit .ph'), ...$$('.kc')], 36, 'translateY(20px)'); }
+}
 $('#swatches').addEventListener('click', e => { const b = e.target.closest('[data-acc]'); if (!b) return; state.accent = b.dataset.acc; applyLook(); });
 $('#seg-bg').addEventListener('click', e => { const b = e.target.closest('button[data-bg]'); if (!b) return; setBg(b.dataset.bg); });
 let upURL = null;
@@ -1326,7 +1489,7 @@ function paintRadar(cv){
 paintStreet($('#bg'), state.bg === 'night');
 paintRadar($('#radar'));
 renderMenu(); renderWorld(); renderDealer();
-applyLook(); fit();
+applyLook(); fit(); sceneIntro();
 })();
 </script>
 
