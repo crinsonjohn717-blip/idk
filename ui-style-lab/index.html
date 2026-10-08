@@ -204,6 +204,8 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .toasts{position:absolute;right:64px;top:64px;width:460px;display:flex;flex-direction:column;gap:10px;z-index:5;pointer-events:none}
 .toast{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:start;padding:14px 18px 16px 14px;overflow:hidden;animation:t-in .28s cubic-bezier(.2,.8,.2,1)}
 .toast.static{animation:none}
+.toast.solo{align-items:center;padding-block:12px 13px}
+.toast.solo .t-t{margin-top:0}
 .t-ic{width:44px;height:44px;display:grid;place-items:center;background:var(--tc);color:var(--tc-ink);border-radius:var(--radius-sm)}
 .t-ic svg{width:24px;height:24px}
 .t-t{font-size:23px;margin-top:2px}
@@ -594,58 +596,58 @@ const CATS = [
 ];
 const COMMANDS = [
   { id:'admin', cat:'utility', title:'Admin Mode', desc:'Toggle admin mode for yourself. Shows entity outlines and your staff tag.', kind:'toggle', on:true, fav:true,
-    msg:on=>['info', on?'Admin mode enabled':'Admin mode disabled', on?'Entity outlines and your staff tag are visible.':'You are playing as a normal player.'] },
+    msg:on=>['info', on?'Admin mode enabled':'Admin mode disabled'] },
   { id:'noclip', cat:'utility', title:'Noclip', desc:'Fly through the world. Hold Shift to go faster.', kind:'toggle', on:false, fav:true,
-    msg:on=>['info', on?'Noclip on':'Noclip off', on?'You are invisible to other players.':'Collision is back on.'] },
+    msg:on=>['info', on?'Noclip on':'Noclip off'] },
   { id:'weather', cat:'utility', title:'Change Weather', desc:'Change the weather to a specific type.', kind:'form', fav:true, action:'Apply',
     fields:[{type:'list',label:'Weather',options:['EXTRASUNNY','CLEAR','CLOUDS','SMOG','FOGGY','OVERCAST','RAIN','THUNDER','CLEARING','XMAS'],i:6},{type:'list',label:'Transition',options:['15 seconds','Instant','60 seconds'],i:0}],
-    run:v=>['ok','Weather changed',`${v[0]} for everyone, ${v[1].toLowerCase()} transition.`] },
+    run:v=>['ok',`Weather set to ${v[0]}`] },
   { id:'time', cat:'utility', title:'Set Time', desc:'Set the in-game clock for everyone.', kind:'form', action:'Apply',
     fields:[{type:'list',label:'Time',options:['06:00','09:00','12:00','15:00','18:00','21:00','00:00','03:00'],i:2},{type:'list',label:'Freeze clock',options:['No','Yes'],i:0}],
-    run:v=>['ok','Clock set',`It is now ${v[0]}${v[1]==='Yes'?' and the clock is frozen':''}.`] },
+    run:v=>['ok',`Time set to ${v[0]}${v[1]==='Yes'?', frozen':''}`] },
   { id:'spawn', cat:'utility', title:'Spawn Vehicle', desc:'Spawn a vehicle for a player.', kind:'form', fav:true, action:'Spawn',
     fields:[{type:'text',label:'Model',value:'schafter2',req:true},{type:'player',label:'For player',i:4}],
-    run:v=>['ok','Vehicle spawned',`${v[0]} delivered to ${v[1]}.`] },
+    run:v=>['ok',`Spawned ${v[0]} for ${v[1]}`] },
   { id:'revive', cat:'players', title:'Revive in Range', desc:'Revive every player within 10 units of you.', kind:'action', fav:true,
-    run:()=>['ok','3 players revived','Everyone within 10 units is back on their feet.'] },
+    run:()=>['ok','3 players revived'] },
   { id:'tpwp', cat:'utility', title:'Teleport to Waypoint', desc:'Move to your map waypoint and land on the ground.', kind:'action',
-    run:()=>['info','Teleported','You arrived at your waypoint on Vespucci Blvd.'] },
+    run:()=>['info','Teleported to waypoint'] },
   { id:'coords', cat:'utility', title:'Copy Coords', desc:'Copy your position as a vector4 for config files.', kind:'action',
     run:()=>['info','Coords copied','vector4(-43.92, 33.08, 71.81, 265.75)'] },
   { id:'mdt', cat:'players', title:'Grant MDT Admin', desc:'Grant the MDT admin rank to a state ID.', kind:'form', action:'Grant',
     fields:[{type:'text',label:'State ID',placeholder:'e.g. 48213',req:true},{type:'list',label:'Rank',options:['MDT Admin','Supervisor','Records Clerk'],i:0}],
-    run:v=>['ok','MDT rank granted',`${v[1]} given to state ID ${v[0]}.`] },
+    run:v=>['ok',`${v[1]} granted to state ID ${v[0]}`] },
   { id:'temp', cat:'players', title:'Grant Temporary Admin Menu', desc:'Grant admin menu access to a player for this server session.', kind:'form', action:'Grant',
     fields:[{type:'player',label:'Player',i:1}],
-    run:v=>['ok','Temporary access granted',`${v[0]} can open the admin menu until the next restart.`] },
+    run:v=>['ok',`Admin menu granted to ${v[0]}`] },
   { id:'spectate', cat:'players', title:'Spectate Player', desc:'Watch a player without being seen.', kind:'form', action:'Spectate',
     fields:[{type:'player',label:'Player',i:2}],
-    run:v=>['info','Spectating',`${v[0]}. Press Esc to stop.`] },
+    run:v=>['info',`Spectating ${v[0]}`] },
   { id:'bring', cat:'players', title:'Bring Player', desc:'Teleport a player to your position.', kind:'form', action:'Bring',
     fields:[{type:'player',label:'Player',i:0}],
-    run:v=>['info','Player brought',`${v[0]} is now next to you.`] },
+    run:v=>['info',`Brought ${v[0]}`] },
   { id:'kick', cat:'players', title:'Kick Player', desc:'Remove a player from the server. They can rejoin.', kind:'form', action:'Kick', danger:true,
     fields:[{type:'player',label:'Player',i:3},{type:'text',label:'Reason',placeholder:'Shown to the player',req:true}],
-    run:v=>['warn','Player kicked',`${v[0]}: ${v[1]}`] },
+    run:v=>['warn',`Kicked ${v[0]}`] },
   { id:'lock', cat:'utility', title:'Server Lock', desc:'Lock or unlock new server admissions.', kind:'toggle', on:false,
-    msg:on=>[on?'warn':'info', on?'Server locked':'Server unlocked', on?'New players cannot join. Staff can still connect.':'Players can join again.'] },
+    msg:on=>[on?'warn':'info', on?'Server locked':'Server unlocked'] },
   { id:'dealer', cat:'utility', title:'Assign Dealership', desc:'Whitelist a player-created business to a dealership location, or revoke an assignment.', kind:'form', action:'Assign',
     fields:[{type:'list',label:'Location',options:['Premium Deluxe Motorsport',"Mosley's Auto","Larry's RV Sales",'Sanders Motorcycles'],i:0},{type:'text',label:'Business ID',placeholder:'BIZ-0000',req:true}],
-    run:v=>['ok','Dealership assigned',`${v[1]} now runs ${v[0]}.`] },
+    run:v=>['ok',`${v[1]} assigned to ${v[0]}`] },
   { id:'stock', cat:'utility', title:'Dealership Stock', desc:'Add or remove stock at a player-owned dealership. Added stock arrives unlisted.', kind:'form', action:'Apply',
     fields:[{type:'text',label:'Model',value:'sultan',req:true},{type:'list',label:'Change',options:['+1','+5','+10','−1'],i:0}],
-    run:v=>['ok','Stock updated',`${v[1]} ${v[0]} at Premium Deluxe Motorsport.`] },
+    run:v=>['ok',`Stock ${v[1]} ${v[0]}`] },
   { id:'prop', cat:'utility', title:'Assign Property', desc:'Assign a property to a player.', kind:'form', action:'Assign',
     fields:[{type:'list',label:'Property',options:['0605 Spanish Ave · Apt 3','Eclipse Towers · 31','Grove St · 12','Mirror Park Blvd · 4'],i:0},{type:'player',label:'Owner',i:4}],
-    run:v=>['ok','Property assigned',`${v[0]} now belongs to ${v[1]}.`] },
+    run:v=>['ok',`${v[0]} assigned to ${v[1]}`] },
   { id:'restore', cat:'utility', title:'Restore Property', desc:'Restore deleted objects in the property you are standing in.', kind:'action',
-    run:()=>['ok','Property restored','14 objects put back in 0605 Spanish Ave · Apt 3.'] },
+    run:()=>['ok','14 objects restored'] },
   { id:'hud', cat:'user', title:'Hide HUD', desc:'Hide every HUD element for clean screenshots.', kind:'toggle', on:false,
-    msg:on=>['info', on?'HUD hidden':'HUD visible', on?'Open the In world screen to see the result.':'The HUD is back on screen.'] },
+    msg:on=>['info', on?'HUD hidden':'HUD visible'] },
   { id:'streamer', cat:'user', title:'Streamer Mode', desc:'Hide player names in menus and on the entity panel.', kind:'toggle', on:false,
-    msg:on=>['info', on?'Streamer mode on':'Streamer mode off', on?'Player names show as Hidden.':'Player names are visible again.'] },
+    msg:on=>['info', on?'Streamer mode on':'Streamer mode off'] },
   { id:'sounds', cat:'user', title:'Staff Chat Sounds', desc:'Play a sound when a staff message arrives.', kind:'toggle', on:true,
-    msg:on=>['info', on?'Sounds on':'Sounds off', ''] },
+    msg:on=>['info', on?'Sounds on':'Sounds off'] },
   { id:'kb1', cat:'keybinds', title:'Open Admin Menu', desc:'Opens this menu.', kind:'bind', key:'F1' },
   { id:'kb2', cat:'keybinds', title:'Toggle Noclip', desc:'Fly mode on or off.', kind:'bind', key:'F2' },
   { id:'kb3', cat:'keybinds', title:'Entity Inspector', desc:'Show info for the entity you are aiming at.', kind:'bind', key:'F3' },
@@ -707,7 +709,7 @@ const inkFor = hex => (1.05 / (lum(hex) + .05)) >= 3.4 ? '#ffffff' : '#0b0c0e';
 
 /* ---------- toasts ---------- */
 function toastHTML(type, title, body, stat){
-  return `<div class="toast pn t-${type}${stat ? ' static' : ''}"><span class="t-ic">${ICON[type]}</span><div><div class="t-t dsp">${esc(title)}</div>${body ? `<div class="t-b">${esc(body)}</div>` : ''}</div>${stat ? '' : '<i class="t-bar"></i>'}</div>`;
+  return `<div class="toast pn t-${type}${body ? '' : ' solo'}${stat ? ' static' : ''}"><span class="t-ic">${ICON[type]}</span><div><div class="t-t dsp">${esc(title)}</div>${body ? `<div class="t-b">${esc(body)}</div>` : ''}</div>${stat ? '' : '<i class="t-bar"></i>'}</div>`;
 }
 function toast(type, title, body){
   const box = $('#toasts');
@@ -854,7 +856,7 @@ function submit(c){
   const miss = c.fields.findIndex((f, k) => f.type === 'text' && f.req && !vals[k]);
   if (miss > -1){
     const lab = c.fields[miss].label;
-    toast('bad', `${lab} is required`, `Type a ${lab.toLowerCase()}, then press Enter.`);
+    toast('bad', `${lab} is required`);
     state.fi = miss; renderList(); focusField(c, miss); return;
   }
   toast(...c.run(vals)); state.open = null; renderList(); flash(c.id);
@@ -943,7 +945,7 @@ function renderWorld(){
     else t += `<span class="cmp-tick minor" style="left:${x}px"></span>`;
   }
   $('#cmp-tape').innerHTML = t + '<i class="cmp-mark"></i>';
-  $('#feed').innerHTML = toastHTML('info', 'Dispatch · 10-31', 'Burglary in progress, Alta St. 0.4 mi.', true) + toastHTML('ok', 'Maze Bank', 'Paycheck received: $1,250.', true);
+  $('#feed').innerHTML = toastHTML('info', 'Dispatch · 10-31', 'Burglary in progress, Alta St. 0.4 mi.', true) + toastHTML('ok', 'Paycheck +$1,250', '', true);
   $('#chips').innerHTML =
     `<span class="chip pn">${ICON.mic}<span class="talk"><i></i><i></i><i></i></span>Normal</span>` +
     `<span class="chip pn num">${ICON.food}82</span>` +
@@ -967,14 +969,14 @@ $('#ent-acts').addEventListener('click', e => {
       return;
     }
     clearTimeout(b._t); b.classList.remove('confirm'); b.firstElementChild.textContent = 'Delete entity';
-    toast('warn', 'Entity deleted', 'Schafter, net ID 7836, removed for everyone.'); return;
+    toast('warn', 'Entity 7836 deleted'); return;
   }
-  const M = { fix:['ok','Vehicle repaired','Engine and body set to 1000.'], clean:['ok','Vehicle cleaned','Dirt level set to 0.'], keys:['info','Keys added','You now have keys for plate 41FZK207.'], enter:['info','Entered vehicle','You are in the driver seat.'] };
+  const M = { fix:['ok','Vehicle repaired'], clean:['ok','Vehicle cleaned'], keys:['info','Vehicle keys added'], enter:['info','Entered vehicle'] };
   toast(...M[a]);
 });
 function pressE(){
   const p = $('#p-e'); p.classList.add('press'); setTimeout(() => p.classList.remove('press'), 140);
-  toast('info', 'Stash opened', 'Apartment 3 stash: 18 of 50 slots used.');
+  toast('info', 'Stash opened');
 }
 let holdRaf = null, holdStart = 0;
 function holdBegin(){
@@ -984,7 +986,7 @@ function holdBegin(){
   const tick = () => {
     const p = Math.min(1, (performance.now() - holdStart) / 1200);
     key.style.setProperty('--p', p);
-    if (p >= 1){ holdRaf = null; key.style.setProperty('--p', 0); toast('ok', 'Search complete', 'Found 2 bandages and 1 lockpick.'); return; }
+    if (p >= 1){ holdRaf = null; key.style.setProperty('--p', 0); toast('ok', 'Found 2× Bandage, 1× Lockpick'); return; }
     holdRaf = requestAnimationFrame(tick);
   };
   holdRaf = requestAnimationFrame(tick);
@@ -1025,16 +1027,16 @@ function renderDealer(){
 }
 function dMove(n){ const l = dList(); state.d.i = (state.d.i + n + l.length) % l.length; renderDealer(); }
 function dClass(n){ const i = DCLS.indexOf(state.d.cls); state.d.cls = DCLS[(i + n + DCLS.length) % DCLS.length]; state.d.i = 0; renderDealer(); }
-function testDrive(){ const v = dList()[state.d.i]; toast('info', 'Test drive started', `${v.make} ${v.name} for 2:00. Bring it back to the showroom before the timer ends.`); }
+function testDrive(){ const v = dList()[state.d.i]; toast('info', 'Test drive · 2:00'); }
 function buy(){
   const v = dList()[state.d.i], pay = state.d.pay;
-  if (!v.stock) return toast('bad', 'Sold out', `Ask the owner to order more ${v.name}s.`);
-  if (pay === 0 && state.bank < v.price) return toast('bad', 'Not enough in the bank', `You need ${money(v.price - state.bank)} more.`);
-  if (pay === 1 && state.cash < v.price) return toast('bad', 'Not enough cash', `You have ${money(state.cash)} on you.`);
+  if (!v.stock) return toast('bad', `${v.name} is sold out`);
+  if (pay === 0 && state.bank < v.price) return toast('bad', `Need ${money(v.price - state.bank)} more in the bank`);
+  if (pay === 1 && state.cash < v.price) return toast('bad', `Need ${money(v.price - state.cash)} more cash`);
   if (pay === 0) state.bank -= v.price;
   if (pay === 1) state.cash -= v.price;
   v.stock--;
-  toast('ok', `${v.name} purchased`, pay === 2 ? `First payment of ${money(v.price * 1.08 / 12)} is due in 7 days. Keys are in your pocket.` : `${money(v.price)} paid. Keys are in your pocket.`);
+  toast('ok', `${v.name} purchased`, pay === 2 ? `${money(v.price * 1.08 / 12)} a week, first payment in 7 days` : '');
   renderDealer();
 }
 $('.scene-dealer').addEventListener('click', e => {
@@ -1066,13 +1068,13 @@ function renderKit(){
   $('#k-acc').textContent = a.name;
   $('#k-fonts').textContent = get('--f-display').split(',')[0].replace(/"/g, '');
   $('#k-pal').innerHTML = TOKENS.map(([n, v]) => `<div><i style="--c:var(${v})"></i><span style="min-width:0"><b>${n}</b><code>${esc(get(v))}</code></span></div>`).join('');
-  $('#k-feed').innerHTML = toastHTML('ok', 'Vehicle repaired', 'Engine and body set to 1000.', true) + toastHTML('warn', 'Server restart', 'In 30 minutes. Park your vehicles.', true) + toastHTML('bad', 'State ID is required', 'Type a state ID, then press Enter.', true);
+  $('#k-feed').innerHTML = toastHTML('info', 'Dispatch · 10-31', 'Burglary in progress, Alta St. 0.4 mi.', true) + toastHTML('ok', 'Vehicle repaired', '', true) + toastHTML('warn', 'Server restart in 30 minutes', '', true) + toastHTML('bad', 'State ID is required', '', true);
   $('#k-code').textContent = `/* ${sk.name} · ${a.name} (${a.hud}) */\n:root {\n` + EXPORT.map(n => `  --ui-${n.slice(2)}: ${get(n)};`).join('\n') + '\n}';
 }
 $('#k-copy').addEventListener('click', () => {
   const text = $('#k-code').textContent;
-  const fallback = () => { const r = document.createRange(); r.selectNodeContents($('#k-code')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('info', 'Text selected', 'Press Ctrl+C to copy the tokens.'); };
-  try { navigator.clipboard.writeText(text).then(() => toast('ok', 'Tokens copied', 'Paste them into your NUI stylesheet.'), fallback); } catch (e) { fallback(); }
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents($('#k-code')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('info', 'Press Ctrl+C to copy'); };
+  try { navigator.clipboard.writeText(text).then(() => toast('ok', 'Tokens copied'), fallback); } catch (e) { fallback(); }
 });
 
 /* ---------- keyboard and focus ---------- */
@@ -1089,7 +1091,7 @@ document.addEventListener('keydown', e => {
   if (state.binding){
     e.preventDefault();
     const c = byId(state.binding); state.binding = null;
-    if (e.key !== 'Escape'){ c.key = keyName(e); toast('ok', 'Keybind saved', `${c.title} is now on ${c.key}.`); }
+    if (e.key !== 'Escape'){ c.key = keyName(e); toast('ok', `${c.title} bound to ${c.key}`); }
     renderList(); return;
   }
   if (state.scene === 'menu') menuKey(e, typing);
