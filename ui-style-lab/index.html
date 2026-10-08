@@ -189,7 +189,8 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .ui[data-skin="native"] .tog{--tick:#06080a;width:28px;height:28px;border-radius:0;background:transparent;box-shadow:inset 0 0 0 2.5px currentColor}
 .ui[data-skin="native"] .tog i{display:none}
 .ui[data-skin="native"] .tog.on{background:currentColor}
-.ui[data-skin="native"] .tog.on::after{content:"";position:absolute;left:10px;top:4px;width:8px;height:15px;border:solid var(--tick);border-width:0 3px 3px 0;transform:rotate(45deg);animation:tick .3s cubic-bezier(.16,1,.3,1)}
+.ui[data-skin="native"] .tog.on::after{content:"";position:absolute;left:10px;top:4px;width:8px;height:15px;border:solid var(--tick);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.ui[data-skin="native"] .tog.on.pop::after{animation:tick .3s cubic-bezier(.16,1,.3,1)}
 @keyframes tick{from{opacity:0;transform:rotate(45deg) scale(.3)}}
 .ui[data-skin="native"] .row.sel .tog{--tick:var(--sel-bg)}
 .tog-l{font-family:var(--f-meta);font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;min-width:34px;opacity:.75}
@@ -887,7 +888,8 @@ function sideEffects(c){
 function updateToggle(c){
   const r = $(`#m-list .row[data-id="${c.id}"]`);
   if (!r){ renderList(); return; }
-  r.querySelector('.tog').classList.toggle('on', c.on);
+  const t = r.querySelector('.tog');
+  t.classList.toggle('on', c.on); t.classList.add('pop');
   r.querySelector('.tog-l').textContent = c.on ? 'On' : 'Off';
 }
 function toggleFav(c){
