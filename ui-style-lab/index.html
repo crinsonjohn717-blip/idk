@@ -411,9 +411,6 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 
 /* vehicle controls: just the buttons, each on its own small backing */
 .vm{position:absolute;left:0;right:0;bottom:92px;margin:0 auto;width:max-content;z-index:2;color:#fff}
-.vm-title{display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:12px;text-shadow:var(--hud-shadow)}
-.vm-name{font-size:19px}
-.vm-sub{font-size:13px;opacity:.8}
 .vm-body{position:relative;isolation:isolate;display:flex;gap:22px;align-items:flex-start}
 .vm-h{font-family:var(--f-meta);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0 0 7px 2px;text-shadow:var(--hud-shadow);opacity:.9}
 .ui[data-skin="vinewood"] .vm-h{text-transform:none;letter-spacing:.01em;font-size:13px}
@@ -1944,13 +1941,11 @@ frame.addEventListener('contextmenu', e => {
 
 // Vehicle controls: a top-down car you click on, plus tiles for windows and systems.
 const vm = { f:'door0' };
-const SEATS = ['Driver', 'Front passenger', 'Rear left', 'Rear right'];
 const tile = (id, icon, label, title, wide) => `<button type="button" class="tile${wide ? ' wide' : ''}" data-vm="${id}" title="${title}" aria-label="${title}" tabindex="-1">${ICON[icon]}<span class="tl">${label}</span></button>`;
 function renderVM(){
   const group = (title, cols, tiles) => `<div class="vm-g"><div class="vm-h">${title}</div><div class="vm-tiles ${cols}">${tiles}</div></div>`;
   const four = (kind, icon, noun) => ['Front L', 'Front R', 'Rear L', 'Rear R'].map((l, i) => tile(kind + i, icon, l, `${['Front left', 'Front right', 'Rear left', 'Rear right'][i]} ${noun}`)).join('');
   $('#vm').innerHTML = `
-    <div class="vm-title"><span class="dsp vm-name">Benefactor Schafter</span><span class="vm-sub" id="vm-sub"></span></div>
     <div class="vm-body" id="vm-body">
       ${group('Doors', 'c2', four('door', 'doors', 'door') + tile('hood', 'hood', 'Hood', 'Hood') + tile('trunk', 'trunk', 'Trunk', 'Trunk'))}
       ${group('Windows', 'c2', four('win', 'win', 'window') + tile('winAll', 'win', 'All', 'All windows', true))}
@@ -1967,7 +1962,6 @@ function updateVM(){
   set('engine', c.engine); set('lights', c.lights > 0, ['Lights', 'Low', 'High'][c.lights]);
   set('hazard', c.hazard); set('interior', c.interior);
   set('lock', c.locked, c.locked ? 'Locked' : 'Lock'); set('belt', c.belt);
-  $('#vm-sub').textContent = `${c.in ? SEATS[c.seat] : 'Parked next to you'} · ${c.locked ? 'Locked' : 'Unlocked'} · 41FZK207`;
 }
 function vmToggle(id){
   const c = sim.car, m = /^(door|win|seat)(\d)$/.exec(id), i = m ? +m[2] : -1;
