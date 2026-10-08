@@ -350,44 +350,49 @@ kbd{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 
 .ent .sa-plate{font-size:16px;padding:4px 9px 5px;border-radius:6px}
 .ent .sa-plate span{font-size:8px;margin-bottom:2px}
 
-/* speedometer: just the data on the game, no box. Gauge, then fuel and mileage, then the lights that are on. */
-.veh{position:absolute;right:40px;bottom:26px;width:240px;color:#fff;text-shadow:var(--hud-shadow)}
-.veh.off .veh-top,.veh.off .veh-bars{opacity:.5}
-.veh{--veh-out:0 0 2px #000,0 1px 2px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.35)}
-.veh-top{display:flex;align-items:baseline;justify-content:space-between;text-shadow:var(--veh-out)}
-.veh-n,.veh-g{font-family:var(--f-display);font-style:normal;font-weight:700;font-stretch:var(--veh-stretch,100%);line-height:.9;letter-spacing:0}
-.veh-n{font-size:50px}
-.veh-n .lead{opacity:.3}
-.veh-u,.veh-gl,.veh-l{font-family:var(--f-display);font-style:normal;font-weight:700;font-stretch:var(--veh-stretch,100%);font-size:13px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
-.veh-u{margin-left:5px}
-.veh-gl{margin-right:6px}
-.veh-g{font-size:30px}
+/* speedometer: a round gauge on the game, no box. Segmented RPM ring, gear in a ring, speed and MPH in the middle,
+   a fuel arc on the lower right, blinkers beside the gear and other lights stacked on the right when on. */
+.veh{position:absolute;right:30px;bottom:16px;width:272px;height:222px;color:#fff;--veh-out:0 0 2px #000,0 1px 2px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.35);text-shadow:var(--veh-out)}
 .ui[data-skin="vinewood"] .veh{--veh-stretch:76%}
-.veh-bars{display:grid;grid-template-columns:30px minmax(0,1fr) 38px;align-items:center;gap:5px 8px;margin-top:7px}
-.veh-l{font-size:11px;text-shadow:var(--veh-out)}
-.veh-fic{display:grid;place-items:center;justify-self:start;filter:drop-shadow(0 1px 1px #000)}
-.veh-fic svg{width:14px;height:14px}
-.veh-v{justify-self:end;font-family:var(--f-num);font-size:12px;font-weight:600;text-shadow:var(--veh-out)}
-/* flat bars like GTA's health and armour bars: dark backing, square ends */
-.vb{position:relative;height:7px;background:rgba(0,0,0,.55);box-shadow:0 0 0 1px rgba(0,0,0,.35)}
-.vb i{position:absolute;left:0;top:0;bottom:0;background:#fff}
-.vb.rpm i{background:linear-gradient(90deg,#ffffff 0,#ffffff 48%,#f0c850 74%,#e03232 94%,#e03232 100%);background-size:156px 100%;transition:width .05s linear}
-.vb.rpm::before{content:"";position:absolute;right:0;top:0;bottom:0;width:12.5%;background:rgba(224,50,50,.28)}
-.vb.rpm::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(12.5% - 1px),rgba(0,0,0,.6) calc(12.5% - 1px) 12.5%)}
-.vb.fuel{height:5px}
-.vb.fuel.low i{background:var(--warn)}
-.veh-odo{grid-column:2 / 4;justify-self:end;font-family:var(--f-num);font-size:12px;font-weight:600;letter-spacing:.04em;text-shadow:var(--veh-out);opacity:.9}
-.veh-ind{display:flex;justify-content:space-between;align-items:center;height:20px;margin-top:7px}
+.veh .gauge{position:absolute;left:0;top:0;width:230px;height:222px;overflow:visible;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}
+.gauge path{fill:none}
+.gauge .trk{stroke-width:12;opacity:.24}
+.gauge .val{stroke-width:12}
+.gauge .ftrk{stroke:#fff;stroke-width:5;opacity:.22;stroke-linecap:round}
+.gauge .fval{stroke:#fff;stroke-width:5;stroke-linecap:round;transition:stroke .3s}
+.veh.fuel-low .gauge .fval{stroke:var(--warn)}
+.veh.fuel-crit .gauge .fval{stroke:var(--bad)}
+.gauge .ring{fill:rgba(0,0,0,.28);stroke:#fff;stroke-width:1.6;transition:stroke .2s}
+.veh.shift .gauge .ring{stroke:var(--bad)}
+.g-gear,.g-spd{font-family:var(--f-display);font-style:normal;font-weight:700;font-stretch:var(--veh-stretch,100%);line-height:1;text-align:center}
+.g-gear{position:absolute;left:99px;top:36px;width:32px;height:32px;display:grid;place-items:center;font-size:18px}
+.g-gl,.g-u{position:absolute;left:0;width:230px;text-align:center;font-family:var(--f-display);font-style:normal;font-weight:700;font-stretch:var(--veh-stretch,100%);text-transform:uppercase;opacity:.85}
+.g-gl{top:72px;font-size:10px;letter-spacing:.18em}
+.g-spd{position:absolute;left:0;width:230px;top:88px;font-size:62px;letter-spacing:-.01em}
+.g-spd .lead{opacity:.28}
+.g-u{top:152px;font-size:12px;letter-spacing:.24em}
+.g-odo{position:absolute;left:0;width:230px;top:172px;text-align:center;font-family:var(--f-num);font-size:11px;font-weight:600;letter-spacing:.04em;opacity:.75}
+.g-pump{position:absolute;left:190px;top:196px;display:grid;place-items:center;filter:drop-shadow(0 1px 1px #000)}
+.g-pump svg{width:13px;height:13px}
+.veh.fuel-low .g-pump{color:var(--warn)}
+.veh.fuel-crit .g-pump{color:var(--bad)}
+.veh.off .gauge,.veh.off .g-spd,.veh.off .g-u,.veh.off .g-gl,.veh.off .g-gear{opacity:.5}
 .ind{display:grid;place-items:center;width:22px;height:20px;padding:0;border:0;background:none;color:#fff;opacity:0;transform:scale(.6);pointer-events:none;transition:opacity .15s ease,transform .25s cubic-bezier(.16,1,.3,1)}
 .ind svg{width:17px;height:17px}
 .ind.on{opacity:1;transform:none;pointer-events:auto;cursor:pointer}
+.veh .ind-l{position:absolute;left:62px;top:42px}
+.veh .ind-r{position:absolute;left:146px;top:42px}
+.g-col{position:absolute;left:240px;top:16px;display:flex;flex-direction:column;gap:7px}
+.g-col .ind:not(.on){display:none}
+.g-col .ind.on{animation:ind-in .28s cubic-bezier(.16,1,.3,1)}
+@keyframes ind-in{from{opacity:0;transform:scale(.6)}}
 /* each light keeps its colour while it fades, so a blink never flashes white */
 .ind-l,.ind-r,.ind-low{color:var(--ok);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--ok) 65%,transparent))}
 .ind-high{color:#4c9dff;filter:drop-shadow(0 0 5px rgba(76,157,255,.6))}
 .ind-eng,.ind-fuel,.ind-door{color:var(--warn);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--warn) 60%,transparent))}
 .ind-belt{color:var(--bad);filter:drop-shadow(0 0 5px color-mix(in srgb,var(--bad) 60%,transparent))}
 /* the hint bar steps left of the speedometer in styles that keep it bottom-right */
-.stage[data-scene="world"] .ui.car-hud:not([data-skin="vinewood"]) .ibar{right:310px}
+.stage[data-scene="world"] .ui.car-hud:not([data-skin="vinewood"]) .ibar{right:316px}
 
 /* radial menu, centred on screen */
 .ov-dim{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,0,0,.1),rgba(0,0,0,.4));opacity:0;pointer-events:none;transition:opacity .35s ease}
@@ -1489,26 +1494,40 @@ function renderNeeds(){
     const el = $('#v-' + id); el.textContent = Math.round(v); el.classList.toggle('low', id !== 'stress' && v < 25);
   }
 }
+// Round gauge geometry (stage px): centre (115,112), radius 100. RPM runs clockwise 225° -> 15°, fuel fills upward -50° -> 5°.
+const GAUGE = { cx:115, cy:112, r:100 };
+const gpt = a => `${(GAUGE.cx + GAUGE.r * Math.cos(a * Math.PI / 180)).toFixed(1)} ${(GAUGE.cy - GAUGE.r * Math.sin(a * Math.PI / 180)).toFixed(1)}`;
 function renderVehicle(){
+  const rpm = `M${gpt(225)} A${GAUGE.r} ${GAUGE.r} 0 1 1 ${gpt(15)}`, fuel = `M${gpt(-50)} A${GAUGE.r} ${GAUGE.r} 0 0 0 ${gpt(5)}`;
   $('#veh').innerHTML = `
-    <div class="veh-top">
-      <div><span class="veh-n" id="veh-spd"></span><span class="veh-u">mph</span></div>
-      <div><span class="veh-gl">Gear</span><span class="veh-g" id="veh-gear">N</span></div>
-    </div>
-    <div class="veh-bars">
-      <span class="veh-l">Rpm</span><div class="vb rpm"><i id="rpm-fill"></i></div><span class="veh-v" id="rpm-v"></span>
-      <span class="veh-fic">${ICON.pump}</span><div class="vb fuel" id="veh-fuel"><i></i></div><span class="veh-v" id="veh-fuel-v"></span>
-      <span class="veh-l">Odo</span><span class="veh-odo" id="veh-odo"></span>
-    </div>
-    <div class="veh-ind">
-      <button type="button" class="ind ind-l" data-ind="left" aria-label="Left blinker" tabindex="-1">${ICON.bl}</button>
+    <svg class="gauge" viewBox="0 0 230 222" aria-hidden="true">
+      <defs>
+        <linearGradient id="rpm-grad" gradientUnits="userSpaceOnUse" x1="20" y1="0" x2="215" y2="0">
+          <stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#ffffff"/><stop offset=".76" stop-color="#f0c850"/><stop offset=".94" stop-color="#e03232"/><stop offset="1" stop-color="#e03232"/>
+        </linearGradient>
+        <mask id="rpm-mask" maskUnits="userSpaceOnUse" x="-20" y="-20" width="270" height="262"><path id="rpm-mask-path" d="${rpm}" pathLength="100" stroke="#fff" stroke-width="20" fill="none" stroke-dasharray="0 100"/></mask>
+      </defs>
+      <path class="trk" d="${rpm}" pathLength="100" stroke="url(#rpm-grad)" stroke-dasharray="1.15 .75"/>
+      <path class="val" d="${rpm}" pathLength="100" stroke="url(#rpm-grad)" stroke-dasharray="1.15 .75" mask="url(#rpm-mask)"/>
+      <path class="ftrk" d="${fuel}" pathLength="100"/>
+      <path class="fval" id="fuel-val" d="${fuel}" pathLength="100" stroke-dasharray="0 100"/>
+      <circle class="ring" cx="115" cy="52" r="16"/>
+    </svg>
+    <div class="g-gear" id="veh-gear">N</div>
+    <div class="g-gl">Gear</div>
+    <div class="g-spd" id="veh-spd"></div>
+    <div class="g-u">mph</div>
+    <div class="g-odo" id="veh-odo"></div>
+    <span class="g-pump">${ICON.pump}</span>
+    <button type="button" class="ind ind-l" data-ind="left" aria-label="Left blinker" tabindex="-1">${ICON.bl}</button>
+    <button type="button" class="ind ind-r" data-ind="right" aria-label="Right blinker" tabindex="-1">${ICON.br}</button>
+    <div class="g-col">
       <button type="button" class="ind ind-low" data-ind="lights" aria-label="Headlights" tabindex="-1">${ICON.low}</button>
       <span class="ind ind-high">${ICON.high}</span>
       <span class="ind ind-eng">${ICON.engine}</span>
       <span class="ind ind-fuel">${ICON.pump}</span>
       <span class="ind ind-door">${ICON.ajar}</span>
       <button type="button" class="ind ind-belt" data-ind="belt" aria-label="Seatbelt" tabindex="-1">${ICON.belt}</button>
-      <button type="button" class="ind ind-r" data-ind="right" aria-label="Right blinker" tabindex="-1">${ICON.br}</button>
     </div>`;
 }
 function renderWorld(){
@@ -1556,12 +1575,13 @@ function updateHud(force){
     $('#veh-spd').innerHTML = `<span class="lead">${s3.slice(0, lead)}</span>${s3.slice(lead)}`;
   });
   hudSet('rpm', Math.round(c.rpm * 400), v => {
-    $('#rpm-fill').style.width = (v / 4).toFixed(2) + '%';
-    $('#rpm-v').textContent = (v / 50).toFixed(1);
+    $('#rpm-mask-path').setAttribute('stroke-dasharray', `${(v / 4).toFixed(2)} 100`);
+    $('#veh').classList.toggle('shift', v > 352);
   });
   hudSet('gear', gearOf(c), v => { $('#veh-gear').textContent = v; });
   hudSet('fuel', Math.round(c.fuel * 100), v => {
-    $('#veh-fuel i').style.width = v + '%'; $('#veh-fuel').classList.toggle('low', v < 15); $('#veh-fuel-v').textContent = v + '%';
+    $('#fuel-val').setAttribute('stroke-dasharray', `${v} 100`);
+    $('#veh').classList.toggle('fuel-low', v < 25 && v >= 12); $('#veh').classList.toggle('fuel-crit', v < 12);
   });
   hudSet('odo', c.odo.toFixed(1), v => { $('#veh-odo').textContent = v.padStart(8, '0') + ' mi'; });
   hudSet('off', !c.engine, v => $('#veh').classList.toggle('off', v));
